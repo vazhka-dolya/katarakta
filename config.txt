@@ -1,0 +1,37 @@
+#Welcome to the config file!
+#Keep in mind that you need to use a GFX plugin that has texture pack support like GLideN64
+[PATHS]
+
+#In "SM64Dir" you need to put the path to your SM64 hi-res texture folder.
+#In "Eyes1", "Eyes2", "Eyes3" you have names for the eye textures,
+#they are already set, but there could be a possibility that you need to change them
+#(If there is, then don't put the file extension in the names).
+#
+#"Eyes1" is the fully open eyes texture.
+#"Eyes2" is the half open eyes textures.
+#"Eyes3" is the closed eyes texture. All of this also applies to the "AddEyes" textures.
+#
+#If you also want to have the eye textures while loading an SM64 savestate in a different game for spazzing,
+#then in "AddDir" add the path for that game's hi-res texture folder. You also need to provide the names
+#for the eye textures in "AddEyes" variables. Otherwise you can leave all of them blank.
+#
+#To add eye textures, go to the "eyes" folder and drop a folder with the eye textures.
+#For katarakta to recognize the eye textures, each texture should have the names
+#that you have in "Eyes1", "Eyes2", "Eyes3", "AddEyes1", "AddEyes2" and "AddEyes3" variables.
+
+SM64Dir = 
+AddDir = 
+Eyes1 = SUPER MARIO 64#6B8D43C4#0#2_all
+Eyes2 = SUPER MARIO 64#9FBECEF9#0#2_all
+Eyes3 = SUPER MARIO 64#5D6B0678#0#2_all
+AddEyes1 = 
+AddEyes2 = 
+AddEyes3 = 
+
+[OPTIONS]
+
+#(Only the GUI version has support for different languages)
+#Available languages: English, Ukrainian, Russian.
+#If no language is set then English will be used 
+
+Language = English
