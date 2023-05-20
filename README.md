@@ -11,6 +11,8 @@ There is some stuff I want to add in the future (This list might get bigger if I
 - Making everything configurable through the program itself.
 - Making the window resizable.
 - Optimize the code.
+- Make it possible to also change textures for Mario's cap, hair, mustache and buttons.
+- A button for deleting the textures you have set from the hi-res folders.
 
 # Some questions you might be asking
 **What are additional textures?**\
