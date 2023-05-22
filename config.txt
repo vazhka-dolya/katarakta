@@ -20,6 +20,12 @@
 #For the other textures it's the same, but you need to drop it into the "chmb" folder instead.
 #For katarakta to recognize the textures, each texture should have the names
 #that you have in the variables.
+#
+#Also, if your Project64 is on the C: drive, then you either need to move Project64 to a
+#different place, or run katarakta as an administrator.
+#
+#If you need to clear the hi-res texture folders, then you can go to Options -> Clear hi-res folders.
+#This will remove every texture that has the same names as in the variables.
 
 SM64Dir = 
 AddDir = 
