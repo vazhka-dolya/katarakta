@@ -31,7 +31,7 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.1.0"
+AppVersion = "1.2.0"
 
 Option = Options()
 
@@ -198,7 +198,9 @@ class Ui_MainWindow(object):
         self.menubar.setObjectName("menubar")
         self.menuHelp = QtWidgets.QMenu(self.menubar)
         self.menuHelp.setObjectName("menuHelp")
-        #self.menuLanguage = QtWidgets.QMenu(self.menuOptions)
+        self.menuOptions = QtWidgets.QMenu(self.menubar)
+        self.menuOptions.setObjectName("menuOptions")
+        #self.menuLanguage = QtWidgets.QMenu(self.menuLanguage)
         #self.menuLanguage.setObjectName("menuLanguage")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -206,6 +208,8 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
         self.actionAbout = QtWidgets.QAction(MainWindow)
         self.actionAbout.setObjectName("actionAbout")
+        self.actionClear = QtWidgets.QAction(MainWindow)
+        self.actionClear.setObjectName("actionClear")
         #self.actionEnglish = QtWidgets.QAction(MainWindow)
         #self.actionEnglish.setObjectName("actionEnglish")
         #self.menuLanguage.addAction(self.actionEnglish)
@@ -215,11 +219,14 @@ class Ui_MainWindow(object):
         #self.actionRussian = QtWidgets.QAction(MainWindow)
         #self.actionRussian.setObjectName("actionRussian")
         #self.menuLanguage.addAction(self.actionRussian)
-        self.menuHelp.addAction(self.actionAbout)
         #self.menuOptions.addAction(self.menuLanguage.menuAction())
+        self.menuOptions.addAction(self.actionClear)
+        self.menuHelp.addAction(self.actionAbout)
+        self.menubar.addAction(self.menuOptions.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.actionAbout.triggered.connect(self.OpenAboutWindow)
+        self.actionClear.triggered.connect(self.ClearTextures)
 
         if Option.Language == "English":
             self.retranslateUiEnglish(MainWindow)
@@ -248,6 +255,7 @@ class Ui_MainWindow(object):
         #self.menuLanguage.adjustSize()
         self.Refresh.adjustSize()
         self.SwitchItemsButton.adjustSize()
+        self.menuOptions.adjustSize()
 
     def RefreshEyeList(self):
         EyeFolders = os.listdir("eyes\\")
@@ -295,6 +303,16 @@ class Ui_MainWindow(object):
             self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
             self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
         self.RefreshEyeList()
+
+        
+        """
+
+
+        I sincerely apologize for all the mess you are about to see below, I tried to optimize some of it, but to no avail :(
+
+
+        """
+        
 
     def OnSelectionChanged(self, FolderName):
         if self.Mode == "Eyes":
@@ -379,26 +397,47 @@ class Ui_MainWindow(object):
                 Path = Option.SM64Dir
                 try:
                     shutil.copyfile("eyes\\{}\\{}.png".format(FolderName, Option.Eyes1), "{}{}.png".format(Path, Option.Eyes1))
+                except:
+                    pass
+                try:
                     shutil.copyfile("eyes\\{}\\{}.png".format(FolderName, Option.Eyes2), "{}{}.png".format(Path, Option.Eyes2))
+                except:
+                    pass
+                try:
                     shutil.copyfile("eyes\\{}\\{}.png".format(FolderName, Option.Eyes3), "{}{}.png".format(Path, Option.Eyes3))
                 except:
-                    ShowCopyEyesErrorBox = CopyEyesErrorBox.exec_()
+                    pass
             if Type == "AddDir":
                 Path = Option.AddDir
                 try:
                     shutil.copyfile("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes1), "{}{}.png".format(Path, Option.AddEyes1))
+                except:
+                    pass
+                try:
                     shutil.copyfile("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes2), "{}{}.png".format(Path, Option.AddEyes2))
+                except:
+                    pass
+                try:
                     shutil.copyfile("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes3), "{}{}.png".format(Path, Option.AddEyes3))
                 except:
-                    ShowCopyEyesErrorBox = CopyEyesErrorBox.exec_()
+                    pass
 
         else:
             if Type == "SM64Dir":
                 Path = Option.SM64Dir
                 try:
                     shutil.copyfile("chmb\\{}\\{}.png".format(FolderName, Option.Cap), "{}{}.png".format(Path, Option.Cap))
+                except:
+                    pass
+                try:
                     shutil.copyfile("chmb\\{}\\{}.png".format(FolderName, Option.Hair), "{}{}.png".format(Path, Option.Hair))
+                except:
+                    pass
+                try:
                     shutil.copyfile("chmb\\{}\\{}.png".format(FolderName, Option.Mustache), "{}{}.png".format(Path, Option.Mustache))
+                except:
+                    pass
+                try:
                     shutil.copyfile("chmb\\{}\\{}.png".format(FolderName, Option.Button), "{}{}.png".format(Path, Option.Button))
                 except:
                     pass
@@ -407,11 +446,78 @@ class Ui_MainWindow(object):
                 Path = Option.AddDir
                 try:
                     shutil.copyfile("chmb\\{}\\{}.png".format(FolderName, Option.AddCap), "{}{}.png".format(Path, Option.AddCap))
+                except:
+                    pass
+                try:
                     shutil.copyfile("chmb\\{}\\{}.png".format(FolderName, Option.AddHair), "{}{}.png".format(Path, Option.AddHair))
+                except:
+                    pass
+                try:
                     shutil.copyfile("chmb\\{}\\{}.png".format(FolderName, Option.AddMustache), "{}{}.png".format(Path, Option.AddMustache))
+                except:
+                    pass
+                try:
                     shutil.copyfile("chmb\\{}\\{}.png".format(FolderName, Option.AddButton), "{}{}.png".format(Path, Option.AddButton))
                 except:
                     pass
+
+    def ClearTextures(self):
+        try:
+            os.remove("{}{}.png".format(Option.SM64Dir, Option.Eyes1))
+        except:
+            pass
+        try:
+            os.remove("{}{}.png".format(Option.SM64Dir, Option.Eyes2))
+        except:
+            pass
+        try:
+            os.remove("{}{}.png".format(Option.SM64Dir, Option.Eyes3))
+        except:
+            pass
+        try:
+            os.remove("{}{}.png".format(Option.SM64Dir, Option.Cap))
+        except:
+            pass
+        try:
+            os.remove("{}{}.png".format(Option.SM64Dir, Option.Hair))
+        except:
+            pass
+        try:
+            os.remove("{}{}.png".format(Option.SM64Dir, Option.Mustache))
+        except:
+            pass
+        try:
+            os.remove("{}{}.png".format(Option.SM64Dir, Option.Button))
+        except:
+            pass
+        try:
+            os.remove("{}{}.png".format(Option.AddDir, Option.AddEyes1))
+        except:
+            pass
+        try:
+            os.remove("{}{}.png".format(Option.AddDir, Option.AddEyes2))
+        except:
+            pass
+        try:
+            os.remove("{}{}.png".format(Option.AddDir, Option.AddEyes3))
+        except:
+            pass
+        try:
+            os.remove("{}{}.png".format(Option.AddDir, Option.AddCap))
+        except:
+            pass
+        try:
+            os.remove("{}{}.png".format(Option.AddDir, Option.AddHair))
+        except:
+            pass
+        try:
+            os.remove("{}{}.png".format(Option.AddDir, Option.AddMustache))
+        except:
+            pass
+        try:
+            os.remove("{}{}.png".format(Option.AddDir, Option.AddButton))
+        except:
+            pass
 
     def retranslateUiEnglish(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -429,6 +535,8 @@ class Ui_MainWindow(object):
         #self.actionRussian.setText(_translate("MainWindow", "Русский"))
         self.Refresh.setText(_translate("MainWindow", "Refresh"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Switch"))
+        self.menuOptions.setTitle(_translate("MainWindow", "Options"))
+        self.actionClear.setText(_translate("MainWindow", "Clear hi-res folders"))
 
     def retranslateUiUkrainian(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -446,6 +554,8 @@ class Ui_MainWindow(object):
         #self.actionRussian.setText(_translate("MainWindow", "Русский"))
         self.Refresh.setText(_translate("MainWindow", "Оновити"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Перемкнути"))
+        self.menuOptions.setTitle(_translate("MainWindow", "Опції"))
+        self.actionClear.setText(_translate("MainWindow", "Очистити hi-res папки"))
 
     def retranslateUiRussian(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -464,6 +574,8 @@ class Ui_MainWindow(object):
         self.ApplyAdd.setGeometry(QtCore.QRect(350, 371, 91, 23))
         self.Refresh.setText(_translate("MainWindow", "Обновить"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Переключить"))
+        self.menuOptions.setTitle(_translate("MainWindow", "Опции"))
+        self.actionClear.setText(_translate("MainWindow", "Очистить hi-res папки"))
 
 class Ui_AboutWindow(object):
     def setupUi(self, AboutWindow):
@@ -547,20 +659,21 @@ class Ui_AboutWindow(object):
 
 if Option.Language == "English":
     CopyEyesErrorBoxTitle = "Error"
-    CopyEyesErrorBoxMessage = "An error occured!\nMake sure that:\n- You entered the correct path in config.txt\n- You entered the correct eye texture name in config.txt\n- You have the eye textures in the folder"
+    CopyEyesErrorBoxMessage = "An error occured!\nMake sure that:\n- You entered the correct path in config.txt\n- You entered the correct eye texture name in config.txt\n- You have the eye textures in the folder\n- If your Project64 is on your C: drive, then either run katarakta as administrator or move Project64 elsewhere."
+
 
 elif Option.Language == "Ukrainian":
     CopyEyesErrorBoxTitle = "Помилка"
-    CopyEyesErrorBoxMessage = "Сталая помилка!\nПереконайтеся, що:\n- Ви ввели існуючий шлях до hi-res текстур у config.txt\n- Ви ввели правильні назви текстур очей у config.txt\n- У самій папці є текстури очей"
-
+    CopyEyesErrorBoxMessage = "Сталая помилка!\nПереконайтеся, що:\n- Ви ввели існуючий шлях до hi-res текстур у config.txt\n- Ви ввели правильні назви текстур очей у config.txt\n- У самій папці є текстури очей\n- Якщо Project64 знаходиться на диску C:, то запустить katarakta від імені адміністратора, або перемістить Project64 в інше місце."
+    
 elif Option.Language == "Russian":
     CopyEyesErrorBoxTitle = "Ошибка"
-    CopyEyesErrorBoxMessage = "Произошла ошибка!\nУбедитесь, что:\n- Вы ввели существующий путь к hi-res текстурам в config.txt\n- Вы ввели правильные названия текстур глаз в config.txt\n- У вас есть сами текстуры глаз в папке"
-
+    CopyEyesErrorBoxMessage = "Произошла ошибка!\nУбедитесь, что:\n- Вы ввели существующий путь к hi-res текстурам в config.txt\n- Вы ввели правильные названия текстур глаз в config.txt\n- У вас есть сами текстуры глаз в папке\n- Если Project64 находится на диске C:, то либо запустите katarakta от имени администратора, либо переместите Project64 в другое место."
+    
 else:
     CopyEyesErrorBoxTitle = "Error"
-    CopyEyesErrorBoxMessage = "An error occured!\nMake sure that:\n- You entered the correct path in config.txt\n- You entered the correct eye texture name in config.txt\n- You have the eye textures in the folder"
-
+    CopyEyesErrorBoxMessage = "An error occured!\nMake sure that:\n- You entered the correct path in config.txt\n- You entered the correct eye texture name in config.txt\n- You have the eye textures in the folder\n- If your Project64 is on your C: drive, then either run katarakta as administrator or move Project64 elsewhere."
+    
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     appAboutWindow = QtWidgets.QMainWindow()
@@ -571,6 +684,7 @@ if __name__ == "__main__":
     CopyEyesErrorBox.setText(CopyEyesErrorBoxMessage)
     CopyEyesErrorBox.setIcon(QMessageBox.Information)
     CopyEyesErrorBox.setStandardButtons(QMessageBox.Close)
+    
     try:
         CopyEyesErrorBox.setWindowIcon(QtGui.QIcon("img\\256icon.png"))
     except:
