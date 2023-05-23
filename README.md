@@ -27,3 +27,11 @@ As of 1.2.0, katarakta is translated to Ukrainian and Russian (The language can 
 **Do you know about SM64 Eye Changer from ImCodist?**\
 As you probably guessed by seeing this question here, yes.\
 I already knew about it even before creating katarakta (and SM64EC actually inspired me to make katarakta!), but I still decided to create it because I needed it for my own personal use and SM64EC did not have some features I needed, such as the additional textures and ability to change Mario's other textures besides the eyes.
+
+.
+
+..
+
+...
+
+also please forgive me for all the atrocities i did in the code
