@@ -13,6 +13,9 @@ There is some stuff I want to add in the future (This list might get bigger if I
 - Optimize the code.
 
 # Some questions you might be asking
+**If I use katarakta for my work, should I credit you?**\
+Credit is optional.
+
 **What are additional textures?**\
 You know how for Mario spazzing you load a Super Mario 64 savestate while another game is running?\
 Well, to have Mario's texture changed in that case, you need to have another textures in that game's hi-res textures folder.\
