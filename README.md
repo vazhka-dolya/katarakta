@@ -8,6 +8,7 @@ What you need to run is `katarakta.exe`\
 
 # Plans
 There is some stuff I want to add in the future (This list might get bigger if I get any more ideas):
+- Adding a loading screen since katarakta could take a few seconds for loading.
 - Making everything configurable through the program itself.
 - Making the window resizable.
 - Optimize the code.
