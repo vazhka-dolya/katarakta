@@ -8,7 +8,6 @@ What you need to run is `katarakta.exe`\
 
 # Plans
 There is some stuff I want to add in the future (This list might get bigger if I get any more ideas):
-- Adding a loading screen since katarakta could take a few seconds for loading.
 - Making everything configurable through the program itself.
 - Making the window resizable.
 - Optimize the code.
@@ -26,7 +25,7 @@ I call these other textures the "additional" textures.
 It's romanized "cataract" in Russian. It doesn't really have any meaning and I just thought it was funny.
 
 **Is it translated to any other languages?**\
-As of 1.2.0, katarakta is translated to Ukrainian and Russian (The language can be changed in `config.txt`).
+As of 1.3.0, katarakta is translated to Ukrainian and Russian (The language can be changed in `config.txt`).
 
 **Do you know about SM64 Eye Changer from ImCodist?**\
 As you probably guessed by seeing this question here, yes.\
