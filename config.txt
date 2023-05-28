@@ -51,3 +51,7 @@ AddButton =
 #If no language is set then English will be used 
 
 Language = English
+
+#In the loading folder there are splash screens, you can delete the existing splash screens or add your own ones.
+#The splash screen should be in the .png format and preferably be 360x360, though it can be any other resolution
+#if you want it that way.
