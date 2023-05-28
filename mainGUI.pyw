@@ -4,8 +4,11 @@ import os
 import configparser
 import shutil
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QWidget
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QWidget, QSplashScreen
+from PyQt5.QtGui import QPixmap
 import sys
+import random
 
 class Options():
     SM64Dir = ""
@@ -31,7 +34,7 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.2.0"
+AppVersion = "1.3.0"
 
 Option = Options()
 
@@ -601,12 +604,17 @@ class Ui_AboutWindow(object):
         self.LabelAuthor = QtWidgets.QLabel(AboutWindow)
         self.LabelAuthor.setGeometry(QtCore.QRect(20, 230, 481, 16))
         self.LabelAuthor.setObjectName("LabelAuthor")
+        self.LabelAuthor.setOpenExternalLinks(True)
         self.LabelIcon = QtWidgets.QLabel(AboutWindow)
         self.LabelIcon.setGeometry(QtCore.QRect(20, 20, 201, 201))
         self.LabelIcon.setText("")
         self.LabelIcon.setPixmap(QtGui.QPixmap("img\\768icon.png"))
         self.LabelIcon.setScaledContents(True)
         self.LabelIcon.setObjectName("LabelIcon")
+        self.LabelAddInfo = QtWidgets.QLabel(AboutWindow)
+        self.LabelAddInfo.setGeometry(QtCore.QRect(240, 180, 481, 16))
+        self.LabelAddInfo.setObjectName("AddInfo")
+        self.LabelAddInfo.setOpenExternalLinks(True)
         AboutWindow.setFixedSize(AboutWindow.size())
         
         try:
@@ -635,27 +643,32 @@ class Ui_AboutWindow(object):
         self.LabelName.adjustSize()
         self.LabelVersion.adjustSize()
         self.LabelAuthor.adjustSize()
+        self.LabelAddInfo.adjustSize()
     
     def retranslateUiEnglish(self, AboutWindow):
         _translate = QtCore.QCoreApplication.translate
         AboutWindow.setWindowTitle(_translate("AboutWindow", "About katarakta"))
         self.LabelName.setText(_translate("AboutWindow", "katarakta"))
         self.LabelVersion.setText(_translate("AboutWindow", "Version: {}".format(AppVersion)))
-        self.LabelAuthor.setText(_translate("AboutWindow", "By DanilAstroid (https://github.com/vazhka-dolya/)"))
-    
+        self.LabelAuthor.setText(_translate("AboutWindow", "By DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>)"))
+        self.LabelAddInfo.setText(_translate("AboutWindow", "This project uses the GNU General Public License v3.0<br><br><a href = 'https://github.com/vazhka-dolya/katarakta/issues/'>Report issues</a>"))
+
     def retranslateUiUkrainian(self, AboutWindow):
         _translate = QtCore.QCoreApplication.translate
         AboutWindow.setWindowTitle(_translate("AboutWindow", "Про katarakta"))
         self.LabelName.setText(_translate("AboutWindow", "katarakta"))
         self.LabelVersion.setText(_translate("AboutWindow", "Версія: {}".format(AppVersion)))
-        self.LabelAuthor.setText(_translate("AboutWindow", "Від DanilAstroid (https://github.com/vazhka-dolya/)"))
+        self.LabelAuthor.setText(_translate("AboutWindow", "Від DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>)"))
+        self.LabelAddInfo.setText(_translate("AboutWindow", "Цей проект використовує ліцензію<br>GNU General Public License v3.0<br><a href = 'https://github.com/vazhka-dolya/katarakta/issues/'>Повідомити про проблему</a>"))
     
     def retranslateUiRussian(self, AboutWindow):
         _translate = QtCore.QCoreApplication.translate
         AboutWindow.setWindowTitle(_translate("AboutWindow", "О katarakta"))
         self.LabelName.setText(_translate("AboutWindow", "katarakta"))
         self.LabelVersion.setText(_translate("AboutWindow", "Версия: {}".format(AppVersion)))
-        self.LabelAuthor.setText(_translate("AboutWindow", "От DanilAstroid (https://github.com/vazhka-dolya/)"))
+        self.LabelAuthor.setText(_translate("AboutWindow", "От DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>)"))
+        self.LabelAddInfo.setText(_translate("AboutWindow", "Этот проект использует лицензию<br>GNU General Public License v3.0<br><a href = 'https://github.com/vazhka-dolya/katarakta/issues/'>Сообщить о проблеме</a>"))
+    
 
 if Option.Language == "English":
     CopyEyesErrorBoxTitle = "Error"
@@ -676,6 +689,21 @@ else:
     
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
+
+    try:
+        LoadingImageList = os.listdir('loading')
+        for File in LoadingImageList:
+            if not(File.endswith(".png")):
+                LoadingImageList.remove(File)
+
+        LoadingImage = random.choice(LoadingImageList)
+    
+        Splash = QSplashScreen(QPixmap("loading\\{}".format(LoadingImage)))
+        Splash.show()
+        
+    except:
+        pass
+    
     appAboutWindow = QtWidgets.QMainWindow()
 
     #CopyEyes error message
@@ -694,20 +722,10 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
+    
+    try:
+        Splash.finish(MainWindow)
+    except:
+        pass
+    
     sys.exit(app.exec_())
-
-#print("Welcome to katarakta!\nType help to view all commands and what they do.\nMake sure to also check config.txt if you didn't already, there is some vital stuff.")
-#while True:
-#    Command = input("> ")
-#    if Command == "help":
-#        print("Commands:\nhelp - Displays this message.\ncopys - Copies the eye textures from the eyes folder to your SM64 folder.\ncopya - Copies the eye textures from the eyes folder to your additional folder.\nquit - Quit katarakta.\n")
-#    elif Command == "copys":
-#        FolderName = input("Folder name: ")
-#        CopyEyes("SM64Dir", FolderName)
-#    elif Command == "copya":
-#        FolderName = input("Folder name: ")
-#        CopyEyes("AddDir", Foldername)
-#    elif Command == "quit":
-#        quit()
-#    else:
-#        print("Command not found!")
