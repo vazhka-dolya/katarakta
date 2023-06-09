@@ -10,7 +10,13 @@ What you need to run is `katarakta.exe`\
 There is some stuff I want to add in the future (This list might get bigger if I get any more ideas):
 - Making everything configurable through the program itself.
 - Making the window resizable.
+- Add an ability to change the textures for wing cap's wings, metal Mario and the "X" eyes.
+- Add checking for a newer version of katarakta.
 - Optimize the code.
+
+# Known Issues
+Before reporting an issue, see if this issue is already on the list:
+- When choosing a folder, switching, and applying, katarakta will crash.
 
 # Some questions you might be asking
 **If I use katarakta for my work, should I credit you?**\
