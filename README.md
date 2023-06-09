@@ -12,6 +12,7 @@ There is some stuff I want to add in the future (This list might get bigger if I
 - Making the window resizable.
 - Add an ability to change the textures for wing cap's wings, metal Mario and the "X" eyes.
 - Add checking for a newer version of katarakta.
+- Add an ability to view what is currently in the hi-res folder.
 - Optimize the code.
 
 # Known Issues
