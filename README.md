@@ -17,7 +17,7 @@ There is some stuff I want to add in the future (This list might get bigger if I
 
 # Known Issues
 Before reporting an issue, see if this issue is already on the list:
-- When choosing a folder, switching, and applying, katarakta will crash.
+- When choosing a folder, switching or refreshing, and applying, katarakta will crash.
 
 # Some questions you might be asking
 **If I use katarakta for my work, should I credit you?**\
