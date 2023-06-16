@@ -3,7 +3,7 @@ katarakta is a tool for Super Mario 64 machinimas that enables you to change Mar
 
 # Setting Up
 ## For 1.4.0+
-What you need to run is `katarakta.exe`, you can (and need) to configure it by going to `Options` > `Settings`. After configuring, click `Save`.
+After downloading the archive, extract it somewhere. What you need to run is `katarakta.exe`, you can (and need) to configure it by going to `Options` > `Settings`. After configuring, click `Save`.
 ## For 1.0.0 - 1.3.0
 After downloading the archive, extract it somewhere. Open `config.txt` and follow the instructions. There are also guides in Ukrainian and Russian.\
 What you need to run is `katarakta.exe`\
