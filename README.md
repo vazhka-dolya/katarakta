@@ -2,22 +2,23 @@
 katarakta is a tool for Super Mario 64 machinimas that enables you to change Mario's textures quicker and makes it a lot less tedious.
 
 # Setting Up
+## For 1.4.0+
+What you need to run is `katarakta.exe`, you can (and need) to configure it by going to `Options` > `Settings`. After configuring, click `Save`.
+## For 1.0.0 - 1.3.0
 After downloading the archive, extract it somewhere. Open `config.txt` and follow the instructions. There are also guides in Ukrainian and Russian.\
 What you need to run is `katarakta.exe`\
 `kataraktaConsole.exe` is, obviously, the console version of katarakta, this version was made for testing, it lacks some features the GUI version has and you probably would not want to use that.
 
 # Plans
 There is some stuff I want to add in the future (This list might get bigger if I get any more ideas):
-- Making everything configurable through the program itself.
 - Making the window resizable.
 - Add an ability to change the textures for wing cap's wings, metal Mario and the "X" eyes.
-- Add checking for a newer version of katarakta.
-- Add an ability to view what is currently in the hi-res folder.
 - Optimize the code.
 
 # Known Issues
 Before reporting an issue, see if this issue is already on the list:
-- When choosing a folder, switching or refreshing, and applying, katarakta will crash.
+- When choosing a folder, switching/refreshing, and applying, katarakta will crash.
+- If you close the main katarakta window, the other windows (e.g. "About" window) don't close.
 
 # Some questions you might be asking
 **If I use katarakta for my work, should I credit you?**\
@@ -32,7 +33,7 @@ I call these other textures the "additional" textures.
 It's romanized "cataract" in Russian. It doesn't really have any meaning and I just thought it was funny.
 
 **Is it translated to any other languages?**\
-As of 1.3.0, katarakta is translated to Ukrainian and Russian (The language can be changed in `config.txt`).
+As of 1.4.0, katarakta is translated to Ukrainian and Russian.
 
 **Do you know about SM64 Eye Changer from ImCodist?**\
 As you probably guessed by seeing this question here, yes.\
