@@ -5,10 +5,11 @@ import configparser
 import shutil
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QWidget, QSplashScreen
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QWidget, QSplashScreen, QAction
+from PyQt5.QtGui import QPixmap, QIcon
 import sys
 import random
+import requests
 
 class Options():
     SM64Dir = ""
@@ -34,14 +35,15 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.3.0"
+AppVersion = "1.4.0"
+AppEdition = "Normal"
 
 Option = Options()
 
 Config = configparser.ConfigParser()
 
 def LoadConfig():
-    Config.read("config.txt")
+    Config.read("config.ini")
     if "PATHS" in Config:
         ConfigSecond = Config["PATHS"]
 
@@ -65,6 +67,8 @@ def LoadConfig():
     if "OPTIONS" in Config:
         ConfigSecond = Config["OPTIONS"]
         Option.Language = ConfigSecond.get("Language", Option.Language)
+        Option.StartUpCheckForUpdates = ConfigSecond.get("StartUpCheckForUpdates")
+        Option.StartUpStayOnTop = ConfigSecond.get("StartUpStayOnTop")
 
 LoadConfig()
 
@@ -83,6 +87,29 @@ class Ui_MainWindow(object):
         self.AboutWindowUi.setupUi(self.AboutWindow)
         self.AboutWindow.show()
         
+    def OpenUpdateWindow(self):
+        self.UpdateWindow = QtWidgets.QMainWindow()
+        self.UpdateWindowUi = Ui_UpdateWindow()
+        self.UpdateWindowUi.setupUi(self.UpdateWindow)
+        self.UpdateWindow.show()
+
+    def OpenSettingsWindow(self):
+        self.SettingsWindow = QtWidgets.QMainWindow()
+        self.SettingsWindowUi = Ui_SettingsWindow()
+        self.SettingsWindowUi.setupUi(self.SettingsWindow)
+        self.SettingsWindow.show()
+
+    def CheckUpdatesStartUp(self):
+        try:
+            LatestResponse = requests.get("https://api.github.com/repos/vazhka-dolya/katarakta/releases/latest")
+            LatestVersion = LatestResponse.json()["name"]
+            if ("katarakta " + AppVersion) == LatestVersion:
+                pass
+            else:
+                self.OpenUpdateWindow()
+        except:
+            pass
+    
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
@@ -91,10 +118,11 @@ class Ui_MainWindow(object):
         #MainWindow.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.World))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        try:
-            MainWindow.setWindowIcon(QtGui.QIcon("img\\256icon.png"))
-        except:
-            pass
+        
+        MainWindow.setWindowIcon(QtGui.QIcon("img\\Icon.png"))
+
+        if Option.StartUpCheckForUpdates == "1":
+            self.CheckUpdatesStartUp()
         
         CopyEyesErrorBoxTitle = ""
         CopyEyesErrorBoxMessage = ""
@@ -199,20 +227,54 @@ class Ui_MainWindow(object):
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 518, 21))
         self.menubar.setObjectName("menubar")
+        
         self.menuHelp = QtWidgets.QMenu(self.menubar)
         self.menuHelp.setObjectName("menuHelp")
         self.menuOptions = QtWidgets.QMenu(self.menubar)
         self.menuOptions.setObjectName("menuOptions")
+        #self.menuOptions.setIcon("img/Options.png")
         #self.menuLanguage = QtWidgets.QMenu(self.menuLanguage)
         #self.menuLanguage.setObjectName("menuLanguage")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        
         self.actionAbout = QtWidgets.QAction(MainWindow)
         self.actionAbout.setObjectName("actionAbout")
-        self.actionClear = QtWidgets.QAction(MainWindow)
-        self.actionClear.setObjectName("actionClear")
+        self.actionAbout.setIcon(QIcon("img/Icon.png"))
+
+        self.actionSettings = QtWidgets.QAction(MainWindow)
+        self.actionSettings.setObjectName("actionSettings")
+        self.actionSettings.triggered.connect(self.OpenSettingsWindow)
+        self.actionSettings.setIcon(QIcon("img/Settings.png"))
+        
+        self.submenuHiRes = QtWidgets.QMenu(MainWindow)
+        self.submenuHiRes.setObjectName("actionHiRes")
+        self.submenuHiRes.setIcon(QIcon("img/HiResMain.png"))
+        self.HiResClearSM64 = self.submenuHiRes.addAction(QIcon("img/HiResClear.png"), "ClearSM64")
+        self.HiResClearSM64.triggered.connect(self.ClearSM64)
+        self.HiResClearAdd = self.submenuHiRes.addAction(QIcon("img/HiResClearAdd.png"), "ClearAdd")
+        self.HiResClearAdd.triggered.connect(self.ClearAdd)
+        self.HiResOpenSM64 = self.submenuHiRes.addAction(QIcon("img/HiResOpen.png"), "OpenSM64")
+        self.HiResOpenSM64.triggered.connect(self.OpenSM64)
+        self.HiResOpenAdd = self.submenuHiRes.addAction(QIcon("img/HiResOpenAdd.png"), "OpenAdd")
+        self.HiResOpenAdd.triggered.connect(self.OpenAdd)
+        self.actionStayOnTop = QtWidgets.QAction(MainWindow)
+        self.actionStayOnTop.setObjectName("actionStayOnTop")
+        self.actionStayOnTop.setCheckable(True)
+        self.actionStayOnTop.triggered.connect(self.StayOnTop)
+        self.actionStayOnTop.setIcon(QIcon("img/StayOnTop.png"))
+
+        if Option.StartUpStayOnTop == "1":
+            self.actionStayOnTop.setChecked(True)
+            self.StayOnTop()
+        
+        #self.HiResViewSM64 = self.submenuHiRes.addAction("ViewSM64")
+        #self.HiResViewSM64.triggered.connect(self.ViewSM64)
+        #self.HiResViewAdd = self.submenuHiRes.addAction("ViewAdd")
+        #self.HiResViewAdd.triggered.connect(self.ViewAdd)
+        
         #self.actionEnglish = QtWidgets.QAction(MainWindow)
         #self.actionEnglish.setObjectName("actionEnglish")
         #self.menuLanguage.addAction(self.actionEnglish)
@@ -223,13 +285,21 @@ class Ui_MainWindow(object):
         #self.actionRussian.setObjectName("actionRussian")
         #self.menuLanguage.addAction(self.actionRussian)
         #self.menuOptions.addAction(self.menuLanguage.menuAction())
-        self.menuOptions.addAction(self.actionClear)
+        self.menuOptions.addMenu(self.submenuHiRes)
+        self.menuOptions.addSeparator()
+        self.menuOptions.addAction(self.actionSettings)
+        self.menuOptions.addAction(self.actionStayOnTop)
         self.menuHelp.addAction(self.actionAbout)
         self.menubar.addAction(self.menuOptions.menuAction())
+
+        self.actionUpdate = self.menubar.addAction("actionUpdate")
+        self.actionUpdate.triggered.connect(self.OpenUpdateWindow)
+        
+        self.menubar.addAction(self.actionUpdate)
+        
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.actionAbout.triggered.connect(self.OpenAboutWindow)
-        self.actionClear.triggered.connect(self.ClearTextures)
 
         if Option.Language == "English":
             self.retranslateUiEnglish(MainWindow)
@@ -464,7 +534,13 @@ class Ui_MainWindow(object):
                 except:
                     pass
 
-    def ClearTextures(self):
+    def OpenSM64(self):
+        os.startfile(Option.SM64Dir)
+
+    def OpenAdd(self):
+        os.startfile(Option.AddDir)
+
+    def ClearSM64(self):
         try:
             os.remove("{}{}.png".format(Option.SM64Dir, Option.Eyes1))
         except:
@@ -493,6 +569,8 @@ class Ui_MainWindow(object):
             os.remove("{}{}.png".format(Option.SM64Dir, Option.Button))
         except:
             pass
+        
+    def ClearAdd(self):
         try:
             os.remove("{}{}.png".format(Option.AddDir, Option.AddEyes1))
         except:
@@ -522,9 +600,17 @@ class Ui_MainWindow(object):
         except:
             pass
 
+    def StayOnTop(self):
+        if self.actionStayOnTop.isChecked() == True:
+            MainWindow.setWindowFlags(MainWindow.windowFlags() | Qt.WindowStaysOnTopHint)
+            MainWindow.show()
+        else:
+            MainWindow.setWindowFlags(MainWindow.windowFlags() & ~QtCore.Qt.WindowStaysOnTopHint)
+            MainWindow.show()
+
     def retranslateUiEnglish(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {}".format(AppVersion)))
+        MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
         self.label.setText(_translate("MainWindow", "Found folders"))
         self.ApplySM64.setText(_translate("MainWindow", "Apply SM64"))
         self.ApplyAdd.setText(_translate("MainWindow", "Apply Additional"))
@@ -539,11 +625,18 @@ class Ui_MainWindow(object):
         self.Refresh.setText(_translate("MainWindow", "Refresh"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Switch"))
         self.menuOptions.setTitle(_translate("MainWindow", "Options"))
-        self.actionClear.setText(_translate("MainWindow", "Clear hi-res folders"))
+        self.submenuHiRes.setTitle(_translate("MainWindow", "Hi-res folders"))
+        self.HiResClearSM64.setText(_translate("MainWindow", "Clear SM64"))
+        self.HiResClearAdd.setText(_translate("MainWindow", "Clear Additional"))
+        self.HiResOpenSM64.setText(_translate("MainWindow", "Open SM64"))
+        self.HiResOpenAdd.setText(_translate("MainWindow", "Open Additional"))
+        self.actionSettings.setText(_translate("MainWindow", "Settings"))
+        self.actionStayOnTop.setText(_translate("MainWindow", "Stay on Top"))
+        self.actionUpdate.setText(_translate("MainWindow", "Check for Updates"))
 
     def retranslateUiUkrainian(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {}".format(AppVersion)))
+        MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
         self.label.setText(_translate("MainWindow", "Знайдені папки"))
         self.ApplySM64.setText(_translate("MainWindow", "Застосувати SM64"))
         self.ApplyAdd.setText(_translate("MainWindow", "Застосувати додаткове"))
@@ -558,11 +651,20 @@ class Ui_MainWindow(object):
         self.Refresh.setText(_translate("MainWindow", "Оновити"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Перемкнути"))
         self.menuOptions.setTitle(_translate("MainWindow", "Опції"))
-        self.actionClear.setText(_translate("MainWindow", "Очистити hi-res папки"))
+        self.submenuHiRes.setTitle(_translate("MainWindow", "Hi-res папки"))
+        self.HiResClearSM64.setText(_translate("MainWindow", "Очистити SM64"))
+        self.HiResClearAdd.setText(_translate("MainWindow", "Очистити додаткове"))
+        self.HiResOpenSM64.setText(_translate("MainWindow", "Відкрити папку SM64"))
+        self.HiResOpenAdd.setText(_translate("MainWindow", "Відкрити додаткову папку"))
+        #self.HiResViewSM64.setText(_translate("MainWindow", "Переглянути папку SM64"))
+        #self.HiResViewAdd.setText(_translate("MainWindow", "Переглянути додаткову папку"))
+        self.actionSettings.setText(_translate("MainWindow", "Налаштування"))
+        self.actionStayOnTop.setText(_translate("MainWindow", "Завжди зверху"))
+        self.actionUpdate.setText(_translate("MainWindow", "Перевірка на оновлення"))
 
     def retranslateUiRussian(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {}".format(AppVersion)))
+        MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
         self.label.setText(_translate("MainWindow", "Найденные папки"))
         self.ApplySM64.setText(_translate("MainWindow", "Применить SM64"))
         self.ApplyAdd.setText(_translate("MainWindow", "Применить дополнительное"))
@@ -578,15 +680,23 @@ class Ui_MainWindow(object):
         self.Refresh.setText(_translate("MainWindow", "Обновить"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Переключить"))
         self.menuOptions.setTitle(_translate("MainWindow", "Опции"))
-        self.actionClear.setText(_translate("MainWindow", "Очистить hi-res папки"))
+        self.submenuHiRes.setTitle(_translate("MainWindow", "Hi-res папки"))
+        self.HiResClearSM64.setText(_translate("MainWindow", "Очистить SM64"))
+        self.HiResClearAdd.setText(_translate("MainWindow", "Очистить дополнительное"))
+        self.HiResOpenSM64.setText(_translate("MainWindow", "Открыть папку SM64"))
+        self.HiResOpenAdd.setText(_translate("MainWindow", "Открыть дополнительную папку"))
+        self.actionSettings.setText(_translate("MainWindow", "Настройки"))
+        self.actionStayOnTop.setText(_translate("MainWindow", "Всегда сверху"))
+        self.actionUpdate.setText(_translate("MainWindow", "Проверка на обновления"))
 
 class Ui_AboutWindow(object):
     def setupUi(self, AboutWindow):
         AboutWindow.setObjectName("About katarakta")
-        AboutWindow.resize(520, 256)
+        AboutWindow.resize(520, 306)
         AboutWindow.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.World))
+        AboutWindow.setWindowFlags(AboutWindow.windowFlags() | Qt.WindowStaysOnTopHint)
         self.LabelName = QtWidgets.QLabel(AboutWindow)
-        self.LabelName.setGeometry(QtCore.QRect(240, 80, 271, 71))
+        self.LabelName.setGeometry(QtCore.QRect(240, 20, 271, 71))
         self.LabelName.setSizeIncrement(QtCore.QSize(0, 0))
         font = QtGui.QFont()
         font.setPointSize(48)
@@ -596,7 +706,7 @@ class Ui_AboutWindow(object):
         self.LabelName.setScaledContents(False)
         self.LabelName.setObjectName("LabelName")
         self.LabelVersion = QtWidgets.QLabel(AboutWindow)
-        self.LabelVersion.setGeometry(QtCore.QRect(240, 150, 181, 20))
+        self.LabelVersion.setGeometry(QtCore.QRect(240, 90, 181, 20))
         font = QtGui.QFont()
         font.setPointSize(16)
         self.LabelVersion.setFont(font)
@@ -612,15 +722,12 @@ class Ui_AboutWindow(object):
         self.LabelIcon.setScaledContents(True)
         self.LabelIcon.setObjectName("LabelIcon")
         self.LabelAddInfo = QtWidgets.QLabel(AboutWindow)
-        self.LabelAddInfo.setGeometry(QtCore.QRect(240, 180, 481, 16))
+        self.LabelAddInfo.setGeometry(QtCore.QRect(240, 145, 481, 16))
         self.LabelAddInfo.setObjectName("AddInfo")
         self.LabelAddInfo.setOpenExternalLinks(True)
         AboutWindow.setFixedSize(AboutWindow.size())
         
-        try:
-            AboutWindow.setWindowIcon(QtGui.QIcon("img\\256icon.png"))
-        except:
-            pass
+        AboutWindow.setWindowIcon(QtGui.QIcon("img\\Icon.png"))
 
         if Option.Language == "English":
             self.retranslateUiEnglish(AboutWindow)
@@ -649,43 +756,682 @@ class Ui_AboutWindow(object):
         _translate = QtCore.QCoreApplication.translate
         AboutWindow.setWindowTitle(_translate("AboutWindow", "About katarakta"))
         self.LabelName.setText(_translate("AboutWindow", "katarakta"))
-        self.LabelVersion.setText(_translate("AboutWindow", "Version: {}".format(AppVersion)))
-        self.LabelAuthor.setText(_translate("AboutWindow", "By DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>)"))
+        self.LabelVersion.setText(_translate("AboutWindow", "Version: {}\nEdition: {}".format(AppVersion, AppEdition)))
+        self.LabelAuthor.setText(_translate("AboutWindow", "By DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>).<br><br>Thanks to these people for testing katarakta:<br>@Blender_Blenderovych (<a href = 'https://www.youtube.com/channel/UCGxro_VNeDQBY9k8_jitMCw'>YouTube</a>)<br>@SDRM45 (<a href = 'https://www.youtube.com/channel/UC-3gc0FmQA2_Z2-MIS5sZNQ'>YouTube</a>)"))
         self.LabelAddInfo.setText(_translate("AboutWindow", "This project uses the GNU General Public License v3.0<br><br><a href = 'https://github.com/vazhka-dolya/katarakta/issues/'>Report issues</a>"))
 
     def retranslateUiUkrainian(self, AboutWindow):
         _translate = QtCore.QCoreApplication.translate
         AboutWindow.setWindowTitle(_translate("AboutWindow", "Про katarakta"))
         self.LabelName.setText(_translate("AboutWindow", "katarakta"))
-        self.LabelVersion.setText(_translate("AboutWindow", "Версія: {}".format(AppVersion)))
-        self.LabelAuthor.setText(_translate("AboutWindow", "Від DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>)"))
+        self.LabelVersion.setText(_translate("AboutWindow", "Версія: {}\nРедакція: {}".format(AppVersion, AppEdition)))
+        self.LabelAuthor.setText(_translate("AboutWindow", "Від DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>).<br><br>Висловлюється подяка цим людям за тестування katarakta:<br>@Blender_Blenderovych (<a href = 'https://www.youtube.com/channel/UCGxro_VNeDQBY9k8_jitMCw'>YouTube</a>)<br>@SDRM45 (<a href = 'https://www.youtube.com/channel/UC-3gc0FmQA2_Z2-MIS5sZNQ'>YouTube</a>)"))
         self.LabelAddInfo.setText(_translate("AboutWindow", "Цей проект використовує ліцензію<br>GNU General Public License v3.0<br><a href = 'https://github.com/vazhka-dolya/katarakta/issues/'>Повідомити про проблему</a>"))
     
     def retranslateUiRussian(self, AboutWindow):
         _translate = QtCore.QCoreApplication.translate
         AboutWindow.setWindowTitle(_translate("AboutWindow", "О katarakta"))
         self.LabelName.setText(_translate("AboutWindow", "katarakta"))
-        self.LabelVersion.setText(_translate("AboutWindow", "Версия: {}".format(AppVersion)))
-        self.LabelAuthor.setText(_translate("AboutWindow", "От DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>)"))
+        self.LabelVersion.setText(_translate("AboutWindow", "Версия: {}\nРедакция: {}".format(AppVersion, AppEdition)))
+        self.LabelAuthor.setText(_translate("AboutWindow", "От DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>).<br><br>Выражается благодарность этим людям за тестирование katarakta:<br>@Blender_Blenderovych (<a href = 'https://www.youtube.com/channel/UCGxro_VNeDQBY9k8_jitMCw'>YouTube</a>)<br>@SDRM45 (<a href = 'https://www.youtube.com/channel/UC-3gc0FmQA2_Z2-MIS5sZNQ'>YouTube</a>)"))
         self.LabelAddInfo.setText(_translate("AboutWindow", "Этот проект использует лицензию<br>GNU General Public License v3.0<br><a href = 'https://github.com/vazhka-dolya/katarakta/issues/'>Сообщить о проблеме</a>"))
+        
+        AboutWindow.show()
+
+class Ui_UpdateWindow(object):
+    def setupUi(self, UpdateWindow):
+        if not UpdateWindow.objectName():
+            UpdateWindow.setObjectName("UpdateWindow")
+        UpdateWindow.resize(480, 336)
+        UpdateWindow.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.World))
+        self.UpdateCheckLabel = QtWidgets.QLabel(UpdateWindow)
+        self.UpdateCheckLabel.setObjectName("UpdateCheckLabel")
+        self.UpdateCheckLabel.setGeometry(QtCore.QRect(90, 10, 171, 31))
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.UpdateCheckLabel.setFont(font)
+        self.YourVersionLabel = QtWidgets.QLabel(UpdateWindow)
+        self.YourVersionLabel.setObjectName("YourVersionLabel")
+        self.YourVersionLabel.setGeometry(QtCore.QRect(10, 70, 131, 21))
+        font1 = QtGui.QFont()
+        font1.setPointSize(12)
+        self.YourVersionLabel.setFont(font1)
+        self.LatestVersionLabel = QtWidgets.QLabel(UpdateWindow)
+        self.LatestVersionLabel.setObjectName("LatestVersionLabel")
+        self.LatestVersionLabel.setGeometry(QtCore.QRect(10, 95, 201, 61))
+        self.LatestVersionLabel.setFont(font1)
+        self.IconLabel = QtWidgets.QLabel(UpdateWindow)
+        self.IconLabel.setObjectName("IconLabel")
+        self.IconLabel.setGeometry(QtCore.QRect(10, 0, 71, 71))
+        self.IconLabel.setPixmap(QPixmap("img/update256.png"))
+        self.IconLabel.setScaledContents(True)
+        self.StatusLabel = QtWidgets.QLabel(UpdateWindow)
+        self.StatusLabel.setObjectName("StatusLabel")
+        self.StatusLabel.setGeometry(QtCore.QRect(90, 45, 111, 31))
+        self.StatusLabel.setOpenExternalLinks(True)
+        font2 = QtGui.QFont()
+        font2.setPointSize(10)
+        self.StatusLabel.setFont(font2)
+        self.textBrowser = QtWidgets.QTextBrowser(UpdateWindow)
+        self.textBrowser.setObjectName("textBrowser")
+        self.textBrowser.setGeometry(QtCore.QRect(10, 136, 460, 189))
+        self.textBrowser.setAutoFillBackground(False)
+        self.textBrowserDescription = QtWidgets.QLabel(UpdateWindow)
+        self.textBrowserDescription.setObjectName("textBrowserDescription")
+        self.textBrowserDescription.setGeometry(QtCore.QRect(10, 115, 460, 22))
+        UpdateWindow.setFixedSize(UpdateWindow.size())
+
+        try:
+            LatestResponse = requests.get("https://api.github.com/repos/vazhka-dolya/katarakta/releases/latest")
+            LatestVersion = LatestResponse.json()["name"]
+            LatestBody = LatestResponse.json()["body"]
+            if ("katarakta " + AppVersion) == LatestVersion:
+                IsLatestVersion = True
+            else:
+                IsLatestVersion = False
+        except:
+            IsLatestVersion = "Unknown"
+            LatestVersion = "Unknown"
+            LatestBody = "Unknown"
+
+        self.textBrowser.setHtml(QtCore.QCoreApplication.translate("UpdateWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head></head><body>{}</p></body></html>".format(str(LatestBody.replace("\r\n", "<br>"))), None))
+
+        if Option.Language == "English":
+            self.retranslateUiEnglish(UpdateWindow)
+            self.Update()
+
+        elif Option.Language == "Ukrainian":
+            self.retranslateUiUkrainian(UpdateWindow)
+            self.Update()
+        
+        elif Option.Language == "Russian":
+            self.retranslateUiRussian(UpdateWindow)
+            self.Update()
+        
+        else:
+            self.retranslateUiEnglish(MainWindow)
+
+        QtCore.QMetaObject.connectSlotsByName(UpdateWindow)
+        
+        try:
+            UpdateWindow.setWindowIcon(QtGui.QIcon("img\\update64.png"))
+        except:
+            pass
+
+        if Option.Language == "English":
+            _translate = QtCore.QCoreApplication.translate
+            self.retranslateUiEnglish(UpdateWindow)
+            UpdateWindow.setWindowTitle(_translate("UpdateWindow", "Update Checker"))
+            self.UpdateCheckLabel.setText("Update Checker")
+            self.YourVersionLabel.setText("Your version: katarakta {}".format(str(AppVersion)))
+            self.LatestVersionLabel.setText("Latest version on Github: {}".format(str(LatestVersion)))
+            if IsLatestVersion == True:
+                self.StatusLabel.setText("You have the latest version! <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>All releases on GitHub</a>")
+            elif IsLatestVersion == False:
+                self.StatusLabel.setText("You have an outdated version! <a href = 'https://github.com/vazhka-dolya/katarakta/releases/latest'>Download latest release on GitHub</a>")
+            else:
+                self.StatusLabe.setText("Could not check for the latest version. <a href = 'https://github.com/vazhka-dolya/katarakta/releases>All releases on GitHub</a>")
+            self.textBrowserDescription.setText("Update's changelog:")
+            self.Update()
+
+        elif Option.Language == "Ukrainian":
+            _translate = QtCore.QCoreApplication.translate
+            self.retranslateUiUkrainian(UpdateWindow)
+            UpdateWindow.setWindowTitle(_translate("UpdateWindow", "Перевірка на оновлення"))
+            self.UpdateCheckLabel.setText("Перевірка на оновлення")
+            self.YourVersionLabel.setText("Ваша версія: katarakta {}".format(str(AppVersion)))
+            self.LatestVersionLabel.setText("Остання версія на GitHub: {}".format(str(LatestVersion)))
+            if IsLatestVersion == True:
+                self.StatusLabel.setText("У Вас остання версія! <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Усі випуски на GitHub</a>")
+            elif IsLatestVersion == False:
+                self.StatusLabel.setText("У Вас застаріла версія! <a href = 'https://github.com/vazhka-dolya/katarakta/releases/latest'>Завантажити останню версію на GitHub</a>")
+            else:
+                self.StatusLabe.setText("Неможливо перевірити версію. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Усі випуски на GitHub</a>")
+            self.textBrowserDescription.setText("Список змін оновлення:")
+            self.Update()
+        
+        elif Option.Language == "Russian":
+            _translate = QtCore.QCoreApplication.translate
+            self.retranslateUiRussian(UpdateWindow)
+            UpdateWindow.setWindowTitle(_translate("UpdateWindow", "Проверка на обновления"))
+            self.UpdateCheckLabel.setText("Проверка на обновления")
+            self.YourVersionLabel.setText("Ваша версия: katarakta {}".format(str(AppVersion)))
+            self.LatestVersionLabel.setText("Последняя версия на GitHub: {}".format(str(LatestVersion)))
+            if IsLatestVersion == True:
+                self.StatusLabel.setText("У Вас последняя версия! <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Все выпуски на GitHub</a>")
+            elif IsLatestVersion == False:
+                self.StatusLabel.setText("У Вас устаревшая версия! <a href = 'https://github.com/vazhka-dolya/katarakta/releases/latest'>Скачать последнюю версию на GitHub</a>")
+            else:
+                self.StatusLabe.setText("Невозможно проверить версию. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Все выпуски на GitHub</a>")
+            self.textBrowserDescription.setText("Список изменений:")
     
+            self.Update()
+        
+        else:
+            self.retranslateUiEnglish(MainWindow)
+        
+        QtCore.QMetaObject.connectSlotsByName(UpdateWindow)
+        
+        UpdateWindow.setWindowFlags(UpdateWindow.windowFlags() | Qt.WindowStaysOnTopHint)
+        UpdateWindow.show()
+        
+    def Update(self):
+        self.UpdateCheckLabel.adjustSize()
+        self.YourVersionLabel.adjustSize()
+        self.LatestVersionLabel.adjustSize()
+        self.StatusLabel.adjustSize()
+    
+    def retranslateUiEnglish(self, AboutWindow):
+        _translate = QtCore.QCoreApplication.translate
+        AboutWindow.setWindowTitle(_translate("UpdateWindow", "Update check"))
+        
+    def retranslateUiUkrainian(self, AboutWindow):
+        _translate = QtCore.QCoreApplication.translate
+        AboutWindow.setWindowTitle(_translate("UpdateWindow", "Перевірка на оновлення"))
+        
+    def retranslateUiRussian(self, AboutWindow):
+        _translate = QtCore.QCoreApplication.translate
+        AboutWindow.setWindowTitle(_translate("UpdateWindow", "Проверка на обновления"))
+    
+class Ui_SettingsWindow(object):
+    def setupUi(self, SettingsWindow):
+        SettingsWindow.resize(550, 505)
+        SettingsWindow.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.World))
+        SettingsWindow.setFixedSize(SettingsWindow.size())
+        SettingsWindow.setWindowIcon(QtGui.QIcon("img\\Settings.png"))
+        SettingsWindow.setWindowFlags(SettingsWindow.windowFlags() | Qt.WindowStaysOnTopHint)
+            
+        self.tabWidget = QtWidgets.QTabWidget(SettingsWindow)
+        self.tabWidget.setGeometry(QtCore.QRect(10, 10, 531, 461))
+        self.tabWidget.setObjectName("tabWidget")
+        self.TabGeneral = QtWidgets.QWidget()
+        self.TabGeneral.setObjectName("TabGeneral")
+        self.groupLanguage = QtWidgets.QGroupBox(self.TabGeneral)
+        self.groupLanguage.setGeometry(QtCore.QRect(10, 0, 506, 91))
+        self.groupLanguage.setObjectName("groupLanguage")
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        
+        self.labelLanguage = QtWidgets.QLabel(self.groupLanguage)
+        self.labelLanguage.setGeometry(QtCore.QRect(50, 20, 360, 31))
+        self.labelLanguage.setFont(font)
+        self.labelLanguage.setObjectName("labelLanguage")
+        
+        self.labelLanguageRestart = QtWidgets.QLabel(self.groupLanguage)
+        self.labelLanguageRestart.setGeometry(QtCore.QRect(216, 48, 290, 44))
+        self.labelLanguageRestart.setObjectName("labelLanguageRestart")
+        
+        self.comboLanguage = QtWidgets.QComboBox(self.groupLanguage)
+        self.comboLanguage.setGeometry(QtCore.QRect(10, 60, 201, 22))
+        self.comboLanguage.setObjectName("comboLanguage")
+        
+        self.comboLanguage.addItem("")
+        self.comboLanguage.addItem("")
+        self.comboLanguage.addItem("")
+        
+        _translate = QtCore.QCoreApplication.translate
+        
+        self.comboLanguage.setItemText(0, _translate("SettingsWindow", "English (United States)"))
+        self.comboLanguage.setItemIcon(0, QIcon("img/LangEnglishUS.png"))
+        self.comboLanguage.setItemText(1, _translate("SettingsWindow", "Українська (Україна)"))
+        self.comboLanguage.setItemIcon(1, QIcon("img/LangUkrainian.png"))
+        self.comboLanguage.setItemText(2, _translate("SettingsWindow", "Русский (Россия)"))
+        self.comboLanguage.setItemIcon(2, QIcon("img/LangRussian.png"))
+        
+        self.labelFlagBackground = QtWidgets.QLabel(self.groupLanguage)
+        self.labelFlagBackground.setGeometry(QtCore.QRect(7, 17, 37, 37))
+        self.labelFlagBackground.setText("")
+        self.labelFlagBackground.setScaledContents(True)
+        self.labelFlagBackground.setObjectName("labelFlagBackground")
+        self.labelFlagBackground.setPixmap(QtGui.QPixmap("img/FlagBackground.png"))
+        
+        self.labelLanguageFlag = QtWidgets.QLabel(self.groupLanguage)
+        self.labelLanguageFlag.setGeometry(QtCore.QRect(10, 20, 31, 31))
+        self.labelLanguageFlag.setText("")
+        self.labelLanguageFlag.setScaledContents(True)
+        self.labelLanguageFlag.setObjectName("labelLanguageFlag")
+
+        if Option.Language == "English":
+            self.comboLanguage.setCurrentIndex(0)
+        elif Option.Language == "Ukrainian":
+            self.comboLanguage.setCurrentIndex(1)
+        elif Option.Language == "Russian":
+            self.comboLanguage.setCurrentIndex(2)
+        else:
+            self.comboLanguage.setCurrentIndex(-1)
+
+        def CheckLanguage():
+            global ChosenLanguage
+            if self.comboLanguage.currentIndex() == 0:
+                self.labelLanguageFlag.setPixmap(QtGui.QPixmap("img/LangEnglishUS.png"))
+                self.labelLanguage.setText(_translate("SettingsWindow", "English (United States)"))
+                ChosenLanguage = "English"
+            elif self.comboLanguage.currentIndex() == 1:
+                self.labelLanguageFlag.setPixmap(QtGui.QPixmap("img/LangUkrainian.png"))
+                self.labelLanguage.setText(_translate("SettingsWindow", "Українська (Україна)"))
+                ChosenLanguage = "Ukrainian"
+            elif self.comboLanguage.currentIndex() == 2:
+                self.labelLanguageFlag.setPixmap(QtGui.QPixmap("img/LangRussian.png"))
+                self.labelLanguage.setText(_translate("SettingsWindow", "Русский (Россия)"))
+                ChosenLanguage = "Russian"
+            else:
+                self.labelLanguageFlag.setPixmap(QtGui.QPixmap("img/LangUnknown.png"))
+                self.labelLanguage.setText(_translate("SettingsWindow", "Not detected, using English (United States)"))
+                ChosenLanguage = "English"
+            return ChosenLanguage
+
+        CheckLanguage()
+        self.comboLanguage.currentIndexChanged.connect(CheckLanguage)
+        
+        self.groupUpdates = QtWidgets.QGroupBox(self.TabGeneral)
+        self.groupUpdates.setGeometry(QtCore.QRect(10, 90, 506, 101))
+        self.groupUpdates.setObjectName("groupBox")
+        self.checkUpdates = QtWidgets.QCheckBox(self.groupUpdates)
+        self.checkUpdates.setGeometry(QtCore.QRect(10, 20, 501, 17))
+        self.checkUpdates.setObjectName("checkBox")
+        self.labelUpdates = QtWidgets.QLabel(self.groupUpdates)
+        self.labelUpdates.setGeometry(QtCore.QRect(10, 40, 501, 51))
+        self.labelUpdates.setObjectName("labelUpdates")
+        
+        self.groupMisc = QtWidgets.QGroupBox(self.TabGeneral)
+        self.groupMisc.setGeometry(QtCore.QRect(10, 190, 506, 241))
+        self.groupMisc.setObjectName("groupMisc")
+        self.checkStayOnTop = QtWidgets.QCheckBox(self.groupMisc)
+        self.checkStayOnTop.setGeometry(QtCore.QRect(10, 20, 501, 17))
+        self.checkStayOnTop.setObjectName("checkStayOnTop")
+
+        if Option.StartUpCheckForUpdates == "1":
+            self.checkUpdates.setChecked(True)
+
+        def CheckStartUpCheckForUpdates():
+            global StartUpCheckForUpdates
+            if self.checkUpdates.isChecked() == True:
+                StartUpCheckForUpdates = "1"
+            else:
+                StartUpCheckForUpdates = "0"
+            return StartUpCheckForUpdates
+
+        if Option.StartUpStayOnTop == "1":
+            self.checkStayOnTop.setChecked(True)
+
+        def CheckStartUpStayOnTop():
+            global StartUpStayOnTop
+            if self.checkStayOnTop.isChecked() == True:
+                StartUpStayOnTop = "1"
+            else:
+                StartUpStayOnTop = "0"
+            return StartUpStayOnTop
+        
+        self.tabWidget.addTab(self.TabGeneral, "")
+        self.TabTextures = QtWidgets.QWidget()
+        self.TabTextures.setObjectName("TabTextures")
+        self.groupPaths = QtWidgets.QGroupBox(self.TabTextures)
+        self.groupPaths.setGeometry(QtCore.QRect(10, 0, 506, 121))
+        self.groupPaths.setObjectName("groupPaths")
+        
+        self.lineHiResSM64 = QtWidgets.QLineEdit(self.groupPaths)
+        self.lineHiResSM64.setGeometry(QtCore.QRect(10, 40, 486, 20))
+        self.lineHiResSM64.setObjectName("lineHiResSM64")
+        self.lineHiResSM64.setText(str(Option.SM64Dir))
+        self.labelHiResSM64 = QtWidgets.QLabel(self.groupPaths)
+        self.labelHiResSM64.setGeometry(QtCore.QRect(10, 20, 141, 16))
+        self.labelHiResSM64.setObjectName("labelHiResSM64")
+        
+        self.labelHiResAdd = QtWidgets.QLabel(self.groupPaths)
+        self.labelHiResAdd.setGeometry(QtCore.QRect(10, 70, 161, 16))
+        self.labelHiResAdd.setObjectName("labelHiResAdd")
+        self.lineHiResAdd = QtWidgets.QLineEdit(self.groupPaths)
+        self.lineHiResAdd.setGeometry(QtCore.QRect(10, 90, 486, 20))
+        self.lineHiResAdd.setObjectName("lineHiResAdd")
+        self.lineHiResAdd.setText(str(Option.AddDir))
+        
+        self.groupSM64 = QtWidgets.QGroupBox(self.TabTextures)
+        self.groupSM64.setGeometry(QtCore.QRect(10, 120, 251, 311))
+        self.groupSM64.setObjectName("groupSM64")
+        
+        self.labelEyesOpen = QtWidgets.QLabel(self.groupSM64)
+        self.labelEyesOpen.setGeometry(QtCore.QRect(10, 20, 231, 16))
+        self.labelEyesOpen.setObjectName("labelEyesOpen")
+        
+        self.labelEyesHalfopen = QtWidgets.QLabel(self.groupSM64)
+        self.labelEyesHalfopen.setGeometry(QtCore.QRect(10, 60, 231, 16))
+        self.labelEyesHalfopen.setObjectName("labelEyesHalfopen")
+        
+        self.labelEyesClosed = QtWidgets.QLabel(self.groupSM64)
+        self.labelEyesClosed.setGeometry(QtCore.QRect(10, 100, 231, 16))
+        self.labelEyesClosed.setObjectName("labelEyesClosed")
+        
+        self.labelCap = QtWidgets.QLabel(self.groupSM64)
+        self.labelCap.setGeometry(QtCore.QRect(10, 140, 231, 16))
+        self.labelCap.setObjectName("labelCap")
+        
+        self.labelSidehair = QtWidgets.QLabel(self.groupSM64)
+        self.labelSidehair.setGeometry(QtCore.QRect(10, 180, 231, 16))
+        self.labelSidehair.setObjectName("labelSidehair")
+        
+        self.labelMustache = QtWidgets.QLabel(self.groupSM64)
+        self.labelMustache.setGeometry(QtCore.QRect(10, 220, 231, 16))
+        self.labelMustache.setObjectName("labelMustache")
+        
+        self.labelButton = QtWidgets.QLabel(self.groupSM64)
+        self.labelButton.setGeometry(QtCore.QRect(10, 260, 231, 16))
+        self.labelButton.setObjectName("labelButton")
+        
+        self.lineEyesOpen = QtWidgets.QLineEdit(self.groupSM64)
+        self.lineEyesOpen.setGeometry(QtCore.QRect(10, 40, 231, 20))
+        self.lineEyesOpen.setObjectName("lineEyesOpen")
+        self.lineEyesOpen.setText(str(Option.Eyes1))
+        
+        self.lineEyesHalfopen = QtWidgets.QLineEdit(self.groupSM64)
+        self.lineEyesHalfopen.setGeometry(QtCore.QRect(10, 80, 231, 20))
+        self.lineEyesHalfopen.setObjectName("lineEyesHalfopen")
+        self.lineEyesHalfopen.setText(str(Option.Eyes2))
+        
+        self.lineEyesClosed = QtWidgets.QLineEdit(self.groupSM64)
+        self.lineEyesClosed.setGeometry(QtCore.QRect(10, 120, 231, 20))
+        self.lineEyesClosed.setObjectName("lineEyesClosed")
+        self.lineEyesClosed.setText(str(Option.Eyes3))
+        
+        self.lineCap = QtWidgets.QLineEdit(self.groupSM64)
+        self.lineCap.setGeometry(QtCore.QRect(10, 160, 231, 20))
+        self.lineCap.setObjectName("lineCap")
+        self.lineCap.setText(str(Option.Cap))
+        
+        self.lineSidehair = QtWidgets.QLineEdit(self.groupSM64)
+        self.lineSidehair.setGeometry(QtCore.QRect(10, 200, 231, 20))
+        self.lineSidehair.setObjectName("lineSidehair")
+        self.lineSidehair.setText(str(Option.Hair))
+        
+        self.lineMustache = QtWidgets.QLineEdit(self.groupSM64)
+        self.lineMustache.setGeometry(QtCore.QRect(10, 240, 231, 20))
+        self.lineMustache.setObjectName("lineMustache")
+        self.lineMustache.setText(str(Option.Mustache))
+        
+        self.lineButton = QtWidgets.QLineEdit(self.groupSM64)
+        self.lineButton.setGeometry(QtCore.QRect(10, 280, 231, 20))
+        self.lineButton.setObjectName("lineButton")
+        self.lineButton.setText(str(Option.Button))
+        
+        self.groupAdd = QtWidgets.QGroupBox(self.TabTextures)
+        self.groupAdd.setGeometry(QtCore.QRect(265, 120, 251, 311))
+        self.groupAdd.setObjectName("groupAdd")
+        
+        self.labelEyesOpenAdd = QtWidgets.QLabel(self.groupAdd)
+        self.labelEyesOpenAdd.setGeometry(QtCore.QRect(10, 20, 221, 16))
+        self.labelEyesOpenAdd.setObjectName("labelEyesOpenAdd")
+        
+        self.labelEyesHalfopenAdd = QtWidgets.QLabel(self.groupAdd)
+        self.labelEyesHalfopenAdd.setGeometry(QtCore.QRect(10, 60, 221, 16))
+        self.labelEyesHalfopenAdd.setObjectName("labelEyesHalfopenAdd")
+        
+        self.labelCapAdd = QtWidgets.QLabel(self.groupAdd)
+        self.labelCapAdd.setGeometry(QtCore.QRect(10, 140, 231, 16))
+        self.labelCapAdd.setObjectName("labelCapAdd")
+        
+        self.labelEyesClosedAdd = QtWidgets.QLabel(self.groupAdd)
+        self.labelEyesClosedAdd.setGeometry(QtCore.QRect(10, 100, 231, 16))
+        self.labelEyesClosedAdd.setObjectName("labelEyesClosedAdd")
+        
+        self.labelButtonAdd = QtWidgets.QLabel(self.groupAdd)
+        self.labelButtonAdd.setGeometry(QtCore.QRect(10, 260, 231, 16))
+        self.labelButtonAdd.setObjectName("labelButtonAdd")
+        
+        self.labelMustacheAdd = QtWidgets.QLabel(self.groupAdd)
+        self.labelMustacheAdd.setGeometry(QtCore.QRect(10, 220, 231, 16))
+        self.labelMustacheAdd.setObjectName("labelMustacheAdd")
+        
+        self.labelSidehairAdd = QtWidgets.QLabel(self.groupAdd)
+        self.labelSidehairAdd.setGeometry(QtCore.QRect(10, 180, 231, 16))
+        self.labelSidehairAdd.setObjectName("labelSidehairAdd")
+        
+        self.lineSidehairAdd = QtWidgets.QLineEdit(self.groupAdd)
+        self.lineSidehairAdd.setGeometry(QtCore.QRect(10, 200, 231, 20))
+        self.lineSidehairAdd.setObjectName("lineSidehairAdd")
+        self.lineSidehairAdd.setText(str(Option.AddHair))
+        
+        self.lineOpenAdd = QtWidgets.QLineEdit(self.groupAdd)
+        self.lineOpenAdd.setGeometry(QtCore.QRect(10, 40, 231, 20))
+        self.lineOpenAdd.setObjectName("lineOpenAdd")
+        self.lineOpenAdd.setText(str(Option.AddEyes1))
+        
+        self.lineHalfopenAdd = QtWidgets.QLineEdit(self.groupAdd)
+        self.lineHalfopenAdd.setGeometry(QtCore.QRect(10, 80, 231, 20))
+        self.lineHalfopenAdd.setObjectName("lineHalfopenAdd")
+        self.lineHalfopenAdd.setText(str(Option.AddEyes2))
+        
+        self.lineCapAdd = QtWidgets.QLineEdit(self.groupAdd)
+        self.lineCapAdd.setGeometry(QtCore.QRect(10, 160, 231, 20))
+        self.lineCapAdd.setObjectName("lineCapAdd")
+        self.lineCapAdd.setText(str(Option.AddCap))
+        
+        self.lineClosedAdd = QtWidgets.QLineEdit(self.groupAdd)
+        self.lineClosedAdd.setGeometry(QtCore.QRect(10, 120, 231, 20))
+        self.lineClosedAdd.setObjectName("lineClosedAdd")
+        self.lineClosedAdd.setText(str(Option.AddEyes3))
+        
+        self.lineButtonAdd = QtWidgets.QLineEdit(self.groupAdd)
+        self.lineButtonAdd.setGeometry(QtCore.QRect(10, 280, 231, 20))
+        self.lineButtonAdd.setObjectName("lineButtonAdd")
+        self.lineButtonAdd.setText(str(Option.AddButton))
+        
+        self.lineMustacheAdd = QtWidgets.QLineEdit(self.groupAdd)
+        self.lineMustacheAdd.setGeometry(QtCore.QRect(10, 240, 231, 20))
+        self.lineMustacheAdd.setObjectName("lineMustacheAdd")
+        self.lineMustacheAdd.setText(str(Option.AddMustache))
+        
+        self.tabWidget.addTab(self.TabTextures, "")
+
+        def CloseSettings():
+            SettingsWindow.close()
+        
+        self.pushClose = QtWidgets.QPushButton(SettingsWindow)
+        self.pushClose.setGeometry(QtCore.QRect(460, 475, 75, 23))
+        self.pushClose.setObjectName("pushClose")
+        self.pushClose.clicked.connect(CloseSettings)
+
+        def CollectLineText():
+            global CollectedLineHiResSM64, CollectedLineHiResAdd, CollectedLineEyesOpen, CollectedLineEyesHalfopen, CollectedLineEyesClosed, CollectedLineCap, CollectedLineSidehair, CollectedLineMustache, CollectedLineButton, CollectedLineEyesOpenAdd, CollectedLineEyesHalfopenAdd, CollectedLineEyesClosedAdd, CollectedLineCapAdd, CollectedLineSidehairAdd, CollectedLineMustacheAdd, CollectedLineButtonAdd
+            
+            CollectedLineHiResSM64 = str(self.lineHiResSM64.text())
+            CollectedLineHiResAdd = str(self.lineHiResSM64.text())
+            
+            CollectedLineEyesOpen = str(self.lineEyesOpen.text())
+            CollectedLineEyesHalfopen = str(self.lineEyesHalfopen.text())
+            CollectedLineEyesClosed = str(self.lineEyesClosed.text())
+            CollectedLineCap = str(self.lineCap.text())
+            CollectedLineSidehair = str(self.lineSidehair.text())
+            CollectedLineMustache = str(self.lineMustache.text())
+            CollectedLineButton = str(self.lineButton.text())
+            
+            CollectedLineEyesOpenAdd = str(self.lineOpenAdd.text())
+            CollectedLineEyesHalfopenAdd = str(self.lineHalfopenAdd.text())
+            CollectedLineEyesClosedAdd = str(self.lineClosedAdd.text())
+            CollectedLineCapAdd = str(self.lineCapAdd.text())
+            CollectedLineSidehairAdd = str(self.lineSidehairAdd.text())
+            CollectedLineMustacheAdd = str(self.lineMustacheAdd.text())
+            CollectedLineButtonAdd = str(self.lineButtonAdd.text())
+
+            return CollectedLineHiResSM64, CollectedLineHiResAdd, CollectedLineEyesOpen, CollectedLineEyesHalfopen, CollectedLineEyesClosed, CollectedLineCap, CollectedLineSidehair, CollectedLineMustache, CollectedLineButton, CollectedLineEyesOpenAdd, CollectedLineEyesHalfopenAdd, CollectedLineEyesClosedAdd, CollectedLineCapAdd, CollectedLineSidehairAdd, CollectedLineMustacheAdd, CollectedLineButtonAdd
+
+        
+        def Apply():
+            CollectLineText()
+            CheckLanguage()
+            CheckStartUpCheckForUpdates()
+            CheckStartUpStayOnTop()
+            Config = configparser.ConfigParser()
+            Config.read("config.ini")
+
+            Config.set("PATHS", "SM64Dir", CollectedLineHiResSM64)
+            Config.set("PATHS", "AddDir", CollectedLineHiResAdd)
+            
+            Config.set("PATHS", "Eyes1", CollectedLineEyesOpen)
+            Config.set("PATHS", "Eyes2", CollectedLineEyesHalfopen)
+            Config.set("PATHS", "Eyes3", CollectedLineEyesClosed)
+            Config.set("PATHS", "Cap", CollectedLineCap)
+            Config.set("PATHS", "Hair", CollectedLineSidehair)
+            Config.set("PATHS", "Mustache", CollectedLineMustache)
+            Config.set("PATHS", "Button", CollectedLineButton)
+            
+            Config.set("PATHS", "AddEyes1", CollectedLineEyesOpenAdd)
+            Config.set("PATHS", "AddEyes2", CollectedLineEyesHalfopenAdd)
+            Config.set("PATHS", "AddEyes3", CollectedLineEyesClosedAdd)
+            Config.set("PATHS", "AddCap", CollectedLineCapAdd)
+            Config.set("PATHS", "AddHair", CollectedLineSidehairAdd)
+            Config.set("PATHS", "AddMustache", CollectedLineMustacheAdd)
+            Config.set("PATHS", "AddButton", CollectedLineButtonAdd)
+            
+            Config.set("OPTIONS", "Language", ChosenLanguage)
+            Config.set("OPTIONS", "StartUpCheckForUpdates", StartUpCheckForUpdates)
+            Config.set("OPTIONS", "StartUpStayOnTop", StartUpStayOnTop)
+            
+            with open("config.ini", "w") as ConfigFile:
+                Config.write(ConfigFile)
+
+            LoadConfig()
+        
+        self.pushApply = QtWidgets.QPushButton(SettingsWindow)
+        self.pushApply.setGeometry(QtCore.QRect(380, 475, 75, 23))
+        self.pushApply.setObjectName("pushApply")
+        self.pushApply.clicked.connect(Apply)
+
+        self.tabWidget.setCurrentIndex(0)
+        QtCore.QMetaObject.connectSlotsByName(SettingsWindow)
+
+        if Option.Language == "English":
+            self.retranslateUiEnglish(SettingsWindow)
+
+        elif Option.Language == "Ukrainian":
+            self.retranslateUiUkrainian(SettingsWindow)
+        
+        elif Option.Language == "Russian":
+            self.retranslateUiRussian(SettingsWindow)
+        
+        else:
+            self.retranslateUiEnglish(SettingsWindow)
+
+    def retranslateUiEnglish(self, SettingsWindow):
+        _translate = QtCore.QCoreApplication.translate
+        SettingsWindow.setWindowTitle(_translate("SettingsWindow", "Settings"))
+        self.groupLanguage.setTitle(_translate("SettingsWindow", "Language"))
+        self.labelLanguageRestart.setText(_translate("SettingsWindow", "(requires restarting katarakta to fully work)"))
+        self.groupUpdates.setTitle(_translate("SettingsWindow", "Updates"))
+        self.checkUpdates.setText(_translate("SettingsWindow", "Check for updates on startup"))
+        self.labelUpdates.setText(_translate("SettingsWindow", "Keep this checked to get notified about any new updates to\nkatarakta on startup.\n"
+"\n"
+"If you discover an issue, then, before reporting it, make sure you are on the latest version."))
+        self.groupMisc.setTitle(_translate("SettingsWindow", "Miscellaneous"))
+        self.checkStayOnTop.setText(_translate("SettingsWindow", "Enable Stay on Top on startup"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.TabGeneral), _translate("SettingsWindow", "General"))
+        self.groupPaths.setTitle(_translate("SettingsWindow", "Paths"))
+        self.labelHiResSM64.setText(_translate("SettingsWindow", "SM64 hi-res folder:"))
+        self.labelHiResAdd.setText(_translate("SettingsWindow", "Additional hi-res folder:"))
+        self.groupSM64.setTitle(_translate("SettingsWindow", "SM64 Textures"))
+        self.labelEyesOpen.setText(_translate("SettingsWindow", "Eyes open:"))
+        self.labelEyesHalfopen.setText(_translate("SettingsWindow", "Eyes half-open:"))
+        self.labelEyesClosed.setText(_translate("SettingsWindow", "Eyes closed:"))
+        self.labelCap.setText(_translate("SettingsWindow", "Cap:"))
+        self.labelSidehair.setText(_translate("SettingsWindow", "Sidehair:"))
+        self.labelMustache.setText(_translate("SettingsWindow", "Mustache:"))
+        self.labelButton.setText(_translate("SettingsWindow", "Button:"))
+        self.groupAdd.setTitle(_translate("SettingsWindow", "Additional Textures"))
+        self.labelEyesOpenAdd.setText(_translate("SettingsWindow", "Eyes open:"))
+        self.labelEyesHalfopenAdd.setText(_translate("SettingsWindow", "Eyes half-open:"))
+        self.labelCapAdd.setText(_translate("SettingsWindow", "Cap:"))
+        self.labelEyesClosedAdd.setText(_translate("SettingsWindow", "Eyes closed:"))
+        self.labelButtonAdd.setText(_translate("SettingsWindow", "Button:"))
+        self.labelMustacheAdd.setText(_translate("SettingsWindow", "Mustache:"))
+        self.labelSidehairAdd.setText(_translate("SettingsWindow", "Sidehair:"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.TabTextures), _translate("SettingsWindow", "Textures"))
+        self.pushClose.setText(_translate("SettingsWindow", "Close"))
+        self.pushApply.setText(_translate("SettingsWindow", "Apply"))
+
+    def retranslateUiUkrainian(self, SettingsWindow):
+        _translate = QtCore.QCoreApplication.translate
+        SettingsWindow.setWindowTitle(_translate("SettingsWindow", "Налаштування"))
+        self.groupLanguage.setTitle(_translate("SettingsWindow", "Мова"))
+        self.labelLanguageRestart.setText(_translate("SettingsWindow", "(необхідний перезапуск katarakta щоб зміни повністю\nнабули чинності)"))
+        self.groupUpdates.setTitle(_translate("SettingsWindow", "Оновлення"))
+        self.checkUpdates.setText(_translate("SettingsWindow", "Перевіряти на оновлення при запуску"))
+        self.labelUpdates.setText(_translate("SettingsWindow", "Залиште це увімкненим щоб отримувати повідомлення про нові версії. Якщо Ви знайдете\nпроблему, то перед тим, як повідомляти про неї, переконайтесь, що у Вас остання версія."))
+        self.groupMisc.setTitle(_translate("SettingsWindow", "Інше"))
+        self.checkStayOnTop.setText(_translate("SettingsWindow", "Завжди зверху при запуску"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.TabGeneral), _translate("SettingsWindow", "Основне"))
+        self.groupPaths.setTitle(_translate("SettingsWindow", "Шляхи"))
+        self.labelHiResSM64.setText(_translate("SettingsWindow", "Hi-res папка СМ64:"))
+        self.labelHiResAdd.setText(_translate("SettingsWindow", "Додаткова hi-res папка:"))
+        self.groupSM64.setTitle(_translate("SettingsWindow", "Текстури СМ64"))
+        self.labelEyesOpen.setText(_translate("SettingsWindow", "Розплючені очі:"))
+        self.labelEyesHalfopen.setText(_translate("SettingsWindow", "Напіврозплючені очі:"))
+        self.labelEyesClosed.setText(_translate("SettingsWindow", "Заплющені очі:"))
+        self.labelCap.setText(_translate("SettingsWindow", "Шапка:"))
+        self.labelSidehair.setText(_translate("SettingsWindow", "Бочне волосся:"))
+        self.labelMustache.setText(_translate("SettingsWindow", "Вуса:"))
+        self.labelButton.setText(_translate("SettingsWindow", "Кнопка:"))
+        self.groupAdd.setTitle(_translate("SettingsWindow", "Додаткові текстури:"))
+        self.labelEyesOpenAdd.setText(_translate("SettingsWindow", "Розплючені очі:"))
+        self.labelEyesHalfopenAdd.setText(_translate("SettingsWindow", "Напіврозплючені очі:"))
+        self.labelCapAdd.setText(_translate("SettingsWindow", "Шапка:"))
+        self.labelEyesClosedAdd.setText(_translate("SettingsWindow", "Заплющені очі:"))
+        self.labelButtonAdd.setText(_translate("SettingsWindow", "Кнопка:"))
+        self.labelMustacheAdd.setText(_translate("SettingsWindow", "Вуса:"))
+        self.labelSidehairAdd.setText(_translate("SettingsWindow", "Бочне волосся:"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.TabTextures), _translate("SettingsWindow", "Текстури"))
+        self.pushClose.setText(_translate("SettingsWindow", "Закрити"))
+        self.pushApply.setText(_translate("SettingsWindow", "Застосувати"))
+
+    def retranslateUiRussian(self, SettingsWindow):
+        _translate = QtCore.QCoreApplication.translate
+        SettingsWindow.setWindowTitle(_translate("SettingsWindow", "Настройки"))
+        self.groupLanguage.setTitle(_translate("SettingsWindow", "Язык"))
+        self.labelLanguageRestart.setText(_translate("SettingsWindow", "(необходимо перезапустить katarakta чтобы изменения\nполностью вошли в силу)"))
+        self.groupUpdates.setTitle(_translate("SettingsWindow", "Обновления"))
+        self.checkUpdates.setText(_translate("SettingsWindow", "Проверять на обновления при запуске"))
+        self.labelUpdates.setText(_translate("SettingsWindow", "Оставьте это включённым чтобы получать уведомления о новых обновлениях. Если Вы нашли\nпроблему, то перед тем, как о ней сообщить, убедитесь, что у Вас последняя версия."))
+        self.groupMisc.setTitle(_translate("SettingsWindow", "Другое"))
+        self.checkStayOnTop.setText(_translate("SettingsWindow", "Всегда сверху при запуске"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.TabGeneral), _translate("SettingsWindow", "Основное"))
+        self.groupPaths.setTitle(_translate("SettingsWindow", "Пути"))
+        self.labelHiResSM64.setText(_translate("SettingsWindow", "Hi-res папка СМ64:"))
+        self.labelHiResAdd.setText(_translate("SettingsWindow", "Дополнительная hi-res папка:"))
+        self.groupSM64.setTitle(_translate("SettingsWindow", "Текстуры SM64"))
+        self.labelEyesOpen.setText(_translate("SettingsWindow", "Открытые глаза:"))
+        self.labelEyesHalfopen.setText(_translate("SettingsWindow", "Наполовину открытые глаза:"))
+        self.labelEyesClosed.setText(_translate("SettingsWindow", "Закрытые глаза:"))
+        self.labelCap.setText(_translate("SettingsWindow", "Кепка:"))
+        self.labelSidehair.setText(_translate("SettingsWindow", "Боковые волосы:"))
+        self.labelMustache.setText(_translate("SettingsWindow", "Усы:"))
+        self.labelButton.setText(_translate("SettingsWindow", "Кнопка:"))
+        self.groupAdd.setTitle(_translate("SettingsWindow", "Дополнительные текстуры"))
+        self.labelEyesOpenAdd.setText(_translate("SettingsWindow", "Открытые глаза:"))
+        self.labelEyesHalfopenAdd.setText(_translate("SettingsWindow", "Наполовину открытые глаза:"))
+        self.labelCapAdd.setText(_translate("SettingsWindow", "Кепка:"))
+        self.labelEyesClosedAdd.setText(_translate("SettingsWindow", "Закрытые глаза:"))
+        self.labelButtonAdd.setText(_translate("SettingsWindow", "Кнопка:"))
+        self.labelMustacheAdd.setText(_translate("SettingsWindow", "Усы:"))
+        self.labelSidehairAdd.setText(_translate("SettingsWindow", "Боковые волосы:"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.TabTextures), _translate("SettingsWindow", "Текстуры"))
+        self.pushClose.setText(_translate("SettingsWindow", "Закрыть"))
+        self.pushApply.setText(_translate("SettingsWindow", "Применить"))
+        
+        SettingsWindow.show()
 
 if Option.Language == "English":
     CopyEyesErrorBoxTitle = "Error"
-    CopyEyesErrorBoxMessage = "An error occured!\nMake sure that:\n- You entered the correct path in config.txt\n- You entered the correct eye texture name in config.txt\n- You have the eye textures in the folder\n- If your Project64 is on your C: drive, then either run katarakta as administrator or move Project64 elsewhere."
+    CopyEyesErrorBoxMessage = "An error occured!\nMake sure that:\n- You entered the correct path in config.ini\n- You entered the correct eye texture name in config.ini\n- You have the eye textures in the folder\n- If your Project64 is on your C: drive, then either run katarakta as administrator or move Project64 elsewhere."
 
 
 elif Option.Language == "Ukrainian":
     CopyEyesErrorBoxTitle = "Помилка"
-    CopyEyesErrorBoxMessage = "Сталая помилка!\nПереконайтеся, що:\n- Ви ввели існуючий шлях до hi-res текстур у config.txt\n- Ви ввели правильні назви текстур очей у config.txt\n- У самій папці є текстури очей\n- Якщо Project64 знаходиться на диску C:, то запустить katarakta від імені адміністратора, або перемістить Project64 в інше місце."
+    CopyEyesErrorBoxMessage = "Сталая помилка!\nПереконайтеся, що:\n- Ви ввели існуючий шлях до hi-res текстур у config.ini\n- Ви ввели правильні назви текстур очей у config.ini\n- У самій папці є текстури очей\n- Якщо Project64 знаходиться на диску C:, то запустить katarakta від імені адміністратора, або перемістить Project64 в інше місце."
     
 elif Option.Language == "Russian":
     CopyEyesErrorBoxTitle = "Ошибка"
-    CopyEyesErrorBoxMessage = "Произошла ошибка!\nУбедитесь, что:\n- Вы ввели существующий путь к hi-res текстурам в config.txt\n- Вы ввели правильные названия текстур глаз в config.txt\n- У вас есть сами текстуры глаз в папке\n- Если Project64 находится на диске C:, то либо запустите katarakta от имени администратора, либо переместите Project64 в другое место."
+    CopyEyesErrorBoxMessage = "Произошла ошибка!\nУбедитесь, что:\n- Вы ввели существующий путь к hi-res текстурам в config.ini\n- Вы ввели правильные названия текстур глаз в config.ini\n- У вас есть сами текстуры глаз в папке\n- Если Project64 находится на диске C:, то либо запустите katarakta от имени администратора, либо переместите Project64 в другое место."
     
 else:
     CopyEyesErrorBoxTitle = "Error"
-    CopyEyesErrorBoxMessage = "An error occured!\nMake sure that:\n- You entered the correct path in config.txt\n- You entered the correct eye texture name in config.txt\n- You have the eye textures in the folder\n- If your Project64 is on your C: drive, then either run katarakta as administrator or move Project64 elsewhere."
+    CopyEyesErrorBoxMessage = "An error occured!\nMake sure that:\n- You entered the correct path in config.ini\n- You entered the correct eye texture name in config.ini\n- You have the eye textures in the folder\n- If your Project64 is on your C: drive, then either run katarakta as administrator or move Project64 elsewhere."
     
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
