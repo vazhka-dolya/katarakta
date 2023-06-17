@@ -36,7 +36,7 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.4.0"
+AppVersion = "1.4.2"
 AppEdition = "Normal"
 
 Option = Options()
@@ -1234,7 +1234,7 @@ class Ui_SettingsWindow(object):
             global CollectedLineHiResSM64, CollectedLineHiResAdd, CollectedLineEyesOpen, CollectedLineEyesHalfopen, CollectedLineEyesClosed, CollectedLineCap, CollectedLineSidehair, CollectedLineMustache, CollectedLineButton, CollectedLineEyesOpenAdd, CollectedLineEyesHalfopenAdd, CollectedLineEyesClosedAdd, CollectedLineCapAdd, CollectedLineSidehairAdd, CollectedLineMustacheAdd, CollectedLineButtonAdd
             
             CollectedLineHiResSM64 = str(self.lineHiResSM64.text())
-            CollectedLineHiResAdd = str(self.lineHiResSM64.text())
+            CollectedLineHiResAdd = str(self.lineHiResAdd.text())
             
             CollectedLineEyesOpen = str(self.lineEyesOpen.text())
             CollectedLineEyesHalfopen = str(self.lineEyesHalfopen.text())
