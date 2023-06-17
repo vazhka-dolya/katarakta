@@ -10,6 +10,7 @@ from PyQt5.QtGui import QPixmap, QIcon
 import sys
 import random
 import requests
+QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 
 class Options():
     SM64Dir = ""
