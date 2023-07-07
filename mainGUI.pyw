@@ -36,7 +36,7 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.4.2"
+AppVersion = "1.4.3"
 AppEdition = "Normal"
 
 Option = Options()
@@ -203,24 +203,24 @@ class Ui_MainWindow(object):
 
         #Apply buttons
         self.ApplySM64 = QtWidgets.QPushButton(self.centralwidget)
-        self.ApplySM64.setGeometry(QtCore.QRect(240, 371, 71, 23))
+        self.ApplySM64.setGeometry(QtCore.QRect(239, 364, 71, 23))
         self.ApplySM64.setObjectName("ApplySM64")
         self.ApplySM64.clicked.connect(lambda: self.CopyEyes("SM64Dir", self.listWidget.currentItem().text()))
         
         self.ApplyAdd = QtWidgets.QPushButton(self.centralwidget)
-        self.ApplyAdd.setGeometry(QtCore.QRect(380, 371, 91, 23))
+        self.ApplyAdd.setGeometry(QtCore.QRect(380, 364, 91, 23))
         self.ApplyAdd.setObjectName("ApplyAdd")
         self.ApplyAdd.clicked.connect(lambda: self.CopyEyes("AddDir", self.listWidget.currentItem().text()))
 
         #Refresh eye list button
         self.Refresh = QtWidgets.QPushButton(self.centralwidget)
-        self.Refresh.setGeometry(QtCore.QRect(240, 489, 71, 23))
+        self.Refresh.setGeometry(QtCore.QRect(239, 489, 91, 23))
         self.Refresh.setObjectName("RefreshButton")
         self.Refresh.clicked.connect(lambda: self.RefreshEyeList())
 
         #Switch to cap, hair etc. from eyes and vice versa button
         self.SwitchItemsButton = QtWidgets.QPushButton(self.centralwidget)
-        self.SwitchItemsButton.setGeometry(QtCore.QRect(240, 465, 71, 23))
+        self.SwitchItemsButton.setGeometry(QtCore.QRect(239, 465, 91, 23))
         self.SwitchItemsButton.setObjectName("SwitchButton")
         self.SwitchItemsButton.clicked.connect(lambda: self.SwitchItems())
 
@@ -301,18 +301,26 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.actionAbout.triggered.connect(self.OpenAboutWindow)
-
+        
         if Option.Language == "English":
-            self.retranslateUiEnglish(MainWindow)
-            self.Update()
+                self.retranslateUiEnglish(MainWindow)
+                self.Update()
 
         elif Option.Language == "Ukrainian":
-            self.retranslateUiUkrainian(MainWindow)
-            self.Update()
+                self.retranslateUiUkrainian(MainWindow)
+                self.Update()
         
         elif Option.Language == "Russian":
-            self.retranslateUiRussian(MainWindow)
-            self.Update()
+                self.retranslateUiRussian(MainWindow)
+                self.Update()
+        
+        elif Option.Language == "KazakhCyrillic":
+                self.retranslateUiKazakhCyrillic(MainWindow)
+                self.Update()
+        
+        elif Option.Language == "KazakhLatin":
+                self.retranslateUiKazakhLatin(MainWindow)
+                self.Update()
         
         else:
             self.retranslateUiEnglish(MainWindow)
@@ -321,14 +329,14 @@ class Ui_MainWindow(object):
         
     def Update(self):
         self.label.adjustSize()
-        self.ApplySM64.adjustSize()
-        self.ApplyAdd.adjustSize()
+        #self.ApplySM64.adjustSize()
+        #self.ApplyAdd.adjustSize()
         #self.groupBox.adjustSize()
         #self.groupBox_2.adjustSize()
         self.menuHelp.adjustSize()
         #self.menuLanguage.adjustSize()
-        self.Refresh.adjustSize()
-        self.SwitchItemsButton.adjustSize()
+        #self.Refresh.adjustSize()
+        #self.SwitchItemsButton.adjustSize()
         self.menuOptions.adjustSize()
 
     def RefreshEyeList(self):
@@ -346,8 +354,6 @@ class Ui_MainWindow(object):
             
             self.groupBox.setGeometry(QtCore.QRect(240, 10, 120, 452))
             self.groupBox_2.setGeometry(QtCore.QRect(380, 10, 120, 452))
-            self.ApplySM64.setGeometry(QtCore.QRect(380, 465, 71, 23))
-            self.ApplyAdd.setGeometry(QtCore.QRect(380, 489, 91, 23))
             
             self.Update()
 
@@ -364,8 +370,6 @@ class Ui_MainWindow(object):
             
             self.groupBox.setGeometry(QtCore.QRect(240, 10, 120, 351))
             self.groupBox_2.setGeometry(QtCore.QRect(380, 10, 120, 351))
-            self.ApplySM64.setGeometry(QtCore.QRect(240, 371, 71, 23))
-            self.ApplyAdd.setGeometry(QtCore.QRect(380, 371, 91, 23))
 
             self.Update()
 
@@ -377,6 +381,30 @@ class Ui_MainWindow(object):
             self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
             self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
         self.RefreshEyeList()
+        
+        
+        if Option.Language == "English":
+                self.retranslateUiEnglish(MainWindow)
+                self.Update()
+
+        elif Option.Language == "Ukrainian":
+                self.retranslateUiUkrainian(MainWindow)
+                self.Update()
+        
+        elif Option.Language == "Russian":
+                self.retranslateUiRussian(MainWindow)
+                self.Update()
+        
+        elif Option.Language == "KazakhCyrillic":
+                self.retranslateUiKazakhCyrillic(MainWindow)
+                self.Update()
+        
+        elif Option.Language == "KazakhLatin":
+                self.retranslateUiKazakhLatin(MainWindow)
+                self.Update()
+        
+        else:
+            self.retranslateUiEnglish(MainWindow)
 
         
         """
@@ -623,6 +651,12 @@ class Ui_MainWindow(object):
         #self.actionEnglish.setText(_translate("MainWindow", "English"))
         #self.actionUkrainian.setText(_translate("MainWindow", "Українська"))
         #self.actionRussian.setText(_translate("MainWindow", "Русский"))
+        if self.Mode == "Eyes":
+            self.ApplySM64.setGeometry(QtCore.QRect(239, 364, 122, 23))
+            self.ApplyAdd.setGeometry(QtCore.QRect(379, 364, 122, 23))
+        else:
+            self.ApplySM64.setGeometry(QtCore.QRect(331, 465, 170, 23))
+            self.ApplyAdd.setGeometry(QtCore.QRect(331, 489, 170, 23))
         self.Refresh.setText(_translate("MainWindow", "Refresh"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Switch"))
         self.menuOptions.setTitle(_translate("MainWindow", "Options"))
@@ -649,6 +683,12 @@ class Ui_MainWindow(object):
         #self.actionEnglish.setText(_translate("MainWindow", "English"))
         #self.actionUkrainian.setText(_translate("MainWindow", "Українська"))
         #self.actionRussian.setText(_translate("MainWindow", "Русский"))
+        if self.Mode == "Eyes":
+            self.ApplySM64.setGeometry(QtCore.QRect(239, 364, 122, 23))
+            self.ApplyAdd.setGeometry(QtCore.QRect(362, 364, 139, 23))
+        else:
+            self.ApplySM64.setGeometry(QtCore.QRect(331, 465, 170, 23))
+            self.ApplyAdd.setGeometry(QtCore.QRect(331, 489, 170, 23))
         self.Refresh.setText(_translate("MainWindow", "Оновити"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Перемкнути"))
         self.menuOptions.setTitle(_translate("MainWindow", "Опції"))
@@ -677,7 +717,12 @@ class Ui_MainWindow(object):
         #self.actionEnglish.setText(_translate("MainWindow", "English"))
         #self.actionUkrainian.setText(_translate("MainWindow", "Українська"))
         #self.actionRussian.setText(_translate("MainWindow", "Русский"))
-        self.ApplyAdd.setGeometry(QtCore.QRect(350, 371, 91, 23))
+        if self.Mode == "Eyes":
+            self.ApplySM64.setGeometry(QtCore.QRect(239, 364, 102, 23))
+            self.ApplyAdd.setGeometry(QtCore.QRect(342, 364, 159, 23))
+        else:
+            self.ApplySM64.setGeometry(QtCore.QRect(331, 465, 170, 23))
+            self.ApplyAdd.setGeometry(QtCore.QRect(331, 489, 170, 23))
         self.Refresh.setText(_translate("MainWindow", "Обновить"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Переключить"))
         self.menuOptions.setTitle(_translate("MainWindow", "Опции"))
@@ -690,10 +735,74 @@ class Ui_MainWindow(object):
         self.actionStayOnTop.setText(_translate("MainWindow", "Всегда сверху"))
         self.actionUpdate.setText(_translate("MainWindow", "Проверка на обновления"))
 
+    def retranslateUiKazakhCyrillic(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
+        self.label.setText(_translate("MainWindow", "Табылған қалталар"))
+        self.ApplySM64.setText(_translate("MainWindow", "SM64 қолдаңуга"))
+        self.ApplyAdd.setText(_translate("MainWindow", "Қосымша қолдану"))
+        self.groupBox.setTitle(_translate("MainWindow", "SM64"))
+        self.groupBox_2.setTitle(_translate("MainWindow", "Қосымша"))
+        self.menuHelp.setTitle(_translate("MainWindow", "Көмек"))
+        #self.menuLanguage.setTitle(_translate("MainWindow", "Язык"))
+        self.actionAbout.setText(_translate("MainWindow", "Бағдаларлама туралы"))
+        #self.actionEnglish.setText(_translate("MainWindow", "English"))
+        #self.actionUkrainian.setText(_translate("MainWindow", "Українська"))
+        #self.actionRussian.setText(_translate("MainWindow", "Русский"))
+        if self.Mode == "Eyes":
+            self.ApplySM64.setGeometry(QtCore.QRect(239, 364, 122, 23))
+            self.ApplyAdd.setGeometry(QtCore.QRect(379, 364, 122, 23))
+        else:
+            self.ApplySM64.setGeometry(QtCore.QRect(331, 465, 170, 23))
+            self.ApplyAdd.setGeometry(QtCore.QRect(331, 489, 170, 23))
+        self.Refresh.setText(_translate("MainWindow", "Жаңарту"))
+        self.SwitchItemsButton.setText(_translate("MainWindow", "Аустыру"))
+        self.menuOptions.setTitle(_translate("MainWindow", "Опциялар"))
+        self.submenuHiRes.setTitle(_translate("MainWindow", "Hi-res қалталар"))
+        self.HiResClearSM64.setText(_translate("MainWindow", "SM64 тазарту"))
+        self.HiResClearAdd.setText(_translate("MainWindow", "Қосымшаны тазарту"))
+        self.HiResOpenSM64.setText(_translate("MainWindow", "SM64 қалта ашығу"))
+        self.HiResOpenAdd.setText(_translate("MainWindow", "Қосымша қалта ашығу"))
+        self.actionSettings.setText(_translate("MainWindow", "Параметрлер"))
+        self.actionStayOnTop.setText(_translate("MainWindow", "Әрқашан биікте"))
+        self.actionUpdate.setText(_translate("MainWindow", "Жаңартуларды тексеріңіз"))
+
+    def retranslateUiKazakhLatin(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
+        self.label.setText(_translate("MainWindow", "Tabylğan qaltalar"))
+        self.ApplySM64.setText(_translate("MainWindow", "SM64 qoldañuga"))
+        self.ApplyAdd.setText(_translate("MainWindow", "Qosymşa qoldanu"))
+        self.groupBox.setTitle(_translate("MainWindow", "SM64"))
+        self.groupBox_2.setTitle(_translate("MainWindow", "Qosymşa"))
+        self.menuHelp.setTitle(_translate("MainWindow", "Kömek"))
+        #self.menuLanguage.setTitle(_translate("MainWindow", "Язык"))
+        self.actionAbout.setText(_translate("MainWindow", "Bağdalarlama turaly"))
+        #self.actionEnglish.setText(_translate("MainWindow", "English"))
+        #self.actionUkrainian.setText(_translate("MainWindow", "Українська"))
+        #self.actionRussian.setText(_translate("MainWindow", "Русский"))
+        if self.Mode == "Eyes":
+            self.ApplySM64.setGeometry(QtCore.QRect(239, 364, 122, 23))
+            self.ApplyAdd.setGeometry(QtCore.QRect(379, 364, 122, 23))
+        else:
+            self.ApplySM64.setGeometry(QtCore.QRect(331, 465, 170, 23))
+            self.ApplyAdd.setGeometry(QtCore.QRect(331, 489, 170, 23))
+        self.Refresh.setText(_translate("MainWindow", "Jañartu"))
+        self.SwitchItemsButton.setText(_translate("MainWindow", "Austyru"))
+        self.menuOptions.setTitle(_translate("MainWindow", "Opsialar"))
+        self.submenuHiRes.setTitle(_translate("MainWindow", "Hi-res qaltalar"))
+        self.HiResClearSM64.setText(_translate("MainWindow", "SM64 tazartu"))
+        self.HiResClearAdd.setText(_translate("MainWindow", "Qosymşany tazartu"))
+        self.HiResOpenSM64.setText(_translate("MainWindow", "SM64 qalta aşyğu"))
+        self.HiResOpenAdd.setText(_translate("MainWindow", "Qosymşa qalta aşyğu"))
+        self.actionSettings.setText(_translate("MainWindow", "Parametrler"))
+        self.actionStayOnTop.setText(_translate("MainWindow", "Ärqaşan biıkte"))
+        self.actionUpdate.setText(_translate("MainWindow", "Jañartulardy tekserıñız"))
+
 class Ui_AboutWindow(object):
     def setupUi(self, AboutWindow):
         AboutWindow.setObjectName("About katarakta")
-        AboutWindow.resize(520, 306)
+        AboutWindow.resize(520, 336)
         AboutWindow.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.World))
         AboutWindow.setWindowFlags(AboutWindow.windowFlags() | Qt.WindowStaysOnTopHint)
         self.LabelName = QtWidgets.QLabel(AboutWindow)
@@ -742,6 +851,14 @@ class Ui_AboutWindow(object):
             self.retranslateUiRussian(AboutWindow)
             self.Update()
         
+        elif Option.Language == "KazakhCyrillic":
+            self.retranslateUiKazakhCyrillic(AboutWindow)
+            self.Update()
+        
+        elif Option.Language == "KazakhLatin":
+            self.retranslateUiKazakhLatin(AboutWindow)
+            self.Update()
+        
         else:
             self.retranslateUiEnglish(MainWindow)
         
@@ -758,7 +875,7 @@ class Ui_AboutWindow(object):
         AboutWindow.setWindowTitle(_translate("AboutWindow", "About katarakta"))
         self.LabelName.setText(_translate("AboutWindow", "katarakta"))
         self.LabelVersion.setText(_translate("AboutWindow", "Version: {}\nEdition: {}".format(AppVersion, AppEdition)))
-        self.LabelAuthor.setText(_translate("AboutWindow", "By DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>).<br><br>Thanks to these people for testing katarakta:<br>@Blender_Blenderovych (<a href = 'https://www.youtube.com/channel/UCGxro_VNeDQBY9k8_jitMCw'>YouTube</a>)<br>@SDRM45 (<a href = 'https://www.youtube.com/channel/UC-3gc0FmQA2_Z2-MIS5sZNQ'>YouTube</a>)"))
+        self.LabelAuthor.setText(_translate("AboutWindow", "By DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>).<br><br>Thanks to these people for testing katarakta:<br>@Blender_Blenderovych (<a href = 'https://www.youtube.com/channel/UCGxro_VNeDQBY9k8_jitMCw'>YouTube</a>)<br>@SDRM45 (<a href = 'https://www.youtube.com/channel/UC-3gc0FmQA2_Z2-MIS5sZNQ'>YouTube</a>)<br><br>Kazakh translation by @rmsm6418 (<a href = 'https://www.youtube.com/channel/UCH8LNphoKyKREMgS2ZVU1Ng'>YouTube</a>)"))
         self.LabelAddInfo.setText(_translate("AboutWindow", "This project uses the GNU General Public License v3.0<br><br><a href = 'https://github.com/vazhka-dolya/katarakta/issues/'>Report issues</a>"))
 
     def retranslateUiUkrainian(self, AboutWindow):
@@ -766,7 +883,7 @@ class Ui_AboutWindow(object):
         AboutWindow.setWindowTitle(_translate("AboutWindow", "Про katarakta"))
         self.LabelName.setText(_translate("AboutWindow", "katarakta"))
         self.LabelVersion.setText(_translate("AboutWindow", "Версія: {}\nРедакція: {}".format(AppVersion, AppEdition)))
-        self.LabelAuthor.setText(_translate("AboutWindow", "Від DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>).<br><br>Висловлюється подяка цим людям за тестування katarakta:<br>@Blender_Blenderovych (<a href = 'https://www.youtube.com/channel/UCGxro_VNeDQBY9k8_jitMCw'>YouTube</a>)<br>@SDRM45 (<a href = 'https://www.youtube.com/channel/UC-3gc0FmQA2_Z2-MIS5sZNQ'>YouTube</a>)"))
+        self.LabelAuthor.setText(_translate("AboutWindow", "Від DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>).<br><br>Висловлюється подяка цим людям за тестування katarakta:<br>@Blender_Blenderovych (<a href = 'https://www.youtube.com/channel/UCGxro_VNeDQBY9k8_jitMCw'>YouTube</a>)<br>@SDRM45 (<a href = 'https://www.youtube.com/channel/UC-3gc0FmQA2_Z2-MIS5sZNQ'>YouTube</a>)<br><br>Казахський переклад від @rmsm6418 (<a href = 'https://www.youtube.com/channel/UCH8LNphoKyKREMgS2ZVU1Ng'>YouTube</a>)"))
         self.LabelAddInfo.setText(_translate("AboutWindow", "Цей проект використовує ліцензію<br>GNU General Public License v3.0<br><a href = 'https://github.com/vazhka-dolya/katarakta/issues/'>Повідомити про проблему</a>"))
     
     def retranslateUiRussian(self, AboutWindow):
@@ -774,8 +891,24 @@ class Ui_AboutWindow(object):
         AboutWindow.setWindowTitle(_translate("AboutWindow", "О katarakta"))
         self.LabelName.setText(_translate("AboutWindow", "katarakta"))
         self.LabelVersion.setText(_translate("AboutWindow", "Версия: {}\nРедакция: {}".format(AppVersion, AppEdition)))
-        self.LabelAuthor.setText(_translate("AboutWindow", "От DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>).<br><br>Выражается благодарность этим людям за тестирование katarakta:<br>@Blender_Blenderovych (<a href = 'https://www.youtube.com/channel/UCGxro_VNeDQBY9k8_jitMCw'>YouTube</a>)<br>@SDRM45 (<a href = 'https://www.youtube.com/channel/UC-3gc0FmQA2_Z2-MIS5sZNQ'>YouTube</a>)"))
+        self.LabelAuthor.setText(_translate("AboutWindow", "От DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>).<br><br>Выражается благодарность этим людям за тестирование katarakta:<br>@Blender_Blenderovych (<a href = 'https://www.youtube.com/channel/UCGxro_VNeDQBY9k8_jitMCw'>YouTube</a>)<br>@SDRM45 (<a href = 'https://www.youtube.com/channel/UC-3gc0FmQA2_Z2-MIS5sZNQ'>YouTube</a>)<br><br>Казахский перевод от @rmsm6418 (<a href = 'https://www.youtube.com/channel/UCH8LNphoKyKREMgS2ZVU1Ng'>YouTube</a>)"))
         self.LabelAddInfo.setText(_translate("AboutWindow", "Этот проект использует лицензию<br>GNU General Public License v3.0<br><a href = 'https://github.com/vazhka-dolya/katarakta/issues/'>Сообщить о проблеме</a>"))
+    
+    def retranslateUiKazakhCyrillic(self, AboutWindow):
+        _translate = QtCore.QCoreApplication.translate
+        AboutWindow.setWindowTitle(_translate("AboutWindow", "katarakta туралы"))
+        self.LabelName.setText(_translate("AboutWindow", "katarakta"))
+        self.LabelVersion.setText(_translate("AboutWindow", "Нұсқа: {}\nРедакциялық: {}".format(AppVersion, AppEdition)))
+        self.LabelAuthor.setText(_translate("AboutWindow", "Авторы DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>).<br><br>katarakta сынағандары үшін осы адамдарға рахмет:<br>@Blender_Blenderovych (<a href = 'https://www.youtube.com/channel/UCGxro_VNeDQBY9k8_jitMCw'>YouTube</a>)<br>@SDRM45 (<a href = 'https://www.youtube.com/channel/UC-3gc0FmQA2_Z2-MIS5sZNQ'>YouTube</a>)<br><br>@rmsm6418 бойынша қазақша аударма (<a href = 'https://www.youtube.com/channel/UCH8LNphoKyKREMgS2ZVU1Ng'>YouTube</a>)"))
+        self.LabelAddInfo.setText(_translate("AboutWindow", "Бұл жоба GNU General Public License v3.0<br>нұсқанын пайдаланады<br><a href = 'https://github.com/vazhka-dolya/katarakta/issues/'>Мәселе туралы хабарлау</a>"))
+    
+    def retranslateUiKazakhLatin(self, AboutWindow):
+        _translate = QtCore.QCoreApplication.translate
+        AboutWindow.setWindowTitle(_translate("AboutWindow", "katarakta turaly"))
+        self.LabelName.setText(_translate("AboutWindow", "katarakta"))
+        self.LabelVersion.setText(_translate("AboutWindow", "Nūsqa: {}\nRedaksialyq: {}".format(AppVersion, AppEdition)))
+        self.LabelAuthor.setText(_translate("AboutWindow", "Avtory DanilAstroid (<a href = 'https://github.com/vazhka-dolya/'>GitHub</a>).<br><br>katarakta synağandary üşın osy adamdarğa rahmet:<br>@Blender_Blenderovych (<a href = 'https://www.youtube.com/channel/UCGxro_VNeDQBY9k8_jitMCw'>YouTube</a>)<br>@SDRM45 (<a href = 'https://www.youtube.com/channel/UC-3gc0FmQA2_Z2-MIS5sZNQ'>YouTube</a>)<br><br>@rmsm6418 boiynşa qazaqşa audarma (<a href = 'https://www.youtube.com/channel/UCH8LNphoKyKREMgS2ZVU1Ng'>YouTube</a>)"))
+        self.LabelAddInfo.setText(_translate("AboutWindow", "Būl joba GNU General Public License v3.0<br>nūsqanyn paidalanady<br><a href = 'https://github.com/vazhka-dolya/katarakta/issues/'>Mäsele turaly habarlau</a>"))
         
         AboutWindow.show()
 
@@ -849,6 +982,14 @@ class Ui_UpdateWindow(object):
             self.retranslateUiRussian(UpdateWindow)
             self.Update()
         
+        elif Option.Language == "KazakhCyrillic":
+            self.retranslateUiKazakhCyrillic(UpdateWindow)
+            self.Update()
+        
+        elif Option.Language == "KazakhLatin":
+            self.retranslateUiKazakhLatin(UpdateWindow)
+            self.Update()
+        
         else:
             self.retranslateUiEnglish(MainWindow)
 
@@ -905,6 +1046,38 @@ class Ui_UpdateWindow(object):
             else:
                 self.StatusLabe.setText("Невозможно проверить версию. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Все выпуски на GitHub</a>")
             self.textBrowserDescription.setText("Список изменений:")
+        
+        elif Option.Language == "KazakhCyrillic":
+            _translate = QtCore.QCoreApplication.translate
+            self.retranslateUiKazakhCyrillic(UpdateWindow)
+            UpdateWindow.setWindowTitle(_translate("UpdateWindow", "Жаңартуларды тексеруге"))
+            self.UpdateCheckLabel.setText("Жаңартуларды тексеруге")
+            self.YourVersionLabel.setText("Сіздің нұсқаңыз: katarakta {}".format(str(AppVersion)))
+            self.LatestVersionLabel.setText("GitHub сайтындағы соңғы нұсқасы: {}".format(str(LatestVersion)))
+            if IsLatestVersion == True:
+                self.StatusLabel.setText("Сізде соңғы нұсқа бар! <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>GitHub сайтындағы барлық шығарылымдар</a>")
+            elif IsLatestVersion == False:
+                self.StatusLabel.setText("Сізде ескірген нұсқа бар! <a href = 'https://github.com/vazhka-dolya/katarakta/releases/latest'>GitHub сайтында соңғы нұсқаны жазу</a>")
+            else:
+                self.StatusLabe.setText("Нұсқаны тексеру мүмкін емес. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>GitHub сайтындағы барлық шығарылымдар</a>")
+            self.textBrowserDescription.setText("Өзгерістер тізімі:")
+    
+            self.Update()
+        
+        elif Option.Language == "KazakhLatin":
+            _translate = QtCore.QCoreApplication.translate
+            self.retranslateUiKazakhLatin(UpdateWindow)
+            UpdateWindow.setWindowTitle(_translate("UpdateWindow", "Özgerıster tızımı"))
+            self.UpdateCheckLabel.setText("Özgerıster tızımı")
+            self.YourVersionLabel.setText("Sızdıñ nūsqañyz: katarakta {}".format(str(AppVersion)))
+            self.LatestVersionLabel.setText("GitHub saityndağy soñğy nūsqasy: {}".format(str(LatestVersion)))
+            if IsLatestVersion == True:
+                self.StatusLabel.setText("Sızde soñğy nūsqa bar! <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>GitHub saityndağy barlyq şyğarylymdar</a>")
+            elif IsLatestVersion == False:
+                self.StatusLabel.setText("Sızde eskırgen nūsqa bar! <a href = 'https://github.com/vazhka-dolya/katarakta/releases/latest'>GitHub saitynda soñğy nūsqany jazu</a>")
+            else:
+                self.StatusLabe.setText("Nūsqany tekseru mümkın emes. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>GitHub saityndağy barlyq şyğarylymdar</a>")
+            self.textBrowserDescription.setText("Özgerıster tızımı:")
     
             self.Update()
         
@@ -933,6 +1106,14 @@ class Ui_UpdateWindow(object):
     def retranslateUiRussian(self, AboutWindow):
         _translate = QtCore.QCoreApplication.translate
         AboutWindow.setWindowTitle(_translate("UpdateWindow", "Проверка на обновления"))
+        
+    def retranslateUiKazakhCyrillic(self, AboutWindow):
+        _translate = QtCore.QCoreApplication.translate
+        AboutWindow.setWindowTitle(_translate("UpdateWindow", "Жаңартуларды тексеруге"))
+        
+    def retranslateUiKazakhLatin(self, AboutWindow):
+        _translate = QtCore.QCoreApplication.translate
+        AboutWindow.setWindowTitle(_translate("UpdateWindow", "Özgerıster tızımı"))
     
 class Ui_SettingsWindow(object):
     def setupUi(self, SettingsWindow):
@@ -959,13 +1140,15 @@ class Ui_SettingsWindow(object):
         self.labelLanguage.setObjectName("labelLanguage")
         
         self.labelLanguageRestart = QtWidgets.QLabel(self.groupLanguage)
-        self.labelLanguageRestart.setGeometry(QtCore.QRect(216, 48, 290, 44))
+        self.labelLanguageRestart.setGeometry(QtCore.QRect(256, 48, 290, 44))
         self.labelLanguageRestart.setObjectName("labelLanguageRestart")
         
         self.comboLanguage = QtWidgets.QComboBox(self.groupLanguage)
-        self.comboLanguage.setGeometry(QtCore.QRect(10, 60, 201, 22))
+        self.comboLanguage.setGeometry(QtCore.QRect(10, 60, 241, 22))
         self.comboLanguage.setObjectName("comboLanguage")
         
+        self.comboLanguage.addItem("")
+        self.comboLanguage.addItem("")
         self.comboLanguage.addItem("")
         self.comboLanguage.addItem("")
         self.comboLanguage.addItem("")
@@ -978,6 +1161,10 @@ class Ui_SettingsWindow(object):
         self.comboLanguage.setItemIcon(1, QIcon("img/LangUkrainian.png"))
         self.comboLanguage.setItemText(2, _translate("SettingsWindow", "Русский (Россия)"))
         self.comboLanguage.setItemIcon(2, QIcon("img/LangRussian.png"))
+        self.comboLanguage.setItemText(3, _translate("SettingsWindow", "Қазақша (Қазақстан | Кириллица)"))
+        self.comboLanguage.setItemIcon(3, QIcon("img/LangKazakhCyrillic.png"))
+        self.comboLanguage.setItemText(4, _translate("SettingsWindow", "Qazaqşa (Qazaqstan | Latyn)"))
+        self.comboLanguage.setItemIcon(4, QIcon("img/LangKazakhLatin.png"))
         
         self.labelFlagBackground = QtWidgets.QLabel(self.groupLanguage)
         self.labelFlagBackground.setGeometry(QtCore.QRect(7, 17, 37, 37))
@@ -998,6 +1185,10 @@ class Ui_SettingsWindow(object):
             self.comboLanguage.setCurrentIndex(1)
         elif Option.Language == "Russian":
             self.comboLanguage.setCurrentIndex(2)
+        elif Option.Language == "KazakhCyrillic":
+            self.comboLanguage.setCurrentIndex(3)
+        elif Option.Language == "KazakhLatin":
+            self.comboLanguage.setCurrentIndex(4)
         else:
             self.comboLanguage.setCurrentIndex(-1)
 
@@ -1015,6 +1206,14 @@ class Ui_SettingsWindow(object):
                 self.labelLanguageFlag.setPixmap(QtGui.QPixmap("img/LangRussian.png"))
                 self.labelLanguage.setText(_translate("SettingsWindow", "Русский (Россия)"))
                 ChosenLanguage = "Russian"
+            elif self.comboLanguage.currentIndex() == 3:
+                self.labelLanguageFlag.setPixmap(QtGui.QPixmap("img/LangKazakhCyrillic.png"))
+                self.labelLanguage.setText(_translate("SettingsWindow", "Қазақша (Қазақстан | Кириллица)"))
+                ChosenLanguage = "KazakhCyrillic"
+            elif self.comboLanguage.currentIndex() == 4:
+                self.labelLanguageFlag.setPixmap(QtGui.QPixmap("img/LangKazakhLatin.png"))
+                self.labelLanguage.setText(_translate("SettingsWindow", "Qazaqşa (Qazaqstan | Latyn)"))
+                ChosenLanguage = "KazakhLatin"
             else:
                 self.labelLanguageFlag.setPixmap(QtGui.QPixmap("img/LangUnknown.png"))
                 self.labelLanguage.setText(_translate("SettingsWindow", "Not detected, using English (United States)"))
@@ -1308,6 +1507,12 @@ class Ui_SettingsWindow(object):
         elif Option.Language == "Russian":
             self.retranslateUiRussian(SettingsWindow)
         
+        elif Option.Language == "KazakhCyrillic":
+            self.retranslateUiKazakhCyrillic(SettingsWindow)
+        
+        elif Option.Language == "KazakhLatin":
+            self.retranslateUiKazakhLatin(SettingsWindow)
+        
         else:
             self.retranslateUiEnglish(SettingsWindow)
 
@@ -1351,7 +1556,7 @@ class Ui_SettingsWindow(object):
         _translate = QtCore.QCoreApplication.translate
         SettingsWindow.setWindowTitle(_translate("SettingsWindow", "Налаштування"))
         self.groupLanguage.setTitle(_translate("SettingsWindow", "Мова"))
-        self.labelLanguageRestart.setText(_translate("SettingsWindow", "(необхідний перезапуск katarakta щоб зміни повністю\nнабули чинності)"))
+        self.labelLanguageRestart.setText(_translate("SettingsWindow", "(необхідний перезапуск katarakta щоб зміни\nповністю набули чинності)"))
         self.groupUpdates.setTitle(_translate("SettingsWindow", "Оновлення"))
         self.checkUpdates.setText(_translate("SettingsWindow", "Перевіряти на оновлення при запуску"))
         self.labelUpdates.setText(_translate("SettingsWindow", "Залиште це увімкненим щоб отримувати повідомлення про нові версії. Якщо Ви знайдете\nпроблему, то перед тим, як повідомляти про неї, переконайтесь, що у Вас остання версія."))
@@ -1381,11 +1586,11 @@ class Ui_SettingsWindow(object):
         self.pushClose.setText(_translate("SettingsWindow", "Закрити"))
         self.pushApply.setText(_translate("SettingsWindow", "Застосувати"))
 
-    def retranslateUiRussian(self, SettingsWindow):
+    def retranslateUiKazakhCyrillic(self, SettingsWindow):
         _translate = QtCore.QCoreApplication.translate
         SettingsWindow.setWindowTitle(_translate("SettingsWindow", "Настройки"))
         self.groupLanguage.setTitle(_translate("SettingsWindow", "Язык"))
-        self.labelLanguageRestart.setText(_translate("SettingsWindow", "(необходимо перезапустить katarakta чтобы изменения\nполностью вошли в силу)"))
+        self.labelLanguageRestart.setText(_translate("SettingsWindow", "(необходимо перезапустить katarakta чтобы\nизменения полностью вошли в силу)"))
         self.groupUpdates.setTitle(_translate("SettingsWindow", "Обновления"))
         self.checkUpdates.setText(_translate("SettingsWindow", "Проверять на обновления при запуске"))
         self.labelUpdates.setText(_translate("SettingsWindow", "Оставьте это включённым чтобы получать уведомления о новых обновлениях. Если Вы нашли\nпроблему, то перед тем, как о ней сообщить, убедитесь, что у Вас последняя версия."))
@@ -1414,6 +1619,74 @@ class Ui_SettingsWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.TabTextures), _translate("SettingsWindow", "Текстуры"))
         self.pushClose.setText(_translate("SettingsWindow", "Закрыть"))
         self.pushApply.setText(_translate("SettingsWindow", "Применить"))
+
+    def retranslateUiKazakhCyrillic(self, SettingsWindow):
+        _translate = QtCore.QCoreApplication.translate
+        SettingsWindow.setWindowTitle(_translate("SettingsWindow", "Параметлер"))
+        self.groupLanguage.setTitle(_translate("SettingsWindow", "Тіл"))
+        self.labelLanguageRestart.setText(_translate("SettingsWindow", "(Өзгерістер толығымен күшіне енуі үшін\nkatarakta қайта бастау керек)"))
+        self.groupUpdates.setTitle(_translate("SettingsWindow", "Жаңартулар"))
+        self.checkUpdates.setText(_translate("SettingsWindow", "Іске қосу кезінде жаңартуларды тексеруге"))
+        self.labelUpdates.setText(_translate("SettingsWindow", "Жаңа жаңартулар туралы хабардар болу үшін оны қосулы қалдырыңыз. Мәселе тапсаңыз, ол\nтуралы хабарлаудан бұрын соңғы нұсқасы бар екеніне көз жеткізіңіз."))
+        self.groupMisc.setTitle(_translate("SettingsWindow", "Басқа"))
+        self.checkStayOnTop.setText(_translate("SettingsWindow", "Іске қосу кезінде әрқашан биікте"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.TabGeneral), _translate("SettingsWindow", "Негізгі"))
+        self.groupPaths.setTitle(_translate("SettingsWindow", "Қалталар"))
+        self.labelHiResSM64.setText(_translate("SettingsWindow", "Hi-res SM64 қалтасы:"))
+        self.labelHiResAdd.setText(_translate("SettingsWindow", "Қосымша hi-res қалта:"))
+        self.groupSM64.setTitle(_translate("SettingsWindow", "SM64 Текстурлар"))
+        self.labelEyesOpen.setText(_translate("SettingsWindow", "Ашық көздер:"))
+        self.labelEyesHalfopen.setText(_translate("SettingsWindow", "Жартылай ашық көздер:"))
+        self.labelEyesClosed.setText(_translate("SettingsWindow", "Жабық көздер:"))
+        self.labelCap.setText(_translate("SettingsWindow", "Қақпақ:"))
+        self.labelSidehair.setText(_translate("SettingsWindow", "Бүйірлік шаш:"))
+        self.labelMustache.setText(_translate("SettingsWindow", "Мұрттар:"))
+        self.labelButton.setText(_translate("SettingsWindow", "Түйме:"))
+        self.groupAdd.setTitle(_translate("SettingsWindow", "Қосымша текстуралар"))
+        self.labelEyesOpenAdd.setText(_translate("SettingsWindow", "Ашық көздер:"))
+        self.labelEyesHalfopenAdd.setText(_translate("SettingsWindow", "Жартылай ашық көздер:"))
+        self.labelCapAdd.setText(_translate("SettingsWindow", "Қақпақ:"))
+        self.labelEyesClosedAdd.setText(_translate("SettingsWindow", "Жабық көздер:"))
+        self.labelButtonAdd.setText(_translate("SettingsWindow", "Түйме:"))
+        self.labelMustacheAdd.setText(_translate("SettingsWindow", "Мұрттар:"))
+        self.labelSidehairAdd.setText(_translate("SettingsWindow", "Бүйірлік шаш:"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.TabTextures), _translate("SettingsWindow", "Текстуралар"))
+        self.pushClose.setText(_translate("SettingsWindow", "Жабу"))
+        self.pushApply.setText(_translate("SettingsWindow", "Қолдану"))
+
+    def retranslateUiKazakhLatin(self, SettingsWindow):
+        _translate = QtCore.QCoreApplication.translate
+        SettingsWindow.setWindowTitle(_translate("SettingsWindow", "Parametler"))
+        self.groupLanguage.setTitle(_translate("SettingsWindow", "Tıl"))
+        self.labelLanguageRestart.setText(_translate("SettingsWindow", "(Özgerıster tolyğymen küşıne enuı üşın\nkatarakta qaita bastau kerek)"))
+        self.groupUpdates.setTitle(_translate("SettingsWindow", "Jañartular"))
+        self.checkUpdates.setText(_translate("SettingsWindow", "Iske qosu kezınde jañartulardy tekseruge"))
+        self.labelUpdates.setText(_translate("SettingsWindow", "Jaña jañartular turaly habardar bolu üşın ony qosuly qaldyryñyz. Mäsele tapsañyz, ol\nturaly habarlaudan būryn soñğy nūsqasy bar ekenıne köz jetkızıñız."))
+        self.groupMisc.setTitle(_translate("SettingsWindow", "Basqa"))
+        self.checkStayOnTop.setText(_translate("SettingsWindow", "Iske qosu kezınde ärqaşan biıkte"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.TabGeneral), _translate("SettingsWindow", "Negızgı"))
+        self.groupPaths.setTitle(_translate("SettingsWindow", "Qaltalar"))
+        self.labelHiResSM64.setText(_translate("SettingsWindow", "Hi-res SM64 qaltasy:"))
+        self.labelHiResAdd.setText(_translate("SettingsWindow", "Qosymşa hi-res qalta:"))
+        self.groupSM64.setTitle(_translate("SettingsWindow", "SM64 Teksturlar"))
+        self.labelEyesOpen.setText(_translate("SettingsWindow", "Aşyq közder:"))
+        self.labelEyesHalfopen.setText(_translate("SettingsWindow", "Jartylai aşyq közder:"))
+        self.labelEyesClosed.setText(_translate("SettingsWindow", "Jabyq közder:"))
+        self.labelCap.setText(_translate("SettingsWindow", "Qaqpaq:"))
+        self.labelSidehair.setText(_translate("SettingsWindow", "Büiırlık şaş:"))
+        self.labelMustache.setText(_translate("SettingsWindow", "Mūrttar:"))
+        self.labelButton.setText(_translate("SettingsWindow", "Tüime:"))
+        self.groupAdd.setTitle(_translate("SettingsWindow", "Qosymşa teksturalar"))
+        self.labelEyesOpenAdd.setText(_translate("SettingsWindow", "Aşyq közder:"))
+        self.labelEyesHalfopenAdd.setText(_translate("SettingsWindow", "Jartylai aşyq közder:"))
+        self.labelCapAdd.setText(_translate("SettingsWindow", "Qaqpaq:"))
+        self.labelEyesClosedAdd.setText(_translate("SettingsWindow", "Jabyq közder:"))
+        self.labelButtonAdd.setText(_translate("SettingsWindow", "Tüime:"))
+        self.labelMustacheAdd.setText(_translate("SettingsWindow", "Mūrttar:"))
+        self.labelSidehairAdd.setText(_translate("SettingsWindow", "Büiırlık şaş:"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.TabTextures), _translate("SettingsWindow", "Teksturalar"))
+        self.pushClose.setText(_translate("SettingsWindow", "Jabu"))
+        self.pushApply.setText(_translate("SettingsWindow", "Qoldanu"))
         
         SettingsWindow.show()
 
