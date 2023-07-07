@@ -1586,7 +1586,7 @@ class Ui_SettingsWindow(object):
         self.pushClose.setText(_translate("SettingsWindow", "Закрити"))
         self.pushApply.setText(_translate("SettingsWindow", "Застосувати"))
 
-    def retranslateUiKazakhCyrillic(self, SettingsWindow):
+    def retranslateUiRussian(self, SettingsWindow):
         _translate = QtCore.QCoreApplication.translate
         SettingsWindow.setWindowTitle(_translate("SettingsWindow", "Настройки"))
         self.groupLanguage.setTitle(_translate("SettingsWindow", "Язык"))
