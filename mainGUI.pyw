@@ -1046,6 +1046,7 @@ class Ui_UpdateWindow(object):
             else:
                 self.StatusLabe.setText("Невозможно проверить версию. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Все выпуски на GitHub</a>")
             self.textBrowserDescription.setText("Список изменений:")
+            self.Update()
         
         elif Option.Language == "KazakhCyrillic":
             _translate = QtCore.QCoreApplication.translate
