@@ -19,6 +19,7 @@ There is some stuff I want to add in the future (This list might get bigger if I
 Before reporting an issue, see if this issue is already on the list:
 - When choosing a folder, switching/refreshing, and applying, katarakta will crash.
 - If you close the main katarakta window, the other windows (e.g. "About" window) don't close.
+- When you switch, choose a folder that has a button texture, then switch to back to eyes and switch again, then it will still show the button texture from that folder.
 
 # Some questions you might be asking
 **If I use katarakta for my work, should I credit you?**\
