@@ -17,9 +17,7 @@ There is some stuff I want to add in the future (This list might get bigger if I
 
 # Known Issues
 Before reporting an issue, see if this issue is already on the list:
-- When switching/refreshing, and just applying without choosing anything, katarakta will crash.
 - If you close the main katarakta window, the other windows (e.g. "About" window) don't close.
-- When you switch, choose a folder that has a button texture, then switch to back to eyes and switch again, then it will still show the button texture from that folder.
 
 # Some questions you might be asking
 **If I use katarakta for my work, should I credit you?**\
@@ -34,7 +32,7 @@ I call these other textures the "additional" textures.
 It's romanized "cataract" in Russian. It doesn't really have any meaning and I just thought it was funny.
 
 **Is it translated to any other languages?**\
-As of 1.4.4, katarakta is translated to Ukrainian, Russian and Kazakh (Cyrillic and Latin).
+As of 1.4.5, katarakta is translated to Ukrainian, Russian and Kazakh (Cyrillic and Latin).
 
 **Do you know about SM64 Eye Changer from ImCodist?**\
 As you probably guessed by seeing this question here, yes.\
