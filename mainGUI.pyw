@@ -36,7 +36,7 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.4.3"
+AppVersion = "1.4.5"
 AppEdition = "Normal"
 
 Option = Options()
@@ -133,15 +133,6 @@ class Ui_MainWindow(object):
         self.label.setGeometry(QtCore.QRect(30, 10, 101, 16))
         self.label.setObjectName("label")
 
-        #Eyes list
-        self.listWidget = QtWidgets.QListWidget(self.centralwidget)
-        self.listWidget.setGeometry(QtCore.QRect(20, 30, 201, 481))
-        self.listWidget.setObjectName("listWidget")
-
-        self.listWidget.addItems(EyeFolders)
-
-        self.listWidget.itemClicked.connect(lambda: self.OnSelectionChanged(self.listWidget.currentItem().text()))
-
         #Displaying eye textures
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox.setGeometry(QtCore.QRect(240, 10, 120, 351))
@@ -205,12 +196,21 @@ class Ui_MainWindow(object):
         self.ApplySM64 = QtWidgets.QPushButton(self.centralwidget)
         self.ApplySM64.setGeometry(QtCore.QRect(239, 364, 71, 23))
         self.ApplySM64.setObjectName("ApplySM64")
-        self.ApplySM64.clicked.connect(lambda: self.CopyEyes("SM64Dir", self.listWidget.currentItem().text()))
+        #self.ApplySM64.clicked.connect(lambda: self.CopyEyes("SM64Dir", self.listWidget.currentItem().text()))
         
         self.ApplyAdd = QtWidgets.QPushButton(self.centralwidget)
         self.ApplyAdd.setGeometry(QtCore.QRect(380, 364, 91, 23))
         self.ApplyAdd.setObjectName("ApplyAdd")
-        self.ApplyAdd.clicked.connect(lambda: self.CopyEyes("AddDir", self.listWidget.currentItem().text()))
+        #self.ApplyAdd.clicked.connect(lambda: self.CopyEyes("AddDir", self.listWidget.currentItem().text()))
+
+        #Eyes list
+        self.listWidget = QtWidgets.QListWidget(self.centralwidget)
+        self.listWidget.setGeometry(QtCore.QRect(20, 30, 201, 481))
+        self.listWidget.setObjectName("listWidget")
+
+        self.listWidget.addItems(EyeFolders)
+
+        self.listWidget.itemClicked.connect(lambda: self.ItemChosen())
 
         #Refresh eye list button
         self.Refresh = QtWidgets.QPushButton(self.centralwidget)
@@ -338,7 +338,7 @@ class Ui_MainWindow(object):
         #self.Refresh.adjustSize()
         #self.SwitchItemsButton.adjustSize()
         self.menuOptions.adjustSize()
-
+    
     def RefreshEyeList(self):
         EyeFolders = os.listdir("eyes\\")
         CHMBFolders = os.listdir("chmb\\")
@@ -347,6 +347,12 @@ class Ui_MainWindow(object):
             self.listWidget.addItems(EyeFolders)
         else:
             self.listWidget.addItems(CHMBFolders)
+        self.listWidget.clearSelection()
+        try:
+            self.ApplySM64.clicked.disconnect()
+            self.ApplyAdd.clicked.disconnect()
+        except:
+            pass
 
     def SwitchItems(self):
         if self.Mode == "Eyes":
@@ -360,10 +366,12 @@ class Ui_MainWindow(object):
             self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderCap.png"))
             self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderHair.png"))
             self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderMustache.png"))
+            self.SM64DisplayLabel4.setPixmap(QtGui.QPixmap("img\\PlaceHolderButton.png"))
 
             self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderCap.png"))
             self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderHair.png"))
             self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderMustache.png"))
+            self.AddDisplayLabel4.setPixmap(QtGui.QPixmap("img\\PlaceHolderButton.png"))
             
         else:
             self.Mode = "Eyes"
@@ -381,7 +389,6 @@ class Ui_MainWindow(object):
             self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
             self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
         self.RefreshEyeList()
-        
         
         if Option.Language == "English":
                 self.retranslateUiEnglish(MainWindow)
@@ -562,6 +569,11 @@ class Ui_MainWindow(object):
                     shutil.copyfile("chmb\\{}\\{}.png".format(FolderName, Option.AddButton), "{}{}.png".format(Path, Option.AddButton))
                 except:
                     pass
+
+    def ItemChosen(self):
+        self.ApplySM64.clicked.connect(lambda: self.CopyEyes("SM64Dir", self.listWidget.currentItem().text()))
+        self.ApplyAdd.clicked.connect(lambda: self.CopyEyes("AddDir", self.listWidget.currentItem().text()))
+        self.OnSelectionChanged(self.listWidget.currentItem().text())
 
     def OpenSM64(self):
         os.startfile(Option.SM64Dir)
@@ -1046,6 +1058,7 @@ class Ui_UpdateWindow(object):
             else:
                 self.StatusLabe.setText("Невозможно проверить версию. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Все выпуски на GitHub</a>")
             self.textBrowserDescription.setText("Список изменений:")
+    
             self.Update()
         
         elif Option.Language == "KazakhCyrillic":
