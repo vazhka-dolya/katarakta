@@ -5,11 +5,12 @@ import configparser
 import shutil
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QWidget, QSplashScreen, QAction
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QWidget, QSplashScreen, QAction, QFileDialog
 from PyQt5.QtGui import QPixmap, QIcon
 import sys
 import random
 import requests
+import pyclip
 QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 
 class Options():
@@ -36,7 +37,7 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.4.5"
+AppVersion = "1.4.6"
 AppEdition = "Normal"
 
 Option = Options()
@@ -100,6 +101,12 @@ class Ui_MainWindow(object):
         self.SettingsWindowUi.setupUi(self.SettingsWindow)
         self.SettingsWindow.show()
 
+    def OpenCcconv(self):
+        self.Ccconv = QtWidgets.QMainWindow()
+        self.CcconvUi = Ui_ccconvWindow()
+        self.CcconvUi.setupUi(self.Ccconv)
+        self.Ccconv.show()
+
     def CheckUpdatesStartUp(self):
         try:
             LatestResponse = requests.get("https://api.github.com/repos/vazhka-dolya/katarakta/releases/latest")
@@ -120,7 +127,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         
-        MainWindow.setWindowIcon(QtGui.QIcon("img\\Icon.png"))
+        MainWindow.setWindowIcon(QtGui.QIcon("img/Icon.png"))
 
         if Option.StartUpCheckForUpdates == "1":
             self.CheckUpdatesStartUp()
@@ -141,25 +148,25 @@ class Ui_MainWindow(object):
         self.SM64DisplayLabel1.setEnabled(True)
         self.SM64DisplayLabel1.setGeometry(QtCore.QRect(10, 20, 101, 101))
         self.SM64DisplayLabel1.setText("")
-        self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye1.png"))
+        self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("img/PlaceHolderEye1.png"))
         self.SM64DisplayLabel1.setScaledContents(True)
         self.SM64DisplayLabel1.setObjectName("SM64DisplayLabel1")
         self.SM64DisplayLabel2 = QtWidgets.QLabel(self.groupBox)
         self.SM64DisplayLabel2.setGeometry(QtCore.QRect(10, 130, 101, 101))
         self.SM64DisplayLabel2.setText("")
-        self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
+        self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img/PlaceHolderEye2.png"))
         self.SM64DisplayLabel2.setScaledContents(True)
         self.SM64DisplayLabel2.setObjectName("SM64DisplayLabel2")
         self.SM64DisplayLabel3 = QtWidgets.QLabel(self.groupBox)
         self.SM64DisplayLabel3.setGeometry(QtCore.QRect(10, 240, 101, 101))
         self.SM64DisplayLabel3.setText("")
-        self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
+        self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("img/PlaceHolderEye3.png"))
         self.SM64DisplayLabel3.setScaledContents(True)
         self.SM64DisplayLabel3.setObjectName("SM64DisplayLabel3")
         self.SM64DisplayLabel4 = QtWidgets.QLabel(self.groupBox)
         self.SM64DisplayLabel4.setGeometry(QtCore.QRect(10, 350, 101, 101))
         self.SM64DisplayLabel4.setText("")
-        self.SM64DisplayLabel4.setPixmap(QtGui.QPixmap("img\\PlaceHolderButton.png"))
+        self.SM64DisplayLabel4.setPixmap(QtGui.QPixmap("img/PlaceHolderButton.png"))
         self.SM64DisplayLabel4.setScaledContents(True)
         self.SM64DisplayLabel4.setObjectName("SM64DisplayLabel4")
         self.groupBox_2 = QtWidgets.QGroupBox(self.centralwidget)
@@ -168,25 +175,25 @@ class Ui_MainWindow(object):
         self.AddDisplayLabel1 = QtWidgets.QLabel(self.groupBox_2)
         self.AddDisplayLabel1.setGeometry(QtCore.QRect(10, 20, 101, 101))
         self.AddDisplayLabel1.setText("")
-        self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye1.png"))
+        self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("img/PlaceHolderEye1.png"))
         self.AddDisplayLabel1.setScaledContents(True)
         self.AddDisplayLabel1.setObjectName("AddDisplayLabel1")
         self.AddDisplayLabel2 = QtWidgets.QLabel(self.groupBox_2)
         self.AddDisplayLabel2.setGeometry(QtCore.QRect(10, 130, 101, 101))
         self.AddDisplayLabel2.setText("")
-        self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
+        self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img/PlaceHolderEye2.png"))
         self.AddDisplayLabel2.setScaledContents(True)
         self.AddDisplayLabel2.setObjectName("AddDisplayLabel2")
         self.AddDisplayLabel3 = QtWidgets.QLabel(self.groupBox_2)
         self.AddDisplayLabel3.setGeometry(QtCore.QRect(10, 240, 101, 101))
         self.AddDisplayLabel3.setText("")
-        self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
+        self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img/PlaceHolderEye3.png"))
         self.AddDisplayLabel3.setScaledContents(True)
         self.AddDisplayLabel3.setObjectName("AddDisplayLabel3")
         self.AddDisplayLabel4 = QtWidgets.QLabel(self.groupBox_2)
         self.AddDisplayLabel4.setGeometry(QtCore.QRect(10, 350, 101, 101))
         self.AddDisplayLabel4.setText("")
-        self.AddDisplayLabel4.setPixmap(QtGui.QPixmap("img\\PlaceHolderButton.png"))
+        self.AddDisplayLabel4.setPixmap(QtGui.QPixmap("img/PlaceHolderButton.png"))
         self.AddDisplayLabel4.setScaledContents(True)
         self.AddDisplayLabel4.setObjectName("AddDisplayLabel4")
 
@@ -261,6 +268,14 @@ class Ui_MainWindow(object):
         self.HiResOpenSM64.triggered.connect(self.OpenSM64)
         self.HiResOpenAdd = self.submenuHiRes.addAction(QIcon("img/HiResOpenAdd.png"), "OpenAdd")
         self.HiResOpenAdd.triggered.connect(self.OpenAdd)
+        self.actionOpenKataraktaFolder = QtWidgets.QAction(MainWindow)
+        self.actionOpenKataraktaFolder.setObjectName("actionOpenKataraktaFolder")
+        self.actionOpenKataraktaFolder.triggered.connect(self.OpenKataraktaFolder)
+        self.actionOpenKataraktaFolder.setIcon(QIcon("img/OpenKataraktaFolder.png"))
+        self.actionOpenCcconv = QtWidgets.QAction(MainWindow)
+        self.actionOpenCcconv.setObjectName("actionOpenCcconv")
+        self.actionOpenCcconv.triggered.connect(self.OpenCcconv)
+        self.actionOpenCcconv.setIcon(QIcon("img/ccconv.png"))
         self.actionStayOnTop = QtWidgets.QAction(MainWindow)
         self.actionStayOnTop.setObjectName("actionStayOnTop")
         self.actionStayOnTop.setCheckable(True)
@@ -287,8 +302,10 @@ class Ui_MainWindow(object):
         #self.menuLanguage.addAction(self.actionRussian)
         #self.menuOptions.addAction(self.menuLanguage.menuAction())
         self.menuOptions.addMenu(self.submenuHiRes)
+        self.menuOptions.addAction(self.actionOpenKataraktaFolder)
         self.menuOptions.addSeparator()
         self.menuOptions.addAction(self.actionSettings)
+        self.menuOptions.addAction(self.actionOpenCcconv)
         self.menuOptions.addAction(self.actionStayOnTop)
         self.menuHelp.addAction(self.actionAbout)
         self.menubar.addAction(self.menuOptions.menuAction())
@@ -581,6 +598,9 @@ class Ui_MainWindow(object):
     def OpenAdd(self):
         os.startfile(Option.AddDir)
 
+    def OpenKataraktaFolder(self):
+        os.startfile(os.path.dirname(__file__))
+
     def ClearSM64(self):
         try:
             os.remove("{}{}.png".format(Option.SM64Dir, Option.Eyes1))
@@ -677,7 +697,9 @@ class Ui_MainWindow(object):
         self.HiResClearAdd.setText(_translate("MainWindow", "Clear Additional"))
         self.HiResOpenSM64.setText(_translate("MainWindow", "Open SM64"))
         self.HiResOpenAdd.setText(_translate("MainWindow", "Open Additional"))
+        self.actionOpenKataraktaFolder.setText(_translate("MainWindow", "Open katarakta folder"))
         self.actionSettings.setText(_translate("MainWindow", "Settings"))
+        self.actionOpenCcconv.setText(_translate("MainWindow", "Colorcode Converter"))
         self.actionStayOnTop.setText(_translate("MainWindow", "Stay on Top"))
         self.actionUpdate.setText(_translate("MainWindow", "Check for Updates"))
 
@@ -709,9 +731,11 @@ class Ui_MainWindow(object):
         self.HiResClearAdd.setText(_translate("MainWindow", "Очистити додаткове"))
         self.HiResOpenSM64.setText(_translate("MainWindow", "Відкрити папку SM64"))
         self.HiResOpenAdd.setText(_translate("MainWindow", "Відкрити додаткову папку"))
+        self.actionOpenKataraktaFolder.setText(_translate("MainWindow", "Відкрити папку katarakta"))
         #self.HiResViewSM64.setText(_translate("MainWindow", "Переглянути папку SM64"))
         #self.HiResViewAdd.setText(_translate("MainWindow", "Переглянути додаткову папку"))
         self.actionSettings.setText(_translate("MainWindow", "Налаштування"))
+        self.actionOpenCcconv.setText(_translate("MainWindow", "Конвертер колірних кодів"))
         self.actionStayOnTop.setText(_translate("MainWindow", "Завжди зверху"))
         self.actionUpdate.setText(_translate("MainWindow", "Перевірка на оновлення"))
 
@@ -743,7 +767,9 @@ class Ui_MainWindow(object):
         self.HiResClearAdd.setText(_translate("MainWindow", "Очистить дополнительное"))
         self.HiResOpenSM64.setText(_translate("MainWindow", "Открыть папку SM64"))
         self.HiResOpenAdd.setText(_translate("MainWindow", "Открыть дополнительную папку"))
+        self.actionOpenKataraktaFolder.setText(_translate("MainWindow", "Открыть папку katarakta"))
         self.actionSettings.setText(_translate("MainWindow", "Настройки"))
+        self.actionOpenCcconv.setText(_translate("MainWindow", "Конвертер цветовых кодов"))
         self.actionStayOnTop.setText(_translate("MainWindow", "Всегда сверху"))
         self.actionUpdate.setText(_translate("MainWindow", "Проверка на обновления"))
 
@@ -775,7 +801,9 @@ class Ui_MainWindow(object):
         self.HiResClearAdd.setText(_translate("MainWindow", "Қосымшаны тазарту"))
         self.HiResOpenSM64.setText(_translate("MainWindow", "SM64 қалта ашығу"))
         self.HiResOpenAdd.setText(_translate("MainWindow", "Қосымша қалта ашығу"))
+        self.actionOpenKataraktaFolder.setText(_translate("MainWindow", "Katarakta қалтаны ашыңыз"))
         self.actionSettings.setText(_translate("MainWindow", "Параметрлер"))
+        self.actionOpenCcconv.setText(_translate("MainWindow", "Түс кодын түрлендіргіш"))
         self.actionStayOnTop.setText(_translate("MainWindow", "Әрқашан биікте"))
         self.actionUpdate.setText(_translate("MainWindow", "Жаңартуларды тексеріңіз"))
 
@@ -807,7 +835,9 @@ class Ui_MainWindow(object):
         self.HiResClearAdd.setText(_translate("MainWindow", "Qosymşany tazartu"))
         self.HiResOpenSM64.setText(_translate("MainWindow", "SM64 qalta aşyğu"))
         self.HiResOpenAdd.setText(_translate("MainWindow", "Qosymşa qalta aşyğu"))
+        self.actionOpenKataraktaFolder.setText(_translate("MainWindow", "Katarakta qaltany aşyñyz"))
         self.actionSettings.setText(_translate("MainWindow", "Parametrler"))
+        self.actionOpenCcconv.setText(_translate("MainWindow", "Tüs kodyn türlendırgış"))
         self.actionStayOnTop.setText(_translate("MainWindow", "Ärqaşan biıkte"))
         self.actionUpdate.setText(_translate("MainWindow", "Jañartulardy tekserıñız"))
 
@@ -1704,6 +1734,338 @@ class Ui_SettingsWindow(object):
         
         SettingsWindow.show()
 
+class Ui_ccconvWindow(QWidget):
+    def setupUi(self, ccconvWindow):
+        ccconvWindow.setObjectName("ccconvWindow")
+        ccconvWindow.resize(400, 285)
+        ccconvWindow.setFixedSize(ccconvWindow.size())
+        ccconvWindow.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.World))
+        self.ccconvCentral = QtWidgets.QWidget(ccconvWindow)
+        self.ccconvCentral.setObjectName("ccconvCentral")
+        self.InputCC = QtWidgets.QTextEdit(self.ccconvCentral)
+        self.InputCC.setGeometry(QtCore.QRect(10, 10, 150, 150))
+        self.InputCC.setReadOnly(False)
+        self.InputCC.setObjectName("InputCC")
+        self.OutputCC = QtWidgets.QTextEdit(self.ccconvCentral)
+        self.OutputCC.setGeometry(QtCore.QRect(240, 10, 150, 150))
+        self.OutputCC.setReadOnly(True)
+        self.OutputCC.setObjectName("OutputCC")
+        self.ButtonConvert = QtWidgets.QPushButton(self.ccconvCentral)
+        self.ButtonConvert.setGeometry(QtCore.QRect(9, 235, 382, 42))
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        self.ButtonConvert.setFont(font)
+        self.ButtonConvert.setObjectName("ButtonConvert")
+        self.ArrowLabel = QtWidgets.QLabel(self.ccconvCentral)
+        self.ArrowLabel.setGeometry(QtCore.QRect(170, 10, 60, 150))
+        font = QtGui.QFont()
+        font.setPointSize(24)
+        self.ArrowLabel.setFont(font)
+        self.ArrowLabel.setObjectName("ArrowLabel")
+        self.InputCombo = QtWidgets.QComboBox(self.ccconvCentral)
+        self.InputCombo.setGeometry(QtCore.QRect(10, 164, 150, 20))
+        self.InputCombo.setObjectName("InputCombo")
+        self.InputCombo.addItem("")
+        self.InputCombo.addItem("")
+        self.InputCombo.addItem("")
+        self.InputCombo.addItem("")
+        self.OutputCombo = QtWidgets.QComboBox(self.ccconvCentral)
+        self.OutputCombo.setGeometry(QtCore.QRect(240, 164, 150, 20))
+        self.OutputCombo.setObjectName("OutputCombo")
+        self.OutputCombo.addItem("")
+        self.OutputCombo.addItem("")
+        self.OutputCombo.addItem("")
+        self.OutputCombo.addItem("")
+        self.ButtonPaste = QtWidgets.QPushButton(self.ccconvCentral)
+        self.ButtonPaste.setGeometry(QtCore.QRect(9, 187, 152, 22))
+        self.ButtonPaste.setObjectName("ButtonPaste")
+        self.ButtonCopy = QtWidgets.QPushButton(self.ccconvCentral)
+        self.ButtonCopy.setGeometry(QtCore.QRect(239, 187, 152, 22))
+        self.ButtonCopy.setObjectName("ButtonCopy")
+        self.ButtonExport = QtWidgets.QPushButton(self.ccconvCentral)
+        self.ButtonExport.setGeometry(QtCore.QRect(239, 211, 152, 22))
+        self.ButtonExport.setObjectName("ButtonExport")
+        self.ButtonImport = QtWidgets.QPushButton(self.ccconvCentral)
+        self.ButtonImport.setGeometry(QtCore.QRect(9, 211, 152, 22))
+        self.ButtonImport.setObjectName("ButtonImport")
+        ccconvWindow.setCentralWidget(self.ccconvCentral)
+        
+        ccconvWindow.setWindowIcon(QtGui.QIcon("img/ccconv.png"))
+
+        self.ButtonConvert.clicked.connect(self.CcConvert)
+        self.ButtonPaste.clicked.connect(self.CcPaste)
+        self.ButtonCopy.clicked.connect(self.CcCopy)
+        self.ButtonExport.clicked.connect(self.CcSaveAsTxt)
+        self.ButtonImport.clicked.connect(self.CcOpenFromTxt)
+
+        QtCore.QMetaObject.connectSlotsByName(ccconvWindow)
+
+        if Option.Language == "English":
+            self.retranslateUiEnglish(ccconvWindow)
+
+        elif Option.Language == "Ukrainian":
+            self.retranslateUiUkrainian(ccconvWindow)
+        
+        elif Option.Language == "Russian":
+            self.retranslateUiRussian(ccconvWindow)
+        
+        elif Option.Language == "KazakhCyrillic":
+            self.retranslateUiKazakhCyrillic(ccconvWindow)
+        
+        elif Option.Language == "KazakhLatin":
+            self.retranslateUiKazakhLatin(ccconvWindow)
+        
+        else:
+            self.retranslateUiEnglish(ccconvWindow)
+
+    # Addresses for each region, the "A" stands for "Addresses"
+    global A_NTSCJ, A_NTSCU, A_PAL, A_SHINDOU
+    A_NTSCJ = list(["8107BDC0","8107BDC2","8107BDC4","8107BDC6","8107BDC8","8107BDCA","8107BDCC","8107BDCE","8107BDD8","8107BDDA","8107BDDC","8107BDDE","8107BDE0","8107BDE2","8107BDE4","8107BDE6","8107BDF0","8107BDF2","8107BDF4","8107BDF6","8107BDF8","8107BDFA","8107BDFC","8107BDFE","8107BE08","8107BE0A","8107BE0C","8107BE0E","8107BE10","8107BE12","8107BE14","8107BE16","8107BE20","8107BE22","8107BE24","8107BE26","8107BE28","8107BE2A","8107BE2C","8107BE2E","8107BE38","8107BE3A","8107BE3C","8107BE3E","8107BE40","8107BE42","8107BE44","8107BE46"])
+    A_NTSCU = list(["8107EC20","8107EC22","8107EC24","8107EC26","8107EC28","8107EC2A","8107EC2C","8107EC2E","8107EC38","8107EC3A","8107EC3C","8107EC3E","8107EC40","8107EC42","8107EC44","8107EC46","8107EC50","8107EC52","8107EC54","8107EC56","8107EC58","8107EC5A","8107EC5C","8107EC5E","8107EC68","8107EC6A","8107EC6C","8107EC6E","8107EC70","8107EC72","8107EC74","8107EC76","8107EC80","8107EC82","8107EC84","8107EC86","8107EC88","8107EC8A","8107EC8C","8107EC8E","8107EC98","8107EC9A","8107EC9C","8107EC9E","8107ECA0","8107ECA2","8107ECA4","8107ECA6"])
+    A_PAL = list(["810742E0","810742E2","810742E4","810742E6","810742E8","810742EA","810742EC","810742EE","810742F8","810742FA","810742FC","810742FE","81074300","81074302","81074304","81074306","81074310","81074312","81074314","81074316","81074318","8107431A","8107431C","8107431E","81074328","8107432A","8107432C","8107432E","81074330","81074332","81074334","81074336","81074340","81074342","81074344","81074346","81074348","8107434A","8107434C","8107434E","81074358","8107435A","8107435C","8107435E","81074360","81074362","81074364","81074366"])
+    A_SHINDOU = list(["8107BDC0","8107BDC2","8107BDC4","8107BDC6","8107BDC8","8107BDCA","8107BDCC","8107BDCE","8107BDD8","8107BDDA","8107BDDC","8107BDDE","8107BDE0","8107BDE2","8107BDE4","8107BDE6","8107BDF0","8107BDF2","8107BDF4","8107BDF6","8107BDF8","8107BDFA","8107BDFC","8107BDFE","8107BE08","8107BE0A","8107BE0C","8107BE0E","8107BE10","8107BE12","8107BE14","8107BE16","8107BE20","8107BE22","8107BE24","8107BE26","8107BE28","8107BE2A","8107BE2C","8107BE2E","8107BE38","8107BE3A","8107BE3C","8107BE3E","8107BE40","8107BE42","8107BE44","8107BE46"])
+
+    def CcConvert(self, ccconvWindow):
+        InputCCvar = self.InputCC.toPlainText()
+
+        if self.InputCombo.currentText() == "NTSC-J":
+            self.ChosenListInput = A_NTSCJ
+        elif self.InputCombo.currentText() == "NTSC-U":
+            self.ChosenListInput = A_NTSCU
+        elif self.InputCombo.currentText() == "PAL":
+            self.ChosenListInput = A_PAL
+        else:
+            self.ChosenListInput = A_SHINDOU
+    
+        if self.OutputCombo.currentText() == "NTSC-J":
+            self.ChosenListOutput = A_NTSCJ
+        elif self.OutputCombo.currentText() == "NTSC-U":
+            self.ChosenListOutput = A_NTSCU
+        elif self.OutputCombo.currentText() == "PAL":
+            self.ChosenListOutput = A_PAL
+        else:
+            self.ChosenListOutput = A_SHINDOU
+    
+        count = 0
+        for item in self.ChosenListInput:
+            InputCCvar = InputCCvar.replace(
+                    item,
+                    self.ChosenListOutput[count]
+                    )
+            OutputCCvar = InputCCvar
+            count += 1
+
+        self.OutputCC.setPlainText(OutputCCvar)
+        
+    def CcPaste(self, ccconvWindow):
+        self.InputCC.setPlainText(pyclip.paste(text = True))
+        
+    def CcCopy(self, ccconvWindow):
+        pyclip.copy(self.OutputCC.toPlainText())
+
+    def CcOpenFromTxt(self, ccconvWindow):
+        if Option.Language == "English":
+            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Open file", os.path.dirname(__file__), "Text Document (*.txt)")
+
+        elif Option.Language == "Ukrainian":
+            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Виберіть файл", os.path.dirname(__file__), "Текстовий документ (*.txt)")
+        
+        elif Option.Language == "Russian":
+            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Выберить файл", os.path.dirname(__file__), "Текстовый документ (*.txt)")
+
+        elif Option.Language == "KazakhCyrillic":
+            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Файлды таңдаңыз", os.path.dirname(__file__), "Мәтіндік құжат (*.txt)")
+
+        elif Option.Language == "KazakhLatin":
+            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Faildy tañdañyz", os.path.dirname(__file__), "Mätındık qūjat (*.txt)")
+            
+        else:
+            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Open file", os.path.dirname(__file__), "Text Document (*.txt)")
+
+        try:
+            with open(ChooseOpenFile[0]) as ChosenOpenFileCC:
+                self.InputCC.setPlainText(ChosenOpenFileCC.read())
+                ChosenOpenFileCC.close()
+        except:
+            pass
+
+    def CcSaveAsTxt(self, ccconvWindow):
+        if Option.Language == "English":
+            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Save file", os.path.dirname(__file__), "Text Document (*.txt)")
+
+        elif Option.Language == "Ukrainian":
+            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Збереження файла", os.path.dirname(__file__), "Текстовий документ (*.txt)")
+        
+        elif Option.Language == "Russian":
+            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Сохранение файла", os.path.dirname(__file__), "Текстовый документ (*.txt)")
+
+        elif Option.Language == "KazakhCyrillic":
+            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Файлды сақтау", os.path.dirname(__file__), "Мәтіндік құжат (*.txt)")
+
+        elif Option.Language == "KazakhLatin":
+            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Faildy saqtau", os.path.dirname(__file__), "Mätındık qūjat (*.txt)")
+            
+        else:
+            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Save file", os.path.dirname(__file__), "Text Document (*.txt)")
+        try:
+            SaveFile = open(ChooseSaveFile[0], 'w')
+            SaveFile.write(self.OutputCC.toPlainText())
+            SaveFile.close()
+        except:
+            pass
+
+    def retranslateUiEnglish(self, ccconvWindow):
+        _translate = QtCore.QCoreApplication.translate
+        ccconvWindow.setWindowTitle(_translate("ccconvWindow", "Colorcode Converter"))
+        #self.InputCC.setHtml(_translate("ccconvWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+#"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+#"p, li { white-space: pre-wrap; }\n"
+#"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+#"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.InputCC.setPlaceholderText(_translate("ccconvWindow", "Insert colorcode here..."))
+        #self.OutputCC.setHtml(_translate("ccconvWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+#"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+#"p, li { white-space: pre-wrap; }\n"
+#"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+#"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.OutputCC.setPlaceholderText(_translate("ccconvWindow", "Output will appear here."))
+        self.InputCC.setPlainText()
+        self.OutputCC.setPlainText()
+        self.ButtonConvert.setText(_translate("ccconvWindow", "Convert"))
+        self.ArrowLabel.setText(_translate("ccconvWindow", "--->"))
+        self.InputCombo.setItemText(0, _translate("ccconvWindow", "NTSC-U"))
+        self.InputCombo.setItemText(1, _translate("ccconvWindow", "NTSC-J"))
+        self.InputCombo.setItemText(2, _translate("ccconvWindow", "PAL"))
+        self.InputCombo.setItemText(3, _translate("ccconvWindow", "Shindou"))
+        self.OutputCombo.setItemText(0, _translate("ccconvWindow", "NTSC-U"))
+        self.OutputCombo.setItemText(1, _translate("ccconvWindow", "NTSC-J"))
+        self.OutputCombo.setItemText(2, _translate("ccconvWindow", "PAL"))
+        self.OutputCombo.setItemText(3, _translate("ccconvWindow", "Shindou"))
+        self.ButtonPaste.setText(_translate("ccconvWindow", "Paste from clipboard"))
+        self.ButtonCopy.setText(_translate("ccconvWindow", "Copy to clipboard"))
+        self.ButtonExport.setText(_translate("ccconvWindow", "Export as .txt file"))
+        self.ButtonImport.setText(_translate("ccconvWindow", "Import from .txt file"))
+
+    def retranslateUiUkrainian(self, ccconvWindow):
+        _translate = QtCore.QCoreApplication.translate
+        ccconvWindow.setWindowTitle(_translate("ccconvWindow", "Конвертер колірних кодів"))
+        self.InputCC.setHtml(_translate("ccconvWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.InputCC.setPlaceholderText(_translate("ccconvWindow", "Додайте сюди колірний код..."))
+        self.OutputCC.setHtml(_translate("ccconvWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.OutputCC.setPlaceholderText(_translate("ccconvWindow", "Результат з'явиться тут."))
+        self.ButtonConvert.setText(_translate("ccconvWindow", "Конвертувати"))
+        self.ArrowLabel.setText(_translate("ccconvWindow", "--->"))
+        self.InputCombo.setItemText(0, _translate("ccconvWindow", "NTSC-U"))
+        self.InputCombo.setItemText(1, _translate("ccconvWindow", "NTSC-J"))
+        self.InputCombo.setItemText(2, _translate("ccconvWindow", "PAL"))
+        self.InputCombo.setItemText(3, _translate("ccconvWindow", "Shindou"))
+        self.OutputCombo.setItemText(0, _translate("ccconvWindow", "NTSC-U"))
+        self.OutputCombo.setItemText(1, _translate("ccconvWindow", "NTSC-J"))
+        self.OutputCombo.setItemText(2, _translate("ccconvWindow", "PAL"))
+        self.OutputCombo.setItemText(3, _translate("ccconvWindow", "Shindou"))
+        self.ButtonPaste.setText(_translate("ccconvWindow", "Вставити з буфера обміну"))
+        self.ButtonCopy.setText(_translate("ccconvWindow", "Копіювати"))
+        self.ButtonExport.setText(_translate("ccconvWindow", "Експортувати як .txt файл"))
+        self.ButtonImport.setText(_translate("ccconvWindow", "Імпортувати з .txt файлу"))
+
+    def retranslateUiRussian(self, ccconvWindow):
+        _translate = QtCore.QCoreApplication.translate
+        ccconvWindow.setWindowTitle(_translate("ccconvWindow", "Конвертер цветовых кодов"))
+        self.InputCC.setHtml(_translate("ccconvWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.InputCC.setPlaceholderText(_translate("ccconvWindow", "Вставьте сюда цветовой код..."))
+        self.OutputCC.setHtml(_translate("ccconvWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.OutputCC.setPlaceholderText(_translate("ccconvWindow", "Результат появится здесь."))
+        self.ButtonConvert.setText(_translate("ccconvWindow", "Конвертировать"))
+        self.ArrowLabel.setText(_translate("ccconvWindow", "--->"))
+        self.InputCombo.setItemText(0, _translate("ccconvWindow", "NTSC-U"))
+        self.InputCombo.setItemText(1, _translate("ccconvWindow", "NTSC-J"))
+        self.InputCombo.setItemText(2, _translate("ccconvWindow", "PAL"))
+        self.InputCombo.setItemText(3, _translate("ccconvWindow", "Shindou"))
+        self.OutputCombo.setItemText(0, _translate("ccconvWindow", "NTSC-U"))
+        self.OutputCombo.setItemText(1, _translate("ccconvWindow", "NTSC-J"))
+        self.OutputCombo.setItemText(2, _translate("ccconvWindow", "PAL"))
+        self.OutputCombo.setItemText(3, _translate("ccconvWindow", "Shindou"))
+        self.ButtonPaste.setText(_translate("ccconvWindow", "Вставить из буфера обмена"))
+        self.ButtonCopy.setText(_translate("ccconvWindow", "Копировать"))
+        self.ButtonExport.setText(_translate("ccconvWindow", "Экспортировать как .txt"))
+        self.ButtonImport.setText(_translate("ccconvWindow", "Импортировать из .txt"))
+
+    def retranslateUiKazakhCyrillic(self, ccconvWindow):
+        _translate = QtCore.QCoreApplication.translate
+        ccconvWindow.setWindowTitle(_translate("ccconvWindow", "Түс кодын түрлендіргіш"))
+        self.InputCC.setHtml(_translate("ccconvWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.InputCC.setPlaceholderText(_translate("ccconvWindow", "Түс кодын осы жерге қойыңыз..."))
+        self.OutputCC.setHtml(_translate("ccconvWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.OutputCC.setPlaceholderText(_translate("ccconvWindow", "Нәтиже осы жерде пайда болады."))
+        self.ButtonConvert.setText(_translate("ccconvWindow", "Түрлендіру"))
+        self.ArrowLabel.setText(_translate("ccconvWindow", "--->"))
+        self.InputCombo.setItemText(0, _translate("ccconvWindow", "NTSC-U"))
+        self.InputCombo.setItemText(1, _translate("ccconvWindow", "NTSC-J"))
+        self.InputCombo.setItemText(2, _translate("ccconvWindow", "PAL"))
+        self.InputCombo.setItemText(3, _translate("ccconvWindow", "Shindou"))
+        self.OutputCombo.setItemText(0, _translate("ccconvWindow", "NTSC-U"))
+        self.OutputCombo.setItemText(1, _translate("ccconvWindow", "NTSC-J"))
+        self.OutputCombo.setItemText(2, _translate("ccconvWindow", "PAL"))
+        self.OutputCombo.setItemText(3, _translate("ccconvWindow", "Shindou"))
+        self.ButtonPaste.setText(_translate("ccconvWindow", "Буферден қою"))
+        self.ButtonCopy.setText(_translate("ccconvWindow", "Көшіру"))
+        self.ButtonExport.setText(_translate("ccconvWindow", ".txt файлына экспорттау"))
+        self.ButtonImport.setText(_translate("ccconvWindow", ".txt файлына импорттау"))
+
+    def retranslateUiKazakhLatin(self, ccconvWindow):
+        _translate = QtCore.QCoreApplication.translate
+        ccconvWindow.setWindowTitle(_translate("ccconvWindow", "Tüs kodyn türlendırgış"))
+        self.InputCC.setHtml(_translate("ccconvWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.InputCC.setPlaceholderText(_translate("ccconvWindow", "Tüs kodyn osy jerge qoiyñyz..."))
+        self.OutputCC.setHtml(_translate("ccconvWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
+        self.OutputCC.setPlaceholderText(_translate("ccconvWindow", "Nätije osy jerde paida bolady."))
+        self.ButtonConvert.setText(_translate("ccconvWindow", "Türlendıru"))
+        self.ArrowLabel.setText(_translate("ccconvWindow", "--->"))
+        self.InputCombo.setItemText(0, _translate("ccconvWindow", "NTSC-U"))
+        self.InputCombo.setItemText(1, _translate("ccconvWindow", "NTSC-J"))
+        self.InputCombo.setItemText(2, _translate("ccconvWindow", "PAL"))
+        self.InputCombo.setItemText(3, _translate("ccconvWindow", "Shindou"))
+        self.OutputCombo.setItemText(0, _translate("ccconvWindow", "NTSC-U"))
+        self.OutputCombo.setItemText(1, _translate("ccconvWindow", "NTSC-J"))
+        self.OutputCombo.setItemText(2, _translate("ccconvWindow", "PAL"))
+        self.OutputCombo.setItemText(3, _translate("ccconvWindow", "Shindou"))
+        self.ButtonPaste.setText(_translate("ccconvWindow", "Buferden qoiu"))
+        self.ButtonCopy.setText(_translate("ccconvWindow", "Köşıru"))
+        self.ButtonExport.setText(_translate("ccconvWindow", ".txt failyna eksporttau"))
+        self.ButtonImport.setText(_translate("ccconvWindow", ".txt failyna importtau"))
+        
 if Option.Language == "English":
     CopyEyesErrorBoxTitle = "Error"
     CopyEyesErrorBoxMessage = "An error occured!\nMake sure that:\n- You entered the correct path in config.ini\n- You entered the correct eye texture name in config.ini\n- You have the eye textures in the folder\n- If your Project64 is on your C: drive, then either run katarakta as administrator or move Project64 elsewhere."
