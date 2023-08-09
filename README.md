@@ -32,7 +32,7 @@ I call these other textures the "additional" textures.
 It's romanized "cataract" in Russian. It doesn't really have any meaning and I just thought it was funny.
 
 **Is it translated to any other languages?**\
-As of 1.4.5, katarakta is translated to Ukrainian, Russian and Kazakh (Cyrillic and Latin).
+As of 1.4.6, katarakta is translated to Ukrainian, Russian and Kazakh (Cyrillic and Latin).
 
 **Do you know about SM64 Eye Changer from ImCodist?**\
 As you probably guessed by seeing this question here, yes.\
