@@ -37,7 +37,7 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.4.6"
+AppVersion = "1.4.7"
 AppEdition = "Normal"
 
 Option = Options()
@@ -599,7 +599,7 @@ class Ui_MainWindow(object):
         os.startfile(Option.AddDir)
 
     def OpenKataraktaFolder(self):
-        os.startfile(os.path.dirname(__file__))
+        os.startfile(os.getcwd())
 
     def ClearSM64(self):
         try:
@@ -1737,7 +1737,7 @@ class Ui_SettingsWindow(object):
 class Ui_ccconvWindow(QWidget):
     def setupUi(self, ccconvWindow):
         ccconvWindow.setObjectName("ccconvWindow")
-        ccconvWindow.resize(400, 285)
+        ccconvWindow.resize(400, 286)
         ccconvWindow.setFixedSize(ccconvWindow.size())
         ccconvWindow.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.World))
         self.ccconvCentral = QtWidgets.QWidget(ccconvWindow)
@@ -1865,22 +1865,22 @@ class Ui_ccconvWindow(QWidget):
 
     def CcOpenFromTxt(self, ccconvWindow):
         if Option.Language == "English":
-            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Open file", os.path.dirname(__file__), "Text Document (*.txt)")
+            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Open file", os.getcwd(), "Text Document (*.txt)")
 
         elif Option.Language == "Ukrainian":
-            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Виберіть файл", os.path.dirname(__file__), "Текстовий документ (*.txt)")
+            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Виберіть файл", os.getcwd(), "Текстовий документ (*.txt)")
         
         elif Option.Language == "Russian":
-            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Выберить файл", os.path.dirname(__file__), "Текстовый документ (*.txt)")
+            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Выберить файл", os.getcwd(), "Текстовый документ (*.txt)")
 
         elif Option.Language == "KazakhCyrillic":
-            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Файлды таңдаңыз", os.path.dirname(__file__), "Мәтіндік құжат (*.txt)")
+            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Файлды таңдаңыз", os.getcwd(), "Мәтіндік құжат (*.txt)")
 
         elif Option.Language == "KazakhLatin":
-            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Faildy tañdañyz", os.path.dirname(__file__), "Mätındık qūjat (*.txt)")
+            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Faildy tañdañyz", os.getcwd(), "Mätındık qūjat (*.txt)")
             
         else:
-            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Open file", os.path.dirname(__file__), "Text Document (*.txt)")
+            ChooseOpenFile = QFileDialog.getOpenFileName(self, "Open file", os.getcwd(), "Text Document (*.txt)")
 
         try:
             with open(ChooseOpenFile[0]) as ChosenOpenFileCC:
@@ -1891,22 +1891,22 @@ class Ui_ccconvWindow(QWidget):
 
     def CcSaveAsTxt(self, ccconvWindow):
         if Option.Language == "English":
-            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Save file", os.path.dirname(__file__), "Text Document (*.txt)")
+            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Save file", os.getcwd(), "Text Document (*.txt)")
 
         elif Option.Language == "Ukrainian":
-            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Збереження файла", os.path.dirname(__file__), "Текстовий документ (*.txt)")
+            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Збереження файла", os.getcwd(), "Текстовий документ (*.txt)")
         
         elif Option.Language == "Russian":
-            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Сохранение файла", os.path.dirname(__file__), "Текстовый документ (*.txt)")
+            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Сохранение файла", os.getcwd(), "Текстовый документ (*.txt)")
 
         elif Option.Language == "KazakhCyrillic":
-            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Файлды сақтау", os.path.dirname(__file__), "Мәтіндік құжат (*.txt)")
+            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Файлды сақтау", os.getcwd(), "Мәтіндік құжат (*.txt)")
 
         elif Option.Language == "KazakhLatin":
-            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Faildy saqtau", os.path.dirname(__file__), "Mätındık qūjat (*.txt)")
+            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Faildy saqtau", os.getcwd(), "Mätındık qūjat (*.txt)")
             
         else:
-            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Save file", os.path.dirname(__file__), "Text Document (*.txt)")
+            ChooseSaveFile = QFileDialog.getSaveFileName(self, "Save file", os.getcwd(), "Text Document (*.txt)")
         try:
             SaveFile = open(ChooseSaveFile[0], 'w')
             SaveFile.write(self.OutputCC.toPlainText())
@@ -1929,8 +1929,6 @@ class Ui_ccconvWindow(QWidget):
 #"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 #"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.OutputCC.setPlaceholderText(_translate("ccconvWindow", "Output will appear here."))
-        self.InputCC.setPlainText()
-        self.OutputCC.setPlainText()
         self.ButtonConvert.setText(_translate("ccconvWindow", "Convert"))
         self.ArrowLabel.setText(_translate("ccconvWindow", "--->"))
         self.InputCombo.setItemText(0, _translate("ccconvWindow", "NTSC-U"))
