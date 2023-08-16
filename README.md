@@ -34,6 +34,9 @@ It's romanized "cataract" in Russian. It doesn't really have any meaning and I j
 **Is it translated to any other languages?**\
 As of 1.4.7, katarakta is translated to Ukrainian, Russian and Kazakh (Cyrillic and Latin).
 
+**Why are issues and plans here and not in the Issues tab?**
+When writing this I completely forgot there is a tab for issues and now I am too lazy to move it to that tab.
+
 **Do you know about SM64 Eye Changer from ImCodist?**\
 As you probably guessed by seeing this question here, yes.\
 I already knew about it even before creating katarakta (and SM64EC actually inspired me to make katarakta!), but I still decided to create it because I needed it for my own personal use and SM64EC did not have some features I needed, such as the additional textures and ability to change Mario's other textures besides the eyes.
