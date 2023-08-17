@@ -34,7 +34,7 @@ It's romanized "cataract" in Russian. It doesn't really have any meaning and I j
 **Is it translated to any other languages?**\
 As of 1.4.7, katarakta is translated to Ukrainian, Russian and Kazakh (Cyrillic and Latin).
 
-**Why are issues and plans here and not in the Issues tab?**
+**Why are issues and plans here and not in the Issues tab?**\
 When writing this I completely forgot there is a tab for issues and now I am too lazy to move it to that tab.
 
 **Do you know about SM64 Eye Changer from ImCodist?**\
