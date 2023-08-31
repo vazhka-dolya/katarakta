@@ -11,6 +11,9 @@ import sys
 import random
 import requests
 import pyclip
+import locale
+import ctypes
+
 QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
 
 class Options():
@@ -37,40 +40,83 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.4.7"
+AppVersion = "1.4.8"
 AppEdition = "Normal"
 
 Option = Options()
 
 Config = configparser.ConfigParser()
 
+def CreateConfig():
+    CreatedConfig = configparser.ConfigParser()
+    SetLanguage = "English"
+    try:
+        if locale.windows_locale[ctypes.windll.kernel32.GetUserDefaultUILanguage()] == "ru" or "ru_BY" or "ru_KZ" or "ru_KG" or "ru_MD" or "ru_RU" or "ru_UA" or "be" or "be_BY":
+            SetLanguage = "Russian"
+        elif locale.windows_locale[ctypes.windll.kernel32.GetUserDefaultUILanguage()] == "uk" or "uk_UA":
+            SetLanguage = "Ukrainian"
+        elif locale.windows_locale[ctypes.windll.kernel32.GetUserDefaultUILanguage()] == "kk" or "kk_KZ":
+            SetLanguage = "KazakhLatin"
+        else:
+            pass
+    except:
+        pass
+    CreatedConfig["PATHS"] = {
+        "sm64dir": "",
+        "adddir": "",
+        "eyes1": "SUPER MARIO 64#6B8D43C4#0#2_all",
+        "eyes2": "SUPER MARIO 64#6B8D43C4#0#2_all",
+        "eyes3": "SUPER MARIO 64#6B8D43C4#0#2_all",
+        "cap": "SUPER MARIO 64#6B8D43C4#0#2_all",
+        "hair": "SUPER MARIO 64#6B8D43C4#0#2_all",
+        "mustache": "SUPER MARIO 64#6B8D43C4#0#2_all",
+        "button": "SUPER MARIO 64#6B8D43C4#0#2_all",
+        "addeyes1": "",
+        "addeyes2": "",
+        "addeyes3": "",
+        "addcap": "",
+        "addhair": "",
+        "addmustache": "",
+        "addbutton": ""
+        }
+    CreatedConfig["OPTIONS"] = {
+        "language": SetLanguage,
+        "startupcheckforupdates": "1",
+        "startupstayontop": "0"
+        }
+    with open("config.ini","w") as _ConfigFile:
+        CreatedConfig.write(_ConfigFile)
+
+if os.path.exists("config.ini") is True:
+    pass
+else:
+    CreateConfig()
+
 def LoadConfig():
     Config.read("config.ini")
-    if "PATHS" in Config:
-        ConfigSecond = Config["PATHS"]
+    ConfigSecond = Config["PATHS"]
 
-        Option.SM64Dir = ConfigSecond.get("SM64Dir", Option.SM64Dir)
-        Option.AddDir = ConfigSecond.get("AddDir", Option.AddDir)
-        Option.Eyes1 = ConfigSecond.get("Eyes1", Option.Eyes1)
-        Option.Eyes2 = ConfigSecond.get("Eyes2", Option.Eyes2)
-        Option.Eyes3 = ConfigSecond.get("Eyes3", Option.Eyes3)
-        Option.Cap = ConfigSecond.get("Cap", Option.Cap)
-        Option.Hair = ConfigSecond.get("Hair", Option.Hair)
-        Option.Mustache = ConfigSecond.get("Mustache", Option.Mustache)
-        Option.Button = ConfigSecond.get("Button", Option.Button)
-        Option.AddEyes1 = ConfigSecond.get("AddEyes1", Option.AddEyes1)
-        Option.AddEyes2 = ConfigSecond.get("AddEyes2", Option.AddEyes2)
-        Option.AddEyes3 = ConfigSecond.get("AddEyes3", Option.AddEyes3)
-        Option.AddCap = ConfigSecond.get("AddCap", Option.AddCap)
-        Option.AddHair = ConfigSecond.get("AddHair", Option.AddHair)
-        Option.AddMustache = ConfigSecond.get("AddMustache", Option.AddMustache)
-        Option.AddButton = ConfigSecond.get("AddButton", Option.AddButton)
+    Option.SM64Dir = ConfigSecond.get("SM64Dir", Option.SM64Dir)
+    Option.AddDir = ConfigSecond.get("AddDir", Option.AddDir)
+    Option.Eyes1 = ConfigSecond.get("Eyes1", Option.Eyes1)
+    Option.Eyes2 = ConfigSecond.get("Eyes2", Option.Eyes2)
+    Option.Eyes3 = ConfigSecond.get("Eyes3", Option.Eyes3)
+    Option.Cap = ConfigSecond.get("Cap", Option.Cap)
+    Option.Hair = ConfigSecond.get("Hair", Option.Hair)
+    Option.Mustache = ConfigSecond.get("Mustache", Option.Mustache)
+    Option.Button = ConfigSecond.get("Button", Option.Button)
+    Option.AddEyes1 = ConfigSecond.get("AddEyes1", Option.AddEyes1)
+    Option.AddEyes2 = ConfigSecond.get("AddEyes2", Option.AddEyes2)
+    Option.AddEyes3 = ConfigSecond.get("AddEyes3", Option.AddEyes3)
+    Option.AddCap = ConfigSecond.get("AddCap", Option.AddCap)
+    Option.AddHair = ConfigSecond.get("AddHair", Option.AddHair)
+    Option.AddMustache = ConfigSecond.get("AddMustache", Option.AddMustache)
+    Option.AddButton = ConfigSecond.get("AddButton", Option.AddButton)
         
-    if "OPTIONS" in Config:
-        ConfigSecond = Config["OPTIONS"]
-        Option.Language = ConfigSecond.get("Language", Option.Language)
-        Option.StartUpCheckForUpdates = ConfigSecond.get("StartUpCheckForUpdates")
-        Option.StartUpStayOnTop = ConfigSecond.get("StartUpStayOnTop")
+    ConfigSecond = Config["OPTIONS"]
+    Option.Language = ConfigSecond.get("Language", Option.Language)
+    Option.StartUpCheckForUpdates = ConfigSecond.get("StartUpCheckForUpdates")
+    Option.StartUpStayOnTop = ConfigSecond.get("StartUpStayOnTop")
 
 LoadConfig()
 
@@ -319,6 +365,9 @@ class Ui_MainWindow(object):
 
         self.actionAbout.triggered.connect(self.OpenAboutWindow)
         
+        self.ApplySM64.setEnabled(False)
+        self.ApplyAdd.setEnabled(False)
+        
         if Option.Language == "English":
                 self.retranslateUiEnglish(MainWindow)
                 self.Update()
@@ -366,8 +415,26 @@ class Ui_MainWindow(object):
             self.listWidget.addItems(CHMBFolders)
         self.listWidget.clearSelection()
         try:
-            self.ApplySM64.clicked.disconnect()
-            self.ApplyAdd.clicked.disconnect()
+            #self.ApplySM64.clicked.disconnect()
+            #self.ApplyAdd.clicked.disconnect()
+            self.ApplySM64.setEnabled(False)
+            self.ApplyAdd.setEnabled(False)
+            if self.Mode == "Eyes":
+                self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye1.png"))
+                self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
+                self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
+                self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye1.png"))
+                self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
+                self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
+            if self.Mode == "CHMB":
+                self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderCap.png"))
+                self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderHair.png"))
+                self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderMustache.png"))
+                self.SM64DisplayLabel4.setPixmap(QtGui.QPixmap("img\\PlaceHolderButton.png"))
+                self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderCap.png"))
+                self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderHair.png"))
+                self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderMustache.png"))
+                self.AddDisplayLabel4.setPixmap(QtGui.QPixmap("img\\PlaceHolderButton.png"))
         except:
             pass
 
@@ -441,80 +508,105 @@ class Ui_MainWindow(object):
         
 
     def OnSelectionChanged(self, FolderName):
+        CheckSM64 = 0
+        CheckAdd = 0
         if self.Mode == "Eyes":
             
             if os.path.exists("eyes\\{}\\{}.png".format(FolderName, Option.Eyes1)):
                 self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("eyes\\{}\\{}.png".format(FolderName, Option.Eyes1)))
+                CheckSM64 += 1
             else:
                 self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye1.png"))
             
             if os.path.exists("eyes\\{}\\{}.png".format(FolderName, Option.Eyes2)):
                 self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("eyes\\{}\\{}.png".format(FolderName, Option.Eyes2)))
+                CheckSM64 += 1
             else:
                 self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
                 
             if os.path.exists("eyes\\{}\\{}.png".format(FolderName, Option.Eyes3)):
                 self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("eyes\\{}\\{}.png".format(FolderName, Option.Eyes3)))
+                CheckSM64 += 1
             else:
                 self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
                 
             
             if os.path.exists("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes1)):
                 self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes1)))
+                CheckAdd += 1
             else:
                 self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye1.png"))
             
             if os.path.exists("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes2)):
                 self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes2)))
+                CheckAdd += 1
             else:
                 self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
                 
             if os.path.exists("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes3)):
                 self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes3)))
+                CheckAdd += 1
             else:
                 self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
         
         else:
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.Cap)):
                 self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.Cap)))
+                CheckSM64 += 1
             else:
                 self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderCap.png"))
             
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.Hair)):
                 self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.Hair)))
+                CheckSM64 += 1
             else:
                 self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderHair.png"))
             
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.Mustache)):
                 self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.Mustache)))
+                CheckSM64 += 1
             else:
                 self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderMustache.png"))
             
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.Button)):
                 self.SM64DisplayLabel4.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.Button)))
+                CheckSM64 += 1
             else:
                 self.SM64DisplayLabel4.setPixmap(QtGui.QPixmap("img\\PlaceHolderButton.png"))
                 
                 
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.AddCap)):
                 self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.AddCap)))
+                CheckAdd += 1
             else:
                 self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderCap.png"))
             
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.AddHair)):
                 self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.AddHair)))
+                CheckAdd += 1
             else:
                 self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderHair.png"))
             
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.AddMustache)):
                 self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.AddMustache)))
+                CheckAdd += 1
             else:
                 self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderMustache.png"))
             
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.AddButton)):
                 self.AddDisplayLabel4.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.AddButton)))
+                CheckAdd += 1
             else:
                 self.AddDisplayLabel4.setPixmap(QtGui.QPixmap("img\\PlaceHolderButton.png"))
+                
+        if CheckSM64 > 0:
+            self.ApplySM64.setEnabled(True)
+        else:
+            self.ApplySM64.setEnabled(False)
+        if CheckAdd > 0:
+            self.ApplyAdd.setEnabled(True)
+        else:
+            self.ApplyAdd.setEnabled(False)
             
 
     def CopyEyes(self, Type, FolderName):
@@ -1499,6 +1591,11 @@ class Ui_SettingsWindow(object):
 
         
         def Apply():
+            if os.path.exists("config.ini") is True:
+                pass
+            else:
+                CreateConfig()
+                
             CollectLineText()
             CheckLanguage()
             CheckStartUpCheckForUpdates()
