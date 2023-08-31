@@ -9,16 +9,6 @@ After downloading the archive, extract it somewhere. Open `config.txt` and follo
 What you need to run is `katarakta.exe`\
 `kataraktaConsole.exe` is, obviously, the console version of katarakta, this version was made for testing, it lacks some features the GUI version has and you probably would not want to use that.
 
-# Plans
-There is some stuff I want to add in the future (This list might get bigger if I get any more ideas):
-- Making the window resizable.
-- Add an ability to change the textures for wing cap's wings, metal Mario and the "X" eyes.
-- Optimize the code.
-
-# Known Issues
-Before reporting an issue, see if this issue is already on the list:
-- If you close the main katarakta window, the other windows (e.g. "About" window) don't close.
-
 # Some questions you might be asking
 **If I use katarakta for my work, should I credit you?**\
 Credit is optional.
@@ -32,10 +22,7 @@ I call these other textures the "additional" textures.
 It's romanized "cataract" in Russian. It doesn't really have any meaning and I just thought it was funny.
 
 **Is it translated to any other languages?**\
-As of 1.4.7, katarakta is translated to Ukrainian, Russian and Kazakh (Cyrillic and Latin).
-
-**Why are issues and plans here and not in the Issues tab?**\
-When writing this I completely forgot there is a tab for issues and now I am too lazy to move it to that tab.
+As of 1.4.8, katarakta is translated to Ukrainian, Russian and Kazakh (Cyrillic and Latin).
 
 **Do you know about SM64 Eye Changer from ImCodist?**\
 As you probably guessed by seeing this question here, yes.\
