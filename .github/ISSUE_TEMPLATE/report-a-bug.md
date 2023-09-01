@@ -1,6 +1,6 @@
 ---
 name: Report a bug
-about: Report for something not working right
+about: Report something not working right
 title: ''
 labels: ''
 assignees: ''
