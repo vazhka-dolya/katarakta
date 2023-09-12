@@ -5,7 +5,7 @@ import configparser
 import shutil
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QWidget, QSplashScreen, QAction, QFileDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QWidget, QSplashScreen, QAction, QFileDialog, QStyleFactory
 from PyQt5.QtGui import QPixmap, QIcon
 import sys
 import random
@@ -15,6 +15,8 @@ import locale
 import ctypes
 
 QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+if hasattr(QStyleFactory, 'AA_UseHighDpiPixmaps'):
+    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
 class Options():
     SM64Dir = ""
@@ -40,7 +42,7 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.4.8"
+AppVersion = "1.4.9"
 AppEdition = "Normal"
 
 Option = Options()
@@ -91,6 +93,63 @@ if os.path.exists("config.ini") is True:
     pass
 else:
     CreateConfig()
+    
+
+if os.path.isfile("migrateconfig.ini"):
+    MigrateConfig = configparser.ConfigParser()
+    
+    Config.read("migrateconfig.ini")
+    ConfigSecond = Config["PATHS"]
+
+    Option.SM64Dir = ConfigSecond.get("SM64Dir", Option.SM64Dir)
+    Option.AddDir = ConfigSecond.get("AddDir", Option.AddDir)
+    Option.Eyes1 = ConfigSecond.get("Eyes1", Option.Eyes1)
+    Option.Eyes2 = ConfigSecond.get("Eyes2", Option.Eyes2)
+    Option.Eyes3 = ConfigSecond.get("Eyes3", Option.Eyes3)
+    Option.Cap = ConfigSecond.get("Cap", Option.Cap)
+    Option.Hair = ConfigSecond.get("Hair", Option.Hair)
+    Option.Mustache = ConfigSecond.get("Mustache", Option.Mustache)
+    Option.Button = ConfigSecond.get("Button", Option.Button)
+    Option.AddEyes1 = ConfigSecond.get("AddEyes1", Option.AddEyes1)
+    Option.AddEyes2 = ConfigSecond.get("AddEyes2", Option.AddEyes2)
+    Option.AddEyes3 = ConfigSecond.get("AddEyes3", Option.AddEyes3)
+    Option.AddCap = ConfigSecond.get("AddCap", Option.AddCap)
+    Option.AddHair = ConfigSecond.get("AddHair", Option.AddHair)
+    Option.AddMustache = ConfigSecond.get("AddMustache", Option.AddMustache)
+    Option.AddButton = ConfigSecond.get("AddButton", Option.AddButton)
+    ConfigSecond = Config["OPTIONS"]
+    Option.Language = ConfigSecond.get("Language", Option.Language)
+    
+    Config.read("config.ini")
+    Option.StartUpCheckForUpdates = ConfigSecond.get("StartUpCheckForUpdates")
+    Option.StartUpStayOnTop = ConfigSecond.get("StartUpStayOnTop")
+
+    MigrateConfig["PATHS"] = {
+        "sm64dir": Option.SM64Dir,
+        "adddir": Option.AddDir,
+        "eyes1": Option.Eyes1,
+        "eyes2": Option.Eyes2,
+        "eyes3": Option.Eyes3,
+        "cap": Option.Cap,
+        "hair": Option.Hair,
+        "mustache": Option.Mustache,
+        "button": Option.Button,
+        "addeyes1": Option.AddEyes1,
+        "addeyes2": Option.AddEyes2,
+        "addeyes3": Option.AddEyes3,
+        "addcap": Option.AddCap,
+        "addhair": Option.AddHair,
+        "addmustache": Option.AddMustache,
+        "addbutton": Option.AddButton
+        }
+    MigrateConfig["OPTIONS"] = {
+        "language": Option.Language,
+        "startupcheckforupdates": Option.StartUpCheckForUpdates,
+        "startupstayontop": Option.StartUpStayOnTop
+        }
+    with open("config.ini","w") as _ConfigFile:
+        MigrateConfig.write(_ConfigFile)
+    os.remove("migrateconfig.ini")
 
 def LoadConfig():
     Config.read("config.ini")
@@ -182,9 +241,9 @@ class Ui_MainWindow(object):
         CopyEyesErrorBoxMessage = ""
 
         #Found eye folders label
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(30, 10, 101, 16))
-        self.label.setObjectName("label")
+        #self.label = QtWidgets.QLabel(self.centralwidget)
+        #self.label.setGeometry(QtCore.QRect(30, 10, 101, 16))
+        #self.label.setObjectName("label")
 
         #Displaying eye textures
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
@@ -198,21 +257,20 @@ class Ui_MainWindow(object):
         self.SM64DisplayLabel1.setScaledContents(True)
         self.SM64DisplayLabel1.setObjectName("SM64DisplayLabel1")
         self.SM64DisplayLabel2 = QtWidgets.QLabel(self.groupBox)
-        self.SM64DisplayLabel2.setGeometry(QtCore.QRect(10, 130, 101, 101))
+        self.SM64DisplayLabel2.setGeometry(QtCore.QRect(10, 127, 101, 101))
         self.SM64DisplayLabel2.setText("")
         self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img/PlaceHolderEye2.png"))
         self.SM64DisplayLabel2.setScaledContents(True)
         self.SM64DisplayLabel2.setObjectName("SM64DisplayLabel2")
         self.SM64DisplayLabel3 = QtWidgets.QLabel(self.groupBox)
-        self.SM64DisplayLabel3.setGeometry(QtCore.QRect(10, 240, 101, 101))
+        self.SM64DisplayLabel3.setGeometry(QtCore.QRect(10, 234, 101, 101))
         self.SM64DisplayLabel3.setText("")
         self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("img/PlaceHolderEye3.png"))
         self.SM64DisplayLabel3.setScaledContents(True)
         self.SM64DisplayLabel3.setObjectName("SM64DisplayLabel3")
         self.SM64DisplayLabel4 = QtWidgets.QLabel(self.groupBox)
-        self.SM64DisplayLabel4.setGeometry(QtCore.QRect(10, 350, 101, 101))
+        self.SM64DisplayLabel4.setGeometry(QtCore.QRect(10, 341, 101, 101))
         self.SM64DisplayLabel4.setText("")
-        self.SM64DisplayLabel4.setPixmap(QtGui.QPixmap("img/PlaceHolderButton.png"))
         self.SM64DisplayLabel4.setScaledContents(True)
         self.SM64DisplayLabel4.setObjectName("SM64DisplayLabel4")
         self.groupBox_2 = QtWidgets.QGroupBox(self.centralwidget)
@@ -225,21 +283,20 @@ class Ui_MainWindow(object):
         self.AddDisplayLabel1.setScaledContents(True)
         self.AddDisplayLabel1.setObjectName("AddDisplayLabel1")
         self.AddDisplayLabel2 = QtWidgets.QLabel(self.groupBox_2)
-        self.AddDisplayLabel2.setGeometry(QtCore.QRect(10, 130, 101, 101))
+        self.AddDisplayLabel2.setGeometry(QtCore.QRect(10, 127, 101, 101))
         self.AddDisplayLabel2.setText("")
         self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img/PlaceHolderEye2.png"))
         self.AddDisplayLabel2.setScaledContents(True)
         self.AddDisplayLabel2.setObjectName("AddDisplayLabel2")
         self.AddDisplayLabel3 = QtWidgets.QLabel(self.groupBox_2)
-        self.AddDisplayLabel3.setGeometry(QtCore.QRect(10, 240, 101, 101))
+        self.AddDisplayLabel3.setGeometry(QtCore.QRect(10, 234, 101, 101))
         self.AddDisplayLabel3.setText("")
         self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img/PlaceHolderEye3.png"))
         self.AddDisplayLabel3.setScaledContents(True)
         self.AddDisplayLabel3.setObjectName("AddDisplayLabel3")
         self.AddDisplayLabel4 = QtWidgets.QLabel(self.groupBox_2)
-        self.AddDisplayLabel4.setGeometry(QtCore.QRect(10, 350, 101, 101))
+        self.AddDisplayLabel4.setGeometry(QtCore.QRect(10, 341, 101, 101))
         self.AddDisplayLabel4.setText("")
-        self.AddDisplayLabel4.setPixmap(QtGui.QPixmap("img/PlaceHolderButton.png"))
         self.AddDisplayLabel4.setScaledContents(True)
         self.AddDisplayLabel4.setObjectName("AddDisplayLabel4")
 
@@ -258,7 +315,7 @@ class Ui_MainWindow(object):
 
         #Eyes list
         self.listWidget = QtWidgets.QListWidget(self.centralwidget)
-        self.listWidget.setGeometry(QtCore.QRect(20, 30, 201, 481))
+        self.listWidget.setGeometry(QtCore.QRect(18, 16, 206, 495))
         self.listWidget.setObjectName("listWidget")
 
         self.listWidget.addItems(EyeFolders)
@@ -394,7 +451,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         
     def Update(self):
-        self.label.adjustSize()
+        #self.label.adjustSize()
         #self.ApplySM64.adjustSize()
         #self.ApplyAdd.adjustSize()
         #self.groupBox.adjustSize()
@@ -415,8 +472,6 @@ class Ui_MainWindow(object):
             self.listWidget.addItems(CHMBFolders)
         self.listWidget.clearSelection()
         try:
-            #self.ApplySM64.clicked.disconnect()
-            #self.ApplyAdd.clicked.disconnect()
             self.ApplySM64.setEnabled(False)
             self.ApplyAdd.setEnabled(False)
             if self.Mode == "Eyes":
@@ -426,6 +481,8 @@ class Ui_MainWindow(object):
                 self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye1.png"))
                 self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
                 self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
+                self.SM64DisplayLabel4.setPixmap(QtGui.QPixmap())
+                self.AddDisplayLabel4.setPixmap(QtGui.QPixmap())
             if self.Mode == "CHMB":
                 self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderCap.png"))
                 self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderHair.png"))
@@ -497,107 +554,73 @@ class Ui_MainWindow(object):
         else:
             self.retranslateUiEnglish(MainWindow)
 
-        
-        """
-
-
-        I sincerely apologize for all the mess you are about to see below, I tried to optimize some of it, but to no avail :(
-
-
-        """
-        
-
     def OnSelectionChanged(self, FolderName):
         CheckSM64 = 0
         CheckAdd = 0
         if self.Mode == "Eyes":
+            self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye1.png"))
+            self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
+            self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
+            
+            self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye1.png"))
+            self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
+            self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
             
             if os.path.exists("eyes\\{}\\{}.png".format(FolderName, Option.Eyes1)):
                 self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("eyes\\{}\\{}.png".format(FolderName, Option.Eyes1)))
                 CheckSM64 += 1
-            else:
-                self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye1.png"))
-            
             if os.path.exists("eyes\\{}\\{}.png".format(FolderName, Option.Eyes2)):
                 self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("eyes\\{}\\{}.png".format(FolderName, Option.Eyes2)))
                 CheckSM64 += 1
-            else:
-                self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
-                
             if os.path.exists("eyes\\{}\\{}.png".format(FolderName, Option.Eyes3)):
                 self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("eyes\\{}\\{}.png".format(FolderName, Option.Eyes3)))
                 CheckSM64 += 1
-            else:
-                self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
-                
             
             if os.path.exists("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes1)):
                 self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes1)))
                 CheckAdd += 1
-            else:
-                self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye1.png"))
-            
             if os.path.exists("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes2)):
                 self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes2)))
                 CheckAdd += 1
-            else:
-                self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye2.png"))
-                
             if os.path.exists("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes3)):
                 self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("eyes\\{}\\{}.png".format(FolderName, Option.AddEyes3)))
                 CheckAdd += 1
-            else:
-                self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderEye3.png"))
-        
         else:
+            self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderCap.png"))
+            self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderHair.png"))
+            self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderMustache.png"))
+            self.SM64DisplayLabel4.setPixmap(QtGui.QPixmap("img\\PlaceHolderButton.png"))
+            
+            self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderCap.png"))
+            self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderHair.png"))
+            self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderMustache.png"))
+            self.AddDisplayLabel4.setPixmap(QtGui.QPixmap("img\\PlaceHolderButton.png"))
+            
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.Cap)):
                 self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.Cap)))
                 CheckSM64 += 1
-            else:
-                self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderCap.png"))
-            
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.Hair)):
                 self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.Hair)))
                 CheckSM64 += 1
-            else:
-                self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderHair.png"))
-            
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.Mustache)):
                 self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.Mustache)))
                 CheckSM64 += 1
-            else:
-                self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderMustache.png"))
-            
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.Button)):
                 self.SM64DisplayLabel4.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.Button)))
                 CheckSM64 += 1
-            else:
-                self.SM64DisplayLabel4.setPixmap(QtGui.QPixmap("img\\PlaceHolderButton.png"))
-                
-                
+            
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.AddCap)):
                 self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.AddCap)))
                 CheckAdd += 1
-            else:
-                self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("img\\PlaceHolderCap.png"))
-            
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.AddHair)):
                 self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.AddHair)))
                 CheckAdd += 1
-            else:
-                self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img\\PlaceHolderHair.png"))
-            
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.AddMustache)):
                 self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.AddMustache)))
                 CheckAdd += 1
-            else:
-                self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img\\PlaceHolderMustache.png"))
-            
             if os.path.exists("chmb\\{}\\{}.png".format(FolderName, Option.AddButton)):
                 self.AddDisplayLabel4.setPixmap(QtGui.QPixmap("chmb\\{}\\{}.png".format(FolderName, Option.AddButton)))
                 CheckAdd += 1
-            else:
-                self.AddDisplayLabel4.setPixmap(QtGui.QPixmap("img\\PlaceHolderButton.png"))
                 
         if CheckSM64 > 0:
             self.ApplySM64.setEnabled(True)
@@ -764,7 +787,7 @@ class Ui_MainWindow(object):
     def retranslateUiEnglish(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
-        self.label.setText(_translate("MainWindow", "Found folders"))
+        #self.label.setText(_translate("MainWindow", "Found folders"))
         self.ApplySM64.setText(_translate("MainWindow", "Apply SM64"))
         self.ApplyAdd.setText(_translate("MainWindow", "Apply Additional"))
         self.groupBox.setTitle(_translate("MainWindow", "SM64"))
@@ -798,7 +821,7 @@ class Ui_MainWindow(object):
     def retranslateUiUkrainian(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
-        self.label.setText(_translate("MainWindow", "Знайдені папки"))
+        #self.label.setText(_translate("MainWindow", "Знайдені папки"))
         self.ApplySM64.setText(_translate("MainWindow", "Застосувати SM64"))
         self.ApplyAdd.setText(_translate("MainWindow", "Застосувати додаткове"))
         self.groupBox.setTitle(_translate("MainWindow", "SM64"))
@@ -834,7 +857,7 @@ class Ui_MainWindow(object):
     def retranslateUiRussian(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
-        self.label.setText(_translate("MainWindow", "Найденные папки"))
+        #self.label.setText(_translate("MainWindow", "Найденные папки"))
         self.ApplySM64.setText(_translate("MainWindow", "Применить SM64"))
         self.ApplyAdd.setText(_translate("MainWindow", "Применить дополнительное"))
         self.groupBox.setTitle(_translate("MainWindow", "SM64"))
@@ -868,7 +891,7 @@ class Ui_MainWindow(object):
     def retranslateUiKazakhCyrillic(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
-        self.label.setText(_translate("MainWindow", "Табылған қалталар"))
+        #self.label.setText(_translate("MainWindow", "Табылған қалталар"))
         self.ApplySM64.setText(_translate("MainWindow", "SM64 қолдаңуга"))
         self.ApplyAdd.setText(_translate("MainWindow", "Қосымша қолдану"))
         self.groupBox.setTitle(_translate("MainWindow", "SM64"))
@@ -902,7 +925,7 @@ class Ui_MainWindow(object):
     def retranslateUiKazakhLatin(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
-        self.label.setText(_translate("MainWindow", "Tabylğan qaltalar"))
+        #self.label.setText(_translate("MainWindow", "Tabylğan qaltalar"))
         self.ApplySM64.setText(_translate("MainWindow", "SM64 qoldañuga"))
         self.ApplyAdd.setText(_translate("MainWindow", "Qosymşa qoldanu"))
         self.groupBox.setTitle(_translate("MainWindow", "SM64"))
@@ -937,17 +960,12 @@ class Ui_AboutWindow(object):
     def setupUi(self, AboutWindow):
         AboutWindow.setObjectName("About katarakta")
         AboutWindow.resize(520, 336)
-        AboutWindow.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.World))
         AboutWindow.setWindowFlags(AboutWindow.windowFlags() | Qt.WindowStaysOnTopHint)
         self.LabelName = QtWidgets.QLabel(AboutWindow)
         self.LabelName.setGeometry(QtCore.QRect(240, 20, 271, 71))
-        self.LabelName.setSizeIncrement(QtCore.QSize(0, 0))
         font = QtGui.QFont()
         font.setPointSize(48)
-        font.setItalic(False)
         self.LabelName.setFont(font)
-        self.LabelName.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.World))
-        self.LabelName.setScaledContents(False)
         self.LabelName.setObjectName("LabelName")
         self.LabelVersion = QtWidgets.QLabel(AboutWindow)
         self.LabelVersion.setGeometry(QtCore.QRect(240, 90, 181, 20))
@@ -1162,7 +1180,7 @@ class Ui_UpdateWindow(object):
             elif IsLatestVersion == False:
                 self.StatusLabel.setText("У Вас застаріла версія! <a href = 'https://github.com/vazhka-dolya/katarakta/releases/latest'>Завантажити останню версію на GitHub</a>")
             else:
-                self.StatusLabe.setText("Неможливо перевірити версію. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Усі випуски на GitHub</a>")
+                self.StatusLabel.setText("Неможливо перевірити версію. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Усі випуски на GitHub</a>")
             self.textBrowserDescription.setText("Список змін оновлення:")
             self.Update()
         
