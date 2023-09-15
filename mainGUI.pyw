@@ -42,7 +42,7 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.4.9"
+AppVersion = "1.4.10"
 AppEdition = "Normal"
 
 Option = Options()
@@ -247,55 +247,55 @@ class Ui_MainWindow(object):
 
         #Displaying eye textures
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(240, 10, 120, 351))
+        self.groupBox.setGeometry(QtCore.QRect(240, 10, 128, 351))
         self.groupBox.setObjectName("groupBox")
         self.SM64DisplayLabel1 = QtWidgets.QLabel(self.groupBox)
         self.SM64DisplayLabel1.setEnabled(True)
-        self.SM64DisplayLabel1.setGeometry(QtCore.QRect(10, 20, 101, 101))
+        self.SM64DisplayLabel1.setGeometry(QtCore.QRect(14, 20, 101, 101))
         self.SM64DisplayLabel1.setText("")
         self.SM64DisplayLabel1.setPixmap(QtGui.QPixmap("img/PlaceHolderEye1.png"))
         self.SM64DisplayLabel1.setScaledContents(True)
         self.SM64DisplayLabel1.setObjectName("SM64DisplayLabel1")
         self.SM64DisplayLabel2 = QtWidgets.QLabel(self.groupBox)
-        self.SM64DisplayLabel2.setGeometry(QtCore.QRect(10, 127, 101, 101))
+        self.SM64DisplayLabel2.setGeometry(QtCore.QRect(14, 127, 101, 101))
         self.SM64DisplayLabel2.setText("")
         self.SM64DisplayLabel2.setPixmap(QtGui.QPixmap("img/PlaceHolderEye2.png"))
         self.SM64DisplayLabel2.setScaledContents(True)
         self.SM64DisplayLabel2.setObjectName("SM64DisplayLabel2")
         self.SM64DisplayLabel3 = QtWidgets.QLabel(self.groupBox)
-        self.SM64DisplayLabel3.setGeometry(QtCore.QRect(10, 234, 101, 101))
+        self.SM64DisplayLabel3.setGeometry(QtCore.QRect(14, 234, 101, 101))
         self.SM64DisplayLabel3.setText("")
         self.SM64DisplayLabel3.setPixmap(QtGui.QPixmap("img/PlaceHolderEye3.png"))
         self.SM64DisplayLabel3.setScaledContents(True)
         self.SM64DisplayLabel3.setObjectName("SM64DisplayLabel3")
         self.SM64DisplayLabel4 = QtWidgets.QLabel(self.groupBox)
-        self.SM64DisplayLabel4.setGeometry(QtCore.QRect(10, 341, 101, 101))
+        self.SM64DisplayLabel4.setGeometry(QtCore.QRect(14, 341, 101, 101))
         self.SM64DisplayLabel4.setText("")
         self.SM64DisplayLabel4.setScaledContents(True)
         self.SM64DisplayLabel4.setObjectName("SM64DisplayLabel4")
         self.groupBox_2 = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox_2.setGeometry(QtCore.QRect(380, 10, 120, 351))
+        self.groupBox_2.setGeometry(QtCore.QRect(372, 10, 128, 351))
         self.groupBox_2.setObjectName("groupBox_2")
         self.AddDisplayLabel1 = QtWidgets.QLabel(self.groupBox_2)
-        self.AddDisplayLabel1.setGeometry(QtCore.QRect(10, 20, 101, 101))
+        self.AddDisplayLabel1.setGeometry(QtCore.QRect(14, 20, 101, 101))
         self.AddDisplayLabel1.setText("")
         self.AddDisplayLabel1.setPixmap(QtGui.QPixmap("img/PlaceHolderEye1.png"))
         self.AddDisplayLabel1.setScaledContents(True)
         self.AddDisplayLabel1.setObjectName("AddDisplayLabel1")
         self.AddDisplayLabel2 = QtWidgets.QLabel(self.groupBox_2)
-        self.AddDisplayLabel2.setGeometry(QtCore.QRect(10, 127, 101, 101))
+        self.AddDisplayLabel2.setGeometry(QtCore.QRect(14, 127, 101, 101))
         self.AddDisplayLabel2.setText("")
         self.AddDisplayLabel2.setPixmap(QtGui.QPixmap("img/PlaceHolderEye2.png"))
         self.AddDisplayLabel2.setScaledContents(True)
         self.AddDisplayLabel2.setObjectName("AddDisplayLabel2")
         self.AddDisplayLabel3 = QtWidgets.QLabel(self.groupBox_2)
-        self.AddDisplayLabel3.setGeometry(QtCore.QRect(10, 234, 101, 101))
+        self.AddDisplayLabel3.setGeometry(QtCore.QRect(14, 234, 101, 101))
         self.AddDisplayLabel3.setText("")
         self.AddDisplayLabel3.setPixmap(QtGui.QPixmap("img/PlaceHolderEye3.png"))
         self.AddDisplayLabel3.setScaledContents(True)
         self.AddDisplayLabel3.setObjectName("AddDisplayLabel3")
         self.AddDisplayLabel4 = QtWidgets.QLabel(self.groupBox_2)
-        self.AddDisplayLabel4.setGeometry(QtCore.QRect(10, 341, 101, 101))
+        self.AddDisplayLabel4.setGeometry(QtCore.QRect(14, 341, 101, 101))
         self.AddDisplayLabel4.setText("")
         self.AddDisplayLabel4.setScaledContents(True)
         self.AddDisplayLabel4.setObjectName("AddDisplayLabel4")
@@ -304,14 +304,15 @@ class Ui_MainWindow(object):
 
         #Apply buttons
         self.ApplySM64 = QtWidgets.QPushButton(self.centralwidget)
-        self.ApplySM64.setGeometry(QtCore.QRect(239, 364, 71, 23))
         self.ApplySM64.setObjectName("ApplySM64")
         #self.ApplySM64.clicked.connect(lambda: self.CopyEyes("SM64Dir", self.listWidget.currentItem().text()))
         
         self.ApplyAdd = QtWidgets.QPushButton(self.centralwidget)
-        self.ApplyAdd.setGeometry(QtCore.QRect(380, 364, 91, 23))
         self.ApplyAdd.setObjectName("ApplyAdd")
         #self.ApplyAdd.clicked.connect(lambda: self.CopyEyes("AddDir", self.listWidget.currentItem().text()))
+        
+        self.ApplySM64.setGeometry(QtCore.QRect(239, 363, 130, 23))
+        self.ApplyAdd.setGeometry(QtCore.QRect(371, 363, 130, 23))
 
         #Eyes list
         self.listWidget = QtWidgets.QListWidget(self.centralwidget)
@@ -324,13 +325,13 @@ class Ui_MainWindow(object):
 
         #Refresh eye list button
         self.Refresh = QtWidgets.QPushButton(self.centralwidget)
-        self.Refresh.setGeometry(QtCore.QRect(239, 489, 91, 23))
+        self.Refresh.setGeometry(QtCore.QRect(371, 489, 130, 23))
         self.Refresh.setObjectName("RefreshButton")
         self.Refresh.clicked.connect(lambda: self.RefreshEyeList())
 
         #Switch to cap, hair etc. from eyes and vice versa button
         self.SwitchItemsButton = QtWidgets.QPushButton(self.centralwidget)
-        self.SwitchItemsButton.setGeometry(QtCore.QRect(239, 465, 91, 23))
+        self.SwitchItemsButton.setGeometry(QtCore.QRect(239, 489, 130, 23))
         self.SwitchItemsButton.setObjectName("SwitchButton")
         self.SwitchItemsButton.clicked.connect(lambda: self.SwitchItems())
 
@@ -468,8 +469,12 @@ class Ui_MainWindow(object):
         self.listWidget.clear()
         if self.Mode == "Eyes":
             self.listWidget.addItems(EyeFolders)
+            self.ApplySM64.setGeometry(QtCore.QRect(239, 363, 130, 23))
+            self.ApplyAdd.setGeometry(QtCore.QRect(371, 363, 130, 23))
         else:
             self.listWidget.addItems(CHMBFolders)
+            self.ApplySM64.setGeometry(QtCore.QRect(239, 464, 130, 23))
+            self.ApplyAdd.setGeometry(QtCore.QRect(371, 464, 130, 23))
         self.listWidget.clearSelection()
         try:
             self.ApplySM64.setEnabled(False)
@@ -499,8 +504,8 @@ class Ui_MainWindow(object):
         if self.Mode == "Eyes":
             self.Mode = "CHMB"
             
-            self.groupBox.setGeometry(QtCore.QRect(240, 10, 120, 452))
-            self.groupBox_2.setGeometry(QtCore.QRect(380, 10, 120, 452))
+            self.groupBox.setGeometry(QtCore.QRect(240, 10, 128, 452))
+            self.groupBox_2.setGeometry(QtCore.QRect(372, 10, 128, 452))
             
             self.Update()
 
@@ -517,8 +522,8 @@ class Ui_MainWindow(object):
         else:
             self.Mode = "Eyes"
             
-            self.groupBox.setGeometry(QtCore.QRect(240, 10, 120, 351))
-            self.groupBox_2.setGeometry(QtCore.QRect(380, 10, 120, 351))
+            self.groupBox.setGeometry(QtCore.QRect(240, 10, 128, 351))
+            self.groupBox_2.setGeometry(QtCore.QRect(372, 10, 128, 351))
 
             self.Update()
 
@@ -788,8 +793,8 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
         #self.label.setText(_translate("MainWindow", "Found folders"))
-        self.ApplySM64.setText(_translate("MainWindow", "Apply SM64"))
-        self.ApplyAdd.setText(_translate("MainWindow", "Apply Additional"))
+        self.ApplySM64.setText(_translate("MainWindow", "Apply"))
+        self.ApplyAdd.setText(_translate("MainWindow", "Apply"))
         self.groupBox.setTitle(_translate("MainWindow", "SM64"))
         self.groupBox_2.setTitle(_translate("MainWindow", "Additional"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
@@ -798,12 +803,6 @@ class Ui_MainWindow(object):
         #self.actionEnglish.setText(_translate("MainWindow", "English"))
         #self.actionUkrainian.setText(_translate("MainWindow", "Українська"))
         #self.actionRussian.setText(_translate("MainWindow", "Русский"))
-        if self.Mode == "Eyes":
-            self.ApplySM64.setGeometry(QtCore.QRect(239, 364, 122, 23))
-            self.ApplyAdd.setGeometry(QtCore.QRect(379, 364, 122, 23))
-        else:
-            self.ApplySM64.setGeometry(QtCore.QRect(331, 465, 170, 23))
-            self.ApplyAdd.setGeometry(QtCore.QRect(331, 489, 170, 23))
         self.Refresh.setText(_translate("MainWindow", "Refresh"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Switch"))
         self.menuOptions.setTitle(_translate("MainWindow", "Options"))
@@ -822,8 +821,8 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
         #self.label.setText(_translate("MainWindow", "Знайдені папки"))
-        self.ApplySM64.setText(_translate("MainWindow", "Застосувати SM64"))
-        self.ApplyAdd.setText(_translate("MainWindow", "Застосувати додаткове"))
+        self.ApplySM64.setText(_translate("MainWindow", "Застосувати"))
+        self.ApplyAdd.setText(_translate("MainWindow", "Застосувати"))
         self.groupBox.setTitle(_translate("MainWindow", "SM64"))
         self.groupBox_2.setTitle(_translate("MainWindow", "Додаткове"))
         self.menuHelp.setTitle(_translate("MainWindow", "Допомога"))
@@ -832,12 +831,6 @@ class Ui_MainWindow(object):
         #self.actionEnglish.setText(_translate("MainWindow", "English"))
         #self.actionUkrainian.setText(_translate("MainWindow", "Українська"))
         #self.actionRussian.setText(_translate("MainWindow", "Русский"))
-        if self.Mode == "Eyes":
-            self.ApplySM64.setGeometry(QtCore.QRect(239, 364, 122, 23))
-            self.ApplyAdd.setGeometry(QtCore.QRect(362, 364, 139, 23))
-        else:
-            self.ApplySM64.setGeometry(QtCore.QRect(331, 465, 170, 23))
-            self.ApplyAdd.setGeometry(QtCore.QRect(331, 489, 170, 23))
         self.Refresh.setText(_translate("MainWindow", "Оновити"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Перемкнути"))
         self.menuOptions.setTitle(_translate("MainWindow", "Опції"))
@@ -858,8 +851,8 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
         #self.label.setText(_translate("MainWindow", "Найденные папки"))
-        self.ApplySM64.setText(_translate("MainWindow", "Применить SM64"))
-        self.ApplyAdd.setText(_translate("MainWindow", "Применить дополнительное"))
+        self.ApplySM64.setText(_translate("MainWindow", "Применить"))
+        self.ApplyAdd.setText(_translate("MainWindow", "Применить"))
         self.groupBox.setTitle(_translate("MainWindow", "SM64"))
         self.groupBox_2.setTitle(_translate("MainWindow", "Дополнительное"))
         self.menuHelp.setTitle(_translate("MainWindow", "Помощь"))
@@ -868,12 +861,6 @@ class Ui_MainWindow(object):
         #self.actionEnglish.setText(_translate("MainWindow", "English"))
         #self.actionUkrainian.setText(_translate("MainWindow", "Українська"))
         #self.actionRussian.setText(_translate("MainWindow", "Русский"))
-        if self.Mode == "Eyes":
-            self.ApplySM64.setGeometry(QtCore.QRect(239, 364, 102, 23))
-            self.ApplyAdd.setGeometry(QtCore.QRect(342, 364, 159, 23))
-        else:
-            self.ApplySM64.setGeometry(QtCore.QRect(331, 465, 170, 23))
-            self.ApplyAdd.setGeometry(QtCore.QRect(331, 489, 170, 23))
         self.Refresh.setText(_translate("MainWindow", "Обновить"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Переключить"))
         self.menuOptions.setTitle(_translate("MainWindow", "Опции"))
@@ -892,8 +879,8 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
         #self.label.setText(_translate("MainWindow", "Табылған қалталар"))
-        self.ApplySM64.setText(_translate("MainWindow", "SM64 қолдаңуга"))
-        self.ApplyAdd.setText(_translate("MainWindow", "Қосымша қолдану"))
+        self.ApplySM64.setText(_translate("MainWindow", "Қолдану"))
+        self.ApplyAdd.setText(_translate("MainWindow", "Қолдану"))
         self.groupBox.setTitle(_translate("MainWindow", "SM64"))
         self.groupBox_2.setTitle(_translate("MainWindow", "Қосымша"))
         self.menuHelp.setTitle(_translate("MainWindow", "Көмек"))
@@ -902,12 +889,6 @@ class Ui_MainWindow(object):
         #self.actionEnglish.setText(_translate("MainWindow", "English"))
         #self.actionUkrainian.setText(_translate("MainWindow", "Українська"))
         #self.actionRussian.setText(_translate("MainWindow", "Русский"))
-        if self.Mode == "Eyes":
-            self.ApplySM64.setGeometry(QtCore.QRect(239, 364, 122, 23))
-            self.ApplyAdd.setGeometry(QtCore.QRect(379, 364, 122, 23))
-        else:
-            self.ApplySM64.setGeometry(QtCore.QRect(331, 465, 170, 23))
-            self.ApplyAdd.setGeometry(QtCore.QRect(331, 489, 170, 23))
         self.Refresh.setText(_translate("MainWindow", "Жаңарту"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Аустыру"))
         self.menuOptions.setTitle(_translate("MainWindow", "Опциялар"))
@@ -926,8 +907,8 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "katarakta {} ({})".format(AppVersion, AppEdition)))
         #self.label.setText(_translate("MainWindow", "Tabylğan qaltalar"))
-        self.ApplySM64.setText(_translate("MainWindow", "SM64 qoldañuga"))
-        self.ApplyAdd.setText(_translate("MainWindow", "Qosymşa qoldanu"))
+        self.ApplySM64.setText(_translate("MainWindow", "Qoldanu"))
+        self.ApplyAdd.setText(_translate("MainWindow", "Qoldanu"))
         self.groupBox.setTitle(_translate("MainWindow", "SM64"))
         self.groupBox_2.setTitle(_translate("MainWindow", "Qosymşa"))
         self.menuHelp.setTitle(_translate("MainWindow", "Kömek"))
@@ -936,12 +917,6 @@ class Ui_MainWindow(object):
         #self.actionEnglish.setText(_translate("MainWindow", "English"))
         #self.actionUkrainian.setText(_translate("MainWindow", "Українська"))
         #self.actionRussian.setText(_translate("MainWindow", "Русский"))
-        if self.Mode == "Eyes":
-            self.ApplySM64.setGeometry(QtCore.QRect(239, 364, 122, 23))
-            self.ApplyAdd.setGeometry(QtCore.QRect(379, 364, 122, 23))
-        else:
-            self.ApplySM64.setGeometry(QtCore.QRect(331, 465, 170, 23))
-            self.ApplyAdd.setGeometry(QtCore.QRect(331, 489, 170, 23))
         self.Refresh.setText(_translate("MainWindow", "Jañartu"))
         self.SwitchItemsButton.setText(_translate("MainWindow", "Austyru"))
         self.menuOptions.setTitle(_translate("MainWindow", "Opsialar"))
@@ -955,6 +930,10 @@ class Ui_MainWindow(object):
         self.actionOpenCcconv.setText(_translate("MainWindow", "Tüs kodyn türlendırgış"))
         self.actionStayOnTop.setText(_translate("MainWindow", "Ärqaşan biıkte"))
         self.actionUpdate.setText(_translate("MainWindow", "Jañartulardy tekserıñız"))
+
+class ClosingWindow(QMainWindow):
+    def closeEvent(self,event):
+        sys.exit(0)
 
 class Ui_AboutWindow(object):
     def setupUi(self, AboutWindow):
@@ -1105,6 +1084,11 @@ class Ui_UpdateWindow(object):
         self.textBrowserDescription = QtWidgets.QLabel(UpdateWindow)
         self.textBrowserDescription.setObjectName("textBrowserDescription")
         self.textBrowserDescription.setGeometry(QtCore.QRect(10, 115, 460, 22))
+        self.LaunchUpdater = QtWidgets.QPushButton(UpdateWindow)
+        self.LaunchUpdater.setGeometry(QtCore.QRect(320, 43, 126, 23))
+        self.LaunchUpdater.setObjectName("OpenUpdater")
+        self.LaunchUpdater.hide()
+        self.LaunchUpdater.clicked.connect(lambda: self.LaunchUpdaterFunction())
         UpdateWindow.setFixedSize(UpdateWindow.size())
 
         try:
@@ -1162,10 +1146,12 @@ class Ui_UpdateWindow(object):
             if IsLatestVersion == True:
                 self.StatusLabel.setText("You have the latest version! <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>All releases on GitHub</a>")
             elif IsLatestVersion == False:
-                self.StatusLabel.setText("You have an outdated version! <a href = 'https://github.com/vazhka-dolya/katarakta/releases/latest'>Download latest release on GitHub</a>")
+                self.StatusLabel.setText("You have an outdated version!")
+                self.LaunchUpdater.show()
             else:
-                self.StatusLabe.setText("Could not check for the latest version. <a href = 'https://github.com/vazhka-dolya/katarakta/releases>All releases on GitHub</a>")
+                self.StatusLabel.setText("Could not check for the latest version. <a href = 'https://github.com/vazhka-dolya/katarakta/releases>All releases on GitHub</a>")
             self.textBrowserDescription.setText("Update's changelog:")
+            self.LaunchUpdater.setText("Launch Updater")
             self.Update()
 
         elif Option.Language == "Ukrainian":
@@ -1178,10 +1164,12 @@ class Ui_UpdateWindow(object):
             if IsLatestVersion == True:
                 self.StatusLabel.setText("У Вас остання версія! <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Усі випуски на GitHub</a>")
             elif IsLatestVersion == False:
-                self.StatusLabel.setText("У Вас застаріла версія! <a href = 'https://github.com/vazhka-dolya/katarakta/releases/latest'>Завантажити останню версію на GitHub</a>")
+                self.StatusLabel.setText("У Вас застаріла версія!")
+                self.LaunchUpdater.show()
             else:
                 self.StatusLabel.setText("Неможливо перевірити версію. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Усі випуски на GitHub</a>")
             self.textBrowserDescription.setText("Список змін оновлення:")
+            self.LaunchUpdater.setText("Запустити оновлювач")
             self.Update()
         
         elif Option.Language == "Russian":
@@ -1194,11 +1182,13 @@ class Ui_UpdateWindow(object):
             if IsLatestVersion == True:
                 self.StatusLabel.setText("У Вас последняя версия! <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Все выпуски на GitHub</a>")
             elif IsLatestVersion == False:
-                self.StatusLabel.setText("У Вас устаревшая версия! <a href = 'https://github.com/vazhka-dolya/katarakta/releases/latest'>Скачать последнюю версию на GitHub</a>")
+                self.StatusLabel.setText("У Вас устаревшая версия!")
+                self.LaunchUpdater.show()
             else:
-                self.StatusLabe.setText("Невозможно проверить версию. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Все выпуски на GitHub</a>")
+                self.StatusLabel.setText("Невозможно проверить версию. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>Все выпуски на GitHub</a>")
             self.textBrowserDescription.setText("Список изменений:")
-    
+            self.LaunchUpdater.setText("Запустить средство обновления")
+            self.LaunchUpdater.setGeometry(QtCore.QRect(270, 43, 186, 23))
             self.Update()
         
         elif Option.Language == "KazakhCyrillic":
@@ -1211,11 +1201,13 @@ class Ui_UpdateWindow(object):
             if IsLatestVersion == True:
                 self.StatusLabel.setText("Сізде соңғы нұсқа бар! <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>GitHub сайтындағы барлық шығарылымдар</a>")
             elif IsLatestVersion == False:
-                self.StatusLabel.setText("Сізде ескірген нұсқа бар! <a href = 'https://github.com/vazhka-dolya/katarakta/releases/latest'>GitHub сайтында соңғы нұсқаны жазу</a>")
+                self.StatusLabel.setText("Сізде ескірген нұсқа бар!")
+                self.LaunchUpdater.show()
             else:
-                self.StatusLabe.setText("Нұсқаны тексеру мүмкін емес. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>GitHub сайтындағы барлық шығарылымдар</a>")
+                self.StatusLabel.setText("Нұсқаны тексеру мүмкін емес. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>GitHub сайтындағы барлық шығарылымдар</a>")
             self.textBrowserDescription.setText("Өзгерістер тізімі:")
-    
+            self.LaunchUpdater.setText("Жаңартқышты іске қосыңыз")
+            self.LaunchUpdater.setGeometry(QtCore.QRect(270, 43, 186, 23))
             self.Update()
         
         elif Option.Language == "KazakhLatin":
@@ -1228,11 +1220,13 @@ class Ui_UpdateWindow(object):
             if IsLatestVersion == True:
                 self.StatusLabel.setText("Sızde soñğy nūsqa bar! <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>GitHub saityndağy barlyq şyğarylymdar</a>")
             elif IsLatestVersion == False:
-                self.StatusLabel.setText("Sızde eskırgen nūsqa bar! <a href = 'https://github.com/vazhka-dolya/katarakta/releases/latest'>GitHub saitynda soñğy nūsqany jazu</a>")
+                self.StatusLabel.setText("Sızde eskırgen nūsqa bar!")
+                self.LaunchUpdater.show()
             else:
-                self.StatusLabe.setText("Nūsqany tekseru mümkın emes. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>GitHub saityndağy barlyq şyğarylymdar</a>")
+                self.StatusLabel.setText("Nūsqany tekseru mümkın emes. <a href = 'https://github.com/vazhka-dolya/katarakta/releases'>GitHub saityndağy barlyq şyğarylymdar</a>")
             self.textBrowserDescription.setText("Özgerıster tızımı:")
-    
+            self.LaunchUpdater.setText("Jañartqyşty ıske qosyñyz")
+            self.LaunchUpdater.setGeometry(QtCore.QRect(270, 43, 186, 23))
             self.Update()
         
         else:
@@ -1242,6 +1236,10 @@ class Ui_UpdateWindow(object):
         
         UpdateWindow.setWindowFlags(UpdateWindow.windowFlags() | Qt.WindowStaysOnTopHint)
         UpdateWindow.show()
+
+    def LaunchUpdaterFunction(self):
+        os.startfile("updater.exe")
+        sys.exit(0)
         
     def Update(self):
         self.UpdateCheckLabel.adjustSize()
@@ -1384,7 +1382,7 @@ class Ui_SettingsWindow(object):
         self.checkUpdates.setGeometry(QtCore.QRect(10, 20, 501, 17))
         self.checkUpdates.setObjectName("checkBox")
         self.labelUpdates = QtWidgets.QLabel(self.groupUpdates)
-        self.labelUpdates.setGeometry(QtCore.QRect(10, 40, 501, 51))
+        self.labelUpdates.setGeometry(QtCore.QRect(10, 32, 501, 66))
         self.labelUpdates.setObjectName("labelUpdates")
         
         self.groupMisc = QtWidgets.QGroupBox(self.TabGeneral)
@@ -2227,7 +2225,7 @@ if __name__ == "__main__":
     except:
         pass
     
-    MainWindow = QtWidgets.QMainWindow()
+    MainWindow = ClosingWindow() #QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
