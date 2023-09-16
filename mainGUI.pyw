@@ -42,7 +42,7 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.4.10"
+AppVersion = "1.4.11"
 AppEdition = "Normal"
 
 Option = Options()
@@ -67,12 +67,12 @@ def CreateConfig():
         "sm64dir": "",
         "adddir": "",
         "eyes1": "SUPER MARIO 64#6B8D43C4#0#2_all",
-        "eyes2": "SUPER MARIO 64#6B8D43C4#0#2_all",
-        "eyes3": "SUPER MARIO 64#6B8D43C4#0#2_all",
-        "cap": "SUPER MARIO 64#6B8D43C4#0#2_all",
-        "hair": "SUPER MARIO 64#6B8D43C4#0#2_all",
-        "mustache": "SUPER MARIO 64#6B8D43C4#0#2_all",
-        "button": "SUPER MARIO 64#6B8D43C4#0#2_all",
+        "eyes2": "SUPER MARIO 64#9FBECEF9#0#2_all",
+        "eyes3": "SUPER MARIO 64#5D6B0678#0#2_all",
+        "cap": "SUPER MARIO 64#905D3214#0#2_all",
+        "hair": "SUPER MARIO 64#2BEA0A29#0#2_all",
+        "mustache": "SUPER MARIO 64#E9FCBF74#0#2_all",
+        "button": "SUPER MARIO 64#19442FC9#0#2_all",
         "addeyes1": "",
         "addeyes2": "",
         "addeyes3": "",
