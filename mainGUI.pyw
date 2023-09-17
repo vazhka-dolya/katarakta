@@ -42,7 +42,7 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.4.11"
+AppVersion = "1.4.12"
 AppEdition = "Normal"
 
 Option = Options()
@@ -638,6 +638,13 @@ class Ui_MainWindow(object):
             
 
     def CopyEyes(self, Type, FolderName):
+        
+        if os.path.isfile("{}cache.ini".format(Option.SM64Dir)):
+            os.remove("{}cache.ini".format(Option.SM64Dir))
+            
+        if os.path.isfile("{}cache.ini".format(Option.AddDir)):
+            os.remove("{}cache.ini".format(Option.AddDir))
+            
         if self.Mode == "Eyes":
             if Type == "SM64Dir":
                 Path = Option.SM64Dir
@@ -722,6 +729,10 @@ class Ui_MainWindow(object):
         os.startfile(os.getcwd())
 
     def ClearSM64(self):
+        
+        if os.path.isfile("{}cache.ini".format(Option.SM64Dir)):
+            os.remove("{}cache.ini".format(Option.SM64Dir))
+            
         try:
             os.remove("{}{}.png".format(Option.SM64Dir, Option.Eyes1))
         except:
@@ -752,6 +763,10 @@ class Ui_MainWindow(object):
             pass
         
     def ClearAdd(self):
+            
+        if os.path.isfile("{}cache.ini".format(Option.AddDir)):
+            os.remove("{}cache.ini".format(Option.AddDir))
+            
         try:
             os.remove("{}{}.png".format(Option.AddDir, Option.AddEyes1))
         except:
