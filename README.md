@@ -15,7 +15,7 @@ Credit is optional.
 
 **What are additional textures?**\
 You know how for Mario spazzing you load a Super Mario 64 savestate while another game is running?\
-Well, to have Mario's texture changed in that case, you need to have another textures in that game's hi-res textures folder.\
+Well, to have Mario's texture changed in that case, you need to have other textures in that game's hi-res textures folder.\
 I call these other textures the "additional" textures.
 
 **Why is the name "katarakta"?**\
