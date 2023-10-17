@@ -42,7 +42,7 @@ class Options():
     
     Language = ""
 
-AppVersion = "1.4.12"
+AppVersion = "1.4.13"
 AppEdition = "Normal"
 
 Option = Options()
@@ -425,6 +425,8 @@ class Ui_MainWindow(object):
         
         self.ApplySM64.setEnabled(False)
         self.ApplyAdd.setEnabled(False)
+        self.ApplySM64.clicked.connect(lambda: self.CopyEyes("SM64Dir", self.listWidget.currentItem().text()))
+        self.ApplyAdd.clicked.connect(lambda: self.CopyEyes("AddDir", self.listWidget.currentItem().text()))
         
         if Option.Language == "English":
                 self.retranslateUiEnglish(MainWindow)
@@ -715,8 +717,6 @@ class Ui_MainWindow(object):
                     pass
 
     def ItemChosen(self):
-        self.ApplySM64.clicked.connect(lambda: self.CopyEyes("SM64Dir", self.listWidget.currentItem().text()))
-        self.ApplyAdd.clicked.connect(lambda: self.CopyEyes("AddDir", self.listWidget.currentItem().text()))
         self.OnSelectionChanged(self.listWidget.currentItem().text())
 
     def OpenSM64(self):
