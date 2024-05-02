@@ -8,7 +8,7 @@ katarakta's main functionality currently includes the following (functions that 
 - Applying textures to a hi-res folder of another game (useful for spazzing; ***can be turned off in the Public Test 2 version***. Will probably be reworked in the future because it's kind of clumsy right now)
 - ***Applying any other texture***
 - Clearing the hi-res texture folders
-- - The `Cache.ini` file also gets deleted
+- - The `Cache.ini` file also gets deleted if there is one
 - ***Removing the black borders that are sometimes seen around textures after editing them***
 
 # Setting Up
