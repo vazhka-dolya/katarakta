@@ -28,8 +28,8 @@ After downloading the archive, extract it somewhere. Open `config.txt` and follo
 What you need to run is `katarakta.exe`\
 `kataraktaConsole.exe` is, obviously, the console version of katarakta, this version was made for testing, it lacks some features the GUI version has and you probably would not want to use that.
 ## About Linux
-There's currently no Linux version, but I will probably make one in the future when I'm not lazy.\
-Right now you can either download the source code and run it from there, or use WINE (I tested both methods and they worked for me).
+Public Test 3 has a Linux version, which I have tested a little on an Arch Linux virtual machine and it seemed to work there, but I can't say for sure if it works on any distribution.\
+Running it from the source code or launching the `.exe` through [Wine](https://www.winehq.org/) should also work.
 
 # Frequently Asked Questions
 **If I use katarakta for my work, should I credit you?**\
