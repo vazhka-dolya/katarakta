@@ -46,9 +46,46 @@ def LoadConfig():
     else:
         Config.read("config.txt")
     ConfigSecond = Config["PATHS"]
+    
+    if ConfigSecond.has_option("HiresDir") == True:
+        Option.SM64Dir = ConfigSecond.get("HiresDir", Option.HiresDir)
+        Option.AddDir = ConfigSecond.get("HiresDir", Option.HiresDir)
+    else:
+        Option.SM64Dir = ConfigSecond.get("SM64Dir", Option.SM64Dir)
+        Option.AddDir = ConfigSecond.get("AddDir", Option.AddDir)
+    Option.Eyes1 = ConfigSecond.get("Eyes1", Option.Eyes1)
+    Option.Eyes2 = ConfigSecond.get("Eyes2", Option.Eyes2)
+    Option.Eyes3 = ConfigSecond.get("Eyes3", Option.Eyes3)
+    Option.Cap = ConfigSecond.get("Cap", Option.Cap)
+    Option.Hair = ConfigSecond.get("Hair", Option.Hair)
+    Option.Mustache = ConfigSecond.get("Mustache", Option.Mustache)
+    Option.Button = ConfigSecond.get("Button", Option.Button)
+    Option.AddEyes1 = ConfigSecond.get("AddEyes1", Option.AddEyes1)
+    Option.AddEyes2 = ConfigSecond.get("AddEyes2", Option.AddEyes2)
+    Option.AddEyes3 = ConfigSecond.get("AddEyes3", Option.AddEyes3)
+    Option.AddCap = ConfigSecond.get("AddCap", Option.AddCap)
+    Option.AddHair = ConfigSecond.get("AddHair", Option.AddHair)
+    Option.AddMustache = ConfigSecond.get("AddMustache", Option.AddMustache)
+    Option.AddButton = ConfigSecond.get("AddButton", Option.AddButton)
+    
+    ConfigSecond = Config["OPTIONS"]
+    Option.Language = ConfigSecond.get("Language", Option.Language)
 
-    Option.SM64Dir = ConfigSecond.get("SM64Dir", Option.SM64Dir)
-    Option.AddDir = ConfigSecond.get("AddDir", Option.AddDir)
+def LoadConfig():
+    if mode == "dotini":
+        Config.read("config.ini")
+    else:
+        Config.read("config.txt")
+    ConfigSecond = Config["PATHS"]
+    
+    if Config.has_option("PATHS", "HiResDir") == True:
+        Option.HiResDir = ConfigSecond.get("HiResDir")
+    
+        Option.SM64Name = ConfigSecond.get("SM64Name")
+        Option.AddNames = ConfigSecond.get("AddNames")
+    else:
+        Option.SM64Dir = ConfigSecond.get("SM64Dir", Option.SM64Dir)
+        Option.AddDir = ConfigSecond.get("AddDir", Option.AddDir)
     Option.Eyes1 = ConfigSecond.get("Eyes1", Option.Eyes1)
     Option.Eyes2 = ConfigSecond.get("Eyes2", Option.Eyes2)
     Option.Eyes3 = ConfigSecond.get("Eyes3", Option.Eyes3)
@@ -69,27 +106,55 @@ def LoadConfig():
 
 def CreateConfig():
     CreatedConfig = configparser.ConfigParser()
-    CreatedConfig["PATHS"] = {
-        "sm64dir": Option.SM64Dir,
-        "adddir": Option.AddDir,
-        "eyes1": Option.Eyes1,
-        "eyes2": Option.Eyes2,
-        "eyes3": Option.Eyes3,
-        "cap": Option.Cap,
-        "hair": Option.Hair,
-        "mustache": Option.Mustache,
-        "button": Option.Button,
-        "addeyes1": Option.AddEyes1,
-        "addeyes2": Option.AddEyes2,
-        "addeyes3": Option.AddEyes3,
-        "addcap": Option.AddCap,
-        "addhair": Option.AddHair,
-        "addmustache": Option.AddMustache,
-        "addbutton": Option.AddButton
-        }
-    CreatedConfig["OPTIONS"] = {
-        "language": Option.Language
-        }
+    if mode == "dotini":
+        Config.read("config.ini")
+    else:
+        Config.read("config.txt")
+    if Config.has_option("PATHS", "HiResDir") == True:
+        CreatedConfig["PATHS"] = {
+            "hiresdir": Option.HiResDir,
+            "sm64name": Option.SM64Name,
+            "addnames": Option.AddNames,
+            "eyes1": Option.Eyes1,
+            "eyes2": Option.Eyes2,
+            "eyes3": Option.Eyes3,
+            "cap": Option.Cap,
+            "hair": Option.Hair,
+            "mustache": Option.Mustache,
+            "button": Option.Button,
+            "addeyes1": Option.AddEyes1,
+            "addeyes2": Option.AddEyes2,
+            "addeyes3": Option.AddEyes3,
+            "addcap": Option.AddCap,
+            "addhair": Option.AddHair,
+            "addmustache": Option.AddMustache,
+            "addbutton": Option.AddButton
+            }
+        CreatedConfig["OPTIONS"] = {
+            "language": Option.Language
+            }
+    else:
+        CreatedConfig["PATHS"] = {
+            "sm64dir": Option.SM64Dir,
+            "adddir": Option.AddDir,
+            "eyes1": Option.Eyes1,
+            "eyes2": Option.Eyes2,
+            "eyes3": Option.Eyes3,
+            "cap": Option.Cap,
+            "hair": Option.Hair,
+            "mustache": Option.Mustache,
+            "button": Option.Button,
+            "addeyes1": Option.AddEyes1,
+            "addeyes2": Option.AddEyes2,
+            "addeyes3": Option.AddEyes3,
+            "addcap": Option.AddCap,
+            "addhair": Option.AddHair,
+            "addmustache": Option.AddMustache,
+            "addbutton": Option.AddButton
+            }
+        CreatedConfig["OPTIONS"] = {
+            "language": Option.Language
+            }
     with open("migrateconfig.ini","w") as _ConfigFile:
         CreatedConfig.write(_ConfigFile)
 
@@ -112,7 +177,7 @@ try:
 except:
     Option.Language = "English"
     
-UpdaterVersion = "rev1"
+UpdaterVersion = "rev3"
 
 class Ui_UpdaterWindow(object):
     def setupUi(self, UpdaterWindow):
@@ -145,13 +210,16 @@ class Ui_UpdaterWindow(object):
         self.LabelVersion.setGeometry(QtCore.QRect(10, 0, 431, 41))
         self.LabelVersion.setObjectName("LabelVersions")
         self.LabelVersion.setAlignment(QtCore.Qt.AlignCenter)
-        self.TextBox = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.TextBox = QtWidgets.QTextBrowser(self.centralwidget)
         self.TextBox.setGeometry(QtCore.QRect(10, 40, 431, 201))
         self.TextBox.setObjectName("plainTextEdit")
-        self.TextBox.setReadOnly(True)
+        self.TextBox.setOpenExternalLinks(True)
         UpdaterWindow.setCentralWidget(self.centralwidget)
-
-        UpdaterWindow.setWindowIcon(QtGui.QIcon("img/UpdaterIcon.png"))
+        
+        if os.path.isfile("img/UpdaterIcon.png") == True:
+            UpdaterWindow.setWindowIcon(QtGui.QIcon("img/UpdaterIcon.png"))
+        else:
+            UpdaterWindow.setWindowIcon(QtGui.QIcon("resources/img/UpdaterIcon.png"))
     
         self.ButtonNormal.clicked.connect(self.DownloadNormal)
         self.ButtonPy38.clicked.connect(self.DownloadPy38)
@@ -184,9 +252,6 @@ class Ui_UpdaterWindow(object):
         except:
             LatestVersion = "Unknown"
             LatestBody = "Unknown"
-
-        #https://github.com/vazhka-dolya/katarakta/releases/download/v1.4.8/katarakta-1.4.8.zip
-        #https://github.com/vazhka-dolya/katarakta/releases/download/v1.4.8/katarakta-1.4.8-py38.zip
             
         _translate = QtCore.QCoreApplication.translate
 
@@ -209,9 +274,12 @@ class Ui_UpdaterWindow(object):
             self.LabelVersion.setText(_translate("UpdaterWindow", "Latest version on Github: {}".format(str(LatestVersion))))
         
         #try:
-        self.TextBox.setPlainText(LatestBody)
+        self.TextBox.setMarkdown(LatestBody)
         #except:
             #pass
+    
+    ExceptFiles = ["updater.exe", "katarakta.exe", "config.ini"]
+    ExceptDirs = ["chmb", "eyes", "updater"]
 
     def DownloadNormal(self, UpdaterWindow):
         for process in psutil.process_iter():

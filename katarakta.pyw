@@ -49,7 +49,7 @@ class OtherTextures():
     Display3 = ""
     Display4 = ""
 
-AppVersion = "2.0.0"
+AppVersion = "2.0.1"
 AppEdition = "Normal"
 
 Option = Options()
@@ -609,6 +609,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         # ▼
         self.ApplySM64 = QtWidgets.QPushButton(self.centralwidget)
         self.ApplySM64.setObjectName("ApplySM64")
+        self.ApplySM64.setStyleSheet("font-size: 11px")
 
         self.ApplyDropdown = QtWidgets.QPushButton(self.centralwidget)
         self.ApplyDropdown.setObjectName("ApplyDropdown")
@@ -1007,6 +1008,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             
         with open("config.ini", "w") as ConfigFile:
             Config.write(ConfigFile)
+        self.RefreshEyeList()
         #▲▼
         
     def Update(self):
@@ -1592,47 +1594,36 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
 class Ui_AboutWindow(object):
     def setupUi(self, AboutWindow):
-            
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        fontsmaller = QtGui.QFont()
-        fontsmaller.setPointSize(8)
-        #.setFont(fontsmaller)
 
         AboutWindow.setObjectName("About katarakta")
-        AboutWindow.setFont(fontsmaller)
         AboutWindow.resize(520, 381)
         AboutWindow.setWindowFlags(AboutWindow.windowFlags() | Qt.WindowStaysOnTopHint)
         
         # Pride Month easter egg
         # It's a very important feature I swear!!!
-        font = QtGui.QFont()
-        font.setPointSize(12)
         self.LabelPride = QtWidgets.QLabel(AboutWindow)
         self.LabelPride.setObjectName("LabelPride")
         self.LabelPride.setHidden(True)
         self.LabelPride.setGeometry(QtCore.QRect(240, 5, 271, 25))
         self.LabelPride.setAlignment(Qt.AlignCenter)
-        self.LabelPride.setFont(font)
+        self.LabelPride.setStyleSheet("font-size: 16px")
         global IconClickedTimes
         IconClickedTimes = 0
         
         self.LabelName = QtWidgets.QLabel(AboutWindow)
         self.LabelName.setGeometry(QtCore.QRect(240, 20, 271, 71))
-        font = QtGui.QFont()
-        font.setPointSize(48)
-        self.LabelName.setFont(font)
         self.LabelName.setObjectName("LabelName")
+        self.LabelName.setStyleSheet("font-size: 64px")
         self.LabelVersion = QtWidgets.QLabel(AboutWindow)
         self.LabelVersion.setGeometry(QtCore.QRect(240, 90, 181, 20))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        self.LabelVersion.setFont(font)
         self.LabelVersion.setObjectName("LabelVersion")
+        self.LabelVersion.setStyleSheet("font-size: 24px")
         self.LabelAuthor = QtWidgets.QLabel(AboutWindow)
         self.LabelAuthor.setGeometry(QtCore.QRect(20, 230, 481, 16))
         self.LabelAuthor.setObjectName("LabelAuthor")
         self.LabelAuthor.setOpenExternalLinks(True)
+        self.LabelAuthor.setStyleSheet("font-size: 11px")
+        self.LabelVersion.setStyleSheet("font-size: 24px")
         self.LabelIcon = QtWidgets.QLabel(AboutWindow)
         self.LabelIcon.setGeometry(QtCore.QRect(20, 20, 201, 201))
         self.LabelIcon.setText("")
@@ -1641,9 +1632,10 @@ class Ui_AboutWindow(object):
         self.LabelIcon.setObjectName("LabelIcon")
         self.LabelIcon.mousePressEvent = self.ShowTheGay
         self.LabelAddInfo = QtWidgets.QLabel(AboutWindow)
-        self.LabelAddInfo.setGeometry(QtCore.QRect(240, 145, 481, 16))
+        self.LabelAddInfo.setGeometry(QtCore.QRect(240, 155, 481, 16))
         self.LabelAddInfo.setObjectName("LabelAddInfo")
         self.LabelAddInfo.setOpenExternalLinks(True)
+        self.LabelAddInfo.setStyleSheet("font-size: 11px")
         self.LineLegalNotice = QtWidgets.QFrame(AboutWindow)
         self.LineLegalNotice.setObjectName("LineLegalNotice")
         self.LineLegalNotice.setGeometry(QtCore.QRect(20, 310, 481, 3))
@@ -1653,6 +1645,7 @@ class Ui_AboutWindow(object):
         self.LabelLegalNotice.setGeometry(QtCore.QRect(20, 328, 481, 30))
         self.LabelLegalNotice.setObjectName("LabelLegalNotice")
         self.LabelLegalNotice.setAlignment(Qt.AlignCenter)
+        self.LabelLegalNotice.setStyleSheet("font-size: 11px")
         
         AboutWindow.setFixedSize(AboutWindow.size())
         AboutWindow.setWindowFlags(AboutWindow.windowFlags() & ~QtCore.Qt.WindowMaximizeButtonHint & ~QtCore.Qt.WindowMinimizeButtonHint )
@@ -1678,12 +1671,12 @@ class Ui_AboutWindow(object):
                 for Letter, Color in zip(PrideText, PrideColors):
                     ColoredText += f"<font color=\"{Color}\">{Letter}</font>"
                 ColoredText += "!"
-                self.LabelPride.setStyleSheet("background-color: #858585")
+                self.LabelPride.setStyleSheet("background-color: #858585; font-size: 16px")
                 self.LabelPride.setText(ColoredText)
                 self.LabelPride.setHidden(False)
             else:
                 self.LabelPride.setText("Not yet ;)")
-                self.LabelPride.setStyleSheet("")
+                self.LabelPride.setStyleSheet("font-size: 16px")
                 self.LabelPride.setHidden(False)
         
     def Update(self):
@@ -1712,30 +1705,24 @@ class Ui_AboutWindow(object):
 
 class Ui_UpdateWindow(object):
     def setupUi(self, UpdateWindow):
-        fontsmaller = QtGui.QFont()
-        fontsmaller.setPointSize(8)
 
         if not UpdateWindow.objectName():
             UpdateWindow.setObjectName("UpdateWindow")
         
-        UpdateWindow.setFont(fontsmaller)
+        UpdateWindow.setStyleSheet("font-size: 11px")
         UpdateWindow.resize(480, 336)
         self.UpdateCheckLabel = QtWidgets.QLabel(UpdateWindow)
         self.UpdateCheckLabel.setObjectName("UpdateCheckLabel")
         self.UpdateCheckLabel.setGeometry(QtCore.QRect(90, 10, 171, 31))
-        font = QtGui.QFont()
-        font.setPointSize(20)
-        self.UpdateCheckLabel.setFont(font)
+        self.UpdateCheckLabel.setStyleSheet("font-size: 24px")
         self.YourVersionLabel = QtWidgets.QLabel(UpdateWindow)
         self.YourVersionLabel.setObjectName("YourVersionLabel")
         self.YourVersionLabel.setGeometry(QtCore.QRect(10, 70, 131, 21))
-        font1 = QtGui.QFont()
-        font1.setPointSize(12)
-        self.YourVersionLabel.setFont(font1)
+        self.YourVersionLabel.setStyleSheet("font-size: 16px")
         self.LatestVersionLabel = QtWidgets.QLabel(UpdateWindow)
         self.LatestVersionLabel.setObjectName("LatestVersionLabel")
         self.LatestVersionLabel.setGeometry(QtCore.QRect(10, 95, 201, 61))
-        self.LatestVersionLabel.setFont(font1)
+        self.LatestVersionLabel.setStyleSheet("font-size: 16px")
         self.IconLabel = QtWidgets.QLabel(UpdateWindow)
         self.IconLabel.setObjectName("IconLabel")
         self.IconLabel.setGeometry(QtCore.QRect(10, 0, 71, 71))
@@ -1752,6 +1739,7 @@ class Ui_UpdateWindow(object):
         self.textBrowser.setObjectName("textBrowser")
         self.textBrowser.setGeometry(QtCore.QRect(10, 136, 460, 189))
         self.textBrowser.setAutoFillBackground(False)
+        self.textBrowser.setOpenExternalLinks(True)
         self.textBrowserDescription = QtWidgets.QLabel(UpdateWindow)
         self.textBrowserDescription.setObjectName("textBrowserDescription")
         self.textBrowserDescription.setGeometry(QtCore.QRect(10, 115, 460, 22))
@@ -1777,6 +1765,7 @@ class Ui_UpdateWindow(object):
             LatestBody = "Unknown"
 
         self.textBrowser.setHtml(QtCore.QCoreApplication.translate("UpdateWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n<html><head></head><body>{}</p></body></html>".format(str(LatestBody.replace("\r\n", "<br>"))), None))
+        self.textBrowser.setMarkdown(QtCore.QCoreApplication.translate("UpdateWindow", LatestBody))
         
         self.retranslateUiEnglish(UpdateWindow)
         if Language.Properties_InnerName != "English":
@@ -1849,33 +1838,28 @@ class Ui_UpdateWindow(object):
     
 class Ui_SettingsWindow(object):
     def setupUi(self, SettingsWindow):
-            
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        fontsmaller = QtGui.QFont()
-        fontsmaller.setPointSize(8)
         #.setFont(fontsmaller)
 
         SettingsWindow.resize(550, 520)
         SettingsWindow.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.World))
         SettingsWindow.setFixedSize(SettingsWindow.size())
         SettingsWindow.setWindowIcon(QtGui.QIcon("resources/img/Settings.png"))
-        SettingsWindow.setFont(fontsmaller)
+        SettingsWindow.setStyleSheet("font-size: 11px")
 
         self.tabWidget = QtWidgets.QTabWidget(SettingsWindow)
         self.tabWidget.setGeometry(QtCore.QRect(10, 10, 531, 476))
         self.tabWidget.setObjectName("tabWidget")
-        self.tabWidget.setFont(fontsmaller)
+        
         self.TabGeneral = QtWidgets.QWidget()
         self.TabGeneral.setObjectName("TabGeneral")
-        self.TabGeneral.setFont(fontsmaller)
+        
         self.groupLanguage = QtWidgets.QGroupBox(self.TabGeneral)
         self.groupLanguage.setGeometry(QtCore.QRect(10, 0, 506, 91))
         self.groupLanguage.setObjectName("groupLanguage")
         
         self.labelLanguage = QtWidgets.QLabel(self.groupLanguage)
         self.labelLanguage.setGeometry(QtCore.QRect(50, 14, 360, 31))
-        self.labelLanguage.setFont(font)
+        self.labelLanguage.setStyleSheet("font-size: 16px")
         
         self.labelTranslator = QtWidgets.QLabel(self.groupLanguage)
         self.labelTranslator.setGeometry(QtCore.QRect(50, 33, 360, 31))
@@ -2160,18 +2144,15 @@ class Ui_SettingsWindow(object):
         self.BG_ButtonConfigure.setObjectName("BG_ButtonConfigure")
         self.BG_ButtonConfigure.setGeometry(self.BG_ButtonDefault.x(), self.BG_ButtonDefault.y() + 52, 204, 23)
         self.BG_ButtonConfigure.clicked.connect(lambda: BG_Configure())
-        self.BG_ButtonConfigure.setFont(fontsmaller)
 
         self.BG_ButtonReset = QtWidgets.QPushButton(self.groupEyeBG)
         self.BG_ButtonReset.setObjectName("BG_ButtonReset")
         self.BG_ButtonReset.setGeometry(self.BG_ButtonDefault.x() + 208, self.BG_ButtonDefault.y() + 52, 100, 23)
         self.BG_ButtonReset.clicked.connect(lambda: BG_Reset())
-        self.BG_ButtonReset.setFont(fontsmaller)
 
         self.BG_Label = QtWidgets.QLabel(self.groupEyeBG)
         self.BG_Label.setObjectName("BG_Label")
         self.BG_Label.setGeometry(self.BG_ButtonDefault.x(), self.BG_ButtonDefault.y() - 24, 300, 23)
-        self.BG_Label.setFont(fontsmaller)
 
         if BG_OptionMode == "default":
             self.BG_ButtonDefault.setChecked(True)
@@ -2592,7 +2573,6 @@ class Ui_SettingsWindow(object):
         self.pushClose.setGeometry(QtCore.QRect(460, 490, 75, 23))
         self.pushClose.setObjectName("pushClose")
         self.pushClose.clicked.connect(CloseSettings)
-        self.pushClose.setFont(fontsmaller)
 
         def CollectLineText():
             global CollectedLineHiResSM64, CollectedLineSM64Name, CollectedLineAddNames, CollectedLineEyesOpen, CollectedLineEyesHalfopen, CollectedLineEyesClosed, CollectedLineCap, CollectedLineSidehair, CollectedLineMustache, CollectedLineButton
@@ -2680,7 +2660,6 @@ class Ui_SettingsWindow(object):
         self.pushApply.setGeometry(QtCore.QRect(370, 490, 85, 23))
         self.pushApply.setObjectName("pushApply")
         self.pushApply.clicked.connect(Apply)
-        self.pushApply.setFont(fontsmaller)
 
         def ApplyClose():
             Apply()
@@ -2690,7 +2669,6 @@ class Ui_SettingsWindow(object):
         self.pushApplyClose.setGeometry(QtCore.QRect(210, 490, 155, 23))
         self.pushApplyClose.setObjectName("pushApplyClose")
         self.pushApplyClose.clicked.connect(ApplyClose)
-        self.pushApplyClose.setFont(fontsmaller)
 
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(SettingsWindow)
@@ -2929,6 +2907,7 @@ class Ui_ccconvWindow(QWidget):
         ccconvWindow.setObjectName("ccconvWindow")
         ccconvWindow.resize(400, 286)
         ccconvWindow.setFixedSize(ccconvWindow.size())
+        ccconvWindow.setStyleSheet("font-size: 11px")
             
         font = QtGui.QFont()
         font.setPointSize(10)
