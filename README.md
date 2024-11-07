@@ -1,7 +1,10 @@
 # katarakta
 katarakta is a tool made for Super Mario 64 machinimas that enables you to change Mario's textures quicker and makes it a lot less tedious.
+<p align="center">
+  <img src="https://github.com/vazhka-dolya/katarakta/blob/main/GitHubImg/katarakta_2.0.0_screenshot_1.png" width="666"/>
+</p>
 
-# <img align="right" src="https://github.com/vazhka-dolya/katarakta/blob/main/GitHubImg/katarakta_PT3_screenshot_1.png" width="240"/> Features
+# Features
 katarakta's main functionality currently includes the following:
 - Applying eye textures
 - Applying cap/sidehair/mustache/button textures
