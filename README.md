@@ -31,7 +31,7 @@ Credit is optional.
 **What are additional textures?**\
 You know how for one of the methods to make Mario spazz is loading a Super Mario 64 savestate in another game?\
 Well, to have Mario's texture changed in that case, you need to have other textures in that game's hi-res textures folder.\
-I call these other textures the “additional” textures.\
+I call these other textures the “additional” textures.
 
 **What is the `py38` version?**\
 The normal version is “compiled” with Python 3.11, and Python does not support Windows 7 starting from 3.9.\
