@@ -38,8 +38,8 @@ The normal version is “compiled” with Python 3.11, and Python does not suppo
 The `py38` version is “complied” with Python 3.8 instead, and that version of Python supports Windows 7 (probably also Vista, but it was not tested on it yet).\
 If you are using WINE for katarakta on Linux, then the normal version should work for you.
 
-**Why is the name "katarakta"?**\
-It's romanized “cataract” in Russian. Cataract is an *eye* disease and katarakta was originally meant for just *eye* textures and I thought it was funny to name it like that… It was probably a horrible idea, though.
+**What does “katarakta” mean?**\
+It's romanized “cataract” in Russian (“катаракта”). Cataract is an *eye* disease and katarakta was originally meant for just *eye* textures and I thought it was funny to name it like that… It was probably a horrible idea, though.
 
 **Is it translated to any other languages?**\
 As of 2.0.0, katarakta is translated to Russian and Ukrainian. Both translations were made by me.\
