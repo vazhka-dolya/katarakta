@@ -42,7 +42,7 @@ If you are using WINE for katarakta on Linux, then the normal version should wor
 It's romanized “cataract” in Russian (“катаракта”). Cataract is an *eye* disease and katarakta was originally meant for just *eye* textures and I thought it was funny to name it like that… It was probably a horrible idea, though.
 
 **Is it translated to any other languages?**\
-As of 2.0.0, katarakta is translated to Russian and Ukrainian. Both translations were made by me.\
+katarakta is currently translated to Russian and Ukrainian. Both translations were made by me.\
 You can also easily create your own translations! Go to the `ExampleLanguage` folder in the `lang` folder to learn more.
 
 **Do you know about SM64 Eye Changer from ImCodist?**\
