@@ -17,7 +17,6 @@ katarakta's main functionality currently includes the following:
 # Setting Up
 Firstly, you need a graphics plugin that supports texture packs, such as GLideN64 (recommended) or RiceVideo. You need to configure the plugin to be able to load the “hi-res” textures, there are numerous tutorials that can be found on how to do this, such as [GlitchyPSI's](https://www.youtube.com/watch?v=AsmwKbv054g), [Team Toad's](https://www.youtube.com/watch?v=o33pdMVl2Ow), or [mine](https://www.youtube.com/watch?v=1VsTe2No9eA) (has English subtitles), which also tries to explain how to set up katarakta (albeit pretty outdated).
 
-## For 2.0.0+
 After downloading the archive, extract it somewhere. What you need to run is `katarakta.exe`, you can (and have) to configure it by going to `Options` -> `Settings`.\
 It shouldn't be too hard to configure, some settings have hints (red question marks that you can hover your cursor over) that have detailed explanations about said settings.\
 After configuring, click `Save`.
