@@ -49,7 +49,7 @@ class OtherTextures():
     Display3 = ""
     Display4 = ""
 
-AppVersion = "2.0.1"
+AppVersion = "2.0.2"
 AppEdition = "Normal"
 
 Option = Options()
@@ -818,7 +818,11 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 
             if PopupText == "&Yes":
                 #print("chosen yes")
-                PathToTextures = self.ListModel.filePath(self.listWidget.selectedIndexes()[0])
+                FolderNames = self.listWidget.selectedItems()
+                if not FolderNames:
+                    return
+                FolderName = FolderNames[0]
+                PathToTextures = FolderName.data(0, Qt.UserRole)
                 TextureList = []
                 if (os.path.isfile("{}/other.ini".format(PathToTextures)) == True):
                     Config.read("{}/other.ini".format(PathToTextures), encoding = "utf-8")
@@ -2931,12 +2935,14 @@ class Ui_ccconvWindow(QWidget):
         font = QtGui.QFont()
         font.setPointSize(16)
         self.ButtonConvert.setFont(font)
+        self.ButtonConvert.setStyleSheet("font-size: 24px")
         self.ButtonConvert.setObjectName("ButtonConvert")
         self.ArrowLabel = QtWidgets.QLabel(self.ccconvCentral)
         self.ArrowLabel.setGeometry(QtCore.QRect(170, 10, 60, 150))
         font = QtGui.QFont()
         font.setPointSize(24)
         self.ArrowLabel.setFont(font)
+        self.ArrowLabel.setStyleSheet("font-size: 31px")
         self.ArrowLabel.setObjectName("ArrowLabel")
         self.InputCombo = QtWidgets.QComboBox(self.ccconvCentral)
         self.InputCombo.setGeometry(QtCore.QRect(10, 164, 150, 20))
