@@ -1,4 +1,5 @@
 # katarakta
+<img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/vazhka-dolya/katarakta/total?style=plastic&label=total%20downloads&color=0260A4">
 katarakta is a tool made for Super Mario 64 machinimas that enables you to change Mario's textures quicker and makes it a lot less tedious.
 <p align="center">
   <img src="https://github.com/vazhka-dolya/katarakta/blob/main/GitHubImg/katarakta_2.0.0_screenshot_1.png" width="666"/>
@@ -6,13 +7,16 @@ katarakta is a tool made for Super Mario 64 machinimas that enables you to chang
 
 # Features
 katarakta's main functionality currently includes the following:
-- Applying eye textures
-- Applying cap/sidehair/mustache/button textures
+- Applying eye/cap/sidehair/mustache/button textures
 - Applying any other texture
 - Applying textures to a hi-res folder of other games
 - Clearing the hi-res texture folders
 - - The `Cache.ini` file also gets deleted if there is one
 - Removing the black borders that are sometimes seen around textures after editing them
+
+Additionally, the following features are planned to be added in future updates:
+- Dynamically changing textures in RAM
+- Dynamically fixing black textures in RAM
 
 # Setting Up
 Firstly, you need a graphics plugin that supports texture packs, such as GLideN64 (recommended) or RiceVideo. You need to configure the plugin to be able to load the “hi-res” textures, there are numerous tutorials that can be found on how to do this, such as [GlitchyPSI's](https://www.youtube.com/watch?v=AsmwKbv054g), [Team Toad's](https://www.youtube.com/watch?v=o33pdMVl2Ow), or [mine](https://www.youtube.com/watch?v=1VsTe2No9eA) (has English subtitles), which also tries to explain how to set up katarakta (albeit pretty outdated).
@@ -48,3 +52,6 @@ You can also easily create your own translations! Go to the `ExampleLanguage` fo
 **Do you know about SM64 Eye Changer from ImCodist?**\
 As you probably guessed by seeing this question here, yes.\
 I already knew about it even before creating katarakta (and SM64EC actually inspired me to make katarakta!), but I still decided to create it because I needed it for my own personal use and SM64EC did not have some features I needed, such as the additional textures and ability to change Mario's other textures besides the eyes.
+
+# Legal Notice
+This program is not affiliated with or sponsored by Nintendo and does not claim ownership over any\nof Nintendo's intellectual property used (such as the characters in the loading screens).
