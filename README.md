@@ -15,8 +15,8 @@ katarakta's main functionality currently includes the following:
 - Removing the black borders that are sometimes seen around textures after editing them
 
 Additionally, the following features are planned to be added in future updates:
-- Dynamically changing textures in RAM
-- Dynamically fixing black textures in RAM
+- Dynamically changing textures in the game's RAM
+- Dynamically [fixing black textures](https://github.com/vazhka-dolya/sm64_save_state_fixer) in the game's RAM
 
 # Setting Up
 Firstly, you need a graphics plugin that supports texture packs, such as GLideN64 (recommended) or RiceVideo. You need to configure the plugin to be able to load the “hi-res” textures, there are numerous tutorials that can be found on how to do this, such as [GlitchyPSI's](https://www.youtube.com/watch?v=AsmwKbv054g), [Team Toad's](https://www.youtube.com/watch?v=o33pdMVl2Ow), or [mine](https://www.youtube.com/watch?v=1VsTe2No9eA) (has English subtitles), which also tries to explain how to set up katarakta (albeit pretty outdated).
