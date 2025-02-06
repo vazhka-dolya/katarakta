@@ -49,6 +49,9 @@ It's romanized “cataract” in Russian (“катаракта”). Cataract is
 katarakta is currently translated to Russian and Ukrainian. Both translations were made by me.\
 You can also easily create your own translations! Go to the `ExampleLanguage` folder in the `lang` folder to learn more.
 
+**Why does it have a Color Code Converter**
+I don't know why I have added that and it will be gone in the next minor update (2.1.0).
+
 **Do you know about SM64 Eye Changer from ImCodist?**\
 As you probably guessed by seeing this question here, yes.\
 I already knew about it even before creating katarakta (and SM64EC actually inspired me to make katarakta!), but I still decided to create it because I needed it for my own personal use and SM64EC did not have some features I needed, such as the additional textures and ability to change Mario's other textures besides the eyes.
