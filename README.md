@@ -49,7 +49,7 @@ It's romanized “cataract” in Russian (“катаракта”). Cataract is
 katarakta is currently translated to Russian and Ukrainian. Both translations were made by me.\
 You can also easily create your own translations! Go to the `ExampleLanguage` folder in the `lang` folder to learn more.
 
-**Why does it have a Color Code Converter**
+**Why does it have a Color Code Converter?**\
 I don't know why I have added that and it will be gone in the next minor update (2.1.0).
 
 **Do you know about SM64 Eye Changer from ImCodist?**\
