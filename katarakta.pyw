@@ -1745,11 +1745,11 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
                 if OtherTextures.Display1 != "":
                     self.SM64DisplayLabel1.setPixmap(self.TextureFiltering(f"{PathToTextures}/{OtherTextures.Display1}.png"))
                 if OtherTextures.Display2 != "":
-                    self.SM64DisplayLabel2.setPixmap(self.TextureFiltering(f"{PathToTextures}/{OtherTextures.Display1}.png"))
+                    self.SM64DisplayLabel2.setPixmap(self.TextureFiltering(f"{PathToTextures}/{OtherTextures.Display2}.png"))
                 if OtherTextures.Display3 != "":
-                    self.SM64DisplayLabel3.setPixmap(self.TextureFiltering(f"{PathToTextures}/{OtherTextures.Display1}.png"))
+                    self.SM64DisplayLabel3.setPixmap(self.TextureFiltering(f"{PathToTextures}/{OtherTextures.Display3}.png"))
                 if OtherTextures.Display4 != "":
-                    self.SM64DisplayLabel4.setPixmap(self.TextureFiltering(f"{PathToTextures}/{OtherTextures.Display1}.png"))
+                    self.SM64DisplayLabel4.setPixmap(self.TextureFiltering(f"{PathToTextures}/{OtherTextures.Display4}.png"))
             
             else:
                 self.SM64DisplayLabel1.setPixmap(self.TextureFiltering("resources/img/PlaceHolderCap.png"))
@@ -1802,8 +1802,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             Config.read("{}/other.ini".format(PathToTextures), encoding = "utf-8")
             ConfigOther = Config["OTHER"]
             OtherTextures.Textures = ConfigOther.get("Other_Textures", OtherTextures.Textures).split(";")
+
+            AcquiredTexturesRAM = ConfigOther.get("Other_TexturesRAM", OtherTextures.TexturesRAM)
             try:
-                TexturesRAM1 = [item.split(",") for item in ConfigOther.get("Other_TexturesRAM", OtherTextures.TexturesRAM).replace(" ", "").split(";")]
+                TexturesRAM1 = [item.split(",") for item in AcquiredTexturesRAM.replace(" ", "").split(";")]
                 OtherTextures.TexturesRAM = [[int(x, 16) for x in sublist[:2]] + sublist[2:] for sublist in TexturesRAM1]
             except:
                 pass
@@ -1847,7 +1849,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
             ChangeTextureListTexturePack = []
             if os.path.isfile("{}/other.ini".format(PathToTextures)) == True:
                 if OtherTextures.ApplyEverything == "0":
-                    TexturesRAM1 = [item.split(",") for item in ConfigOther.get("Other_TexturesRAM", OtherTextures.TexturesRAM).replace(" ", "").split(";")]
+                    AcquiredTexturesRAM = ConfigOther.get("Other_TexturesRAM", OtherTextures.TexturesRAM)
+                    TexturesRAM1 = [item.split(",") for item in AcquiredTexturesRAM.replace(" ", "").split(";")]
                     try:
                         OtherTextures.TexturesRAM = [[int(x, 16) for x in sublist[:2]] + sublist[2:] for sublist in TexturesRAM1]
                     except:
