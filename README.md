@@ -1,12 +1,19 @@
+# Warning
+I am slowly moving on from developing *katarakta*, and I'm now working on rewriting it as an [M64MM3](https://github.com/projectcomet64/M64MM) add-on currently called *kataraktaCS* (*kCS* for short). *kataraktaCS* will have way more functionality, will be quicker and more lightweight, and will be easier to use than the original *katarakta*. Though, I do plan for *katarakta* to have an update with some features from the [Public Test 4 version](https://github.com/vazhka-dolya/katarakta/releases/tag/vpt4) added, but nothing major after that. Light maintenance, such as bugfixes or very small additions, is also planned.
+
+*kataraktaCS* is still not released, though (and I have no idea when it will be), so you can keep using *katarakta* for now without any worries.
+
 # katarakta
 <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/vazhka-dolya/katarakta/total?style=plastic&label=total%20downloads&color=0260A4">
-katarakta is a tool made for Super Mario 64 machinimas that enables you to change Mario's textures quicker and makes it a lot less tedious.
+
+*katarakta* is a tool made for Super Mario 64 machinimas that enables you to change Mario's textures quicker and makes it a lot less tedious.
+
 <p align="center">
   <img src="https://github.com/vazhka-dolya/katarakta/blob/main/GitHubImg/katarakta_2.0.0_screenshot_1.png" width="666"/>
 </p>
 
 # Features
-katarakta's main functionality currently includes the following:
+*katarakta*'s main functionality currently includes the following:
 - Applying eye/cap/sidehair/mustache/button textures
 - Applying any other texture
 - Applying textures to a hi-res folder of other games
@@ -19,7 +26,7 @@ Additionally, the following features are present in the [latest Public Test vers
 - Changing the eye states
 - Dynamically [fixing black textures](https://github.com/vazhka-dolya/sm64_save_state_fixer) in the game's RAM
 
-Also check out my add-ons for [M64MM3](https://github.com/projectcomet64/M64MM) — [BodyStates](https://github.com/vazhka-dolya/bodystates) and [Tiny-Huge Tweaks](https://github.com/vazhka-dolya/TinyHugeTweaks)!
+Also check out my add-ons for [M64MM3](https://github.com/projectcomet64/M64MM) — [BodyStates](https://github.com/vazhka-dolya/bodystates), [Tiny-Huge Tweaks](https://github.com/vazhka-dolya/TinyHugeTweaks), and [ChameleonCK](https://github.com/vazhka-dolya/ChameleonCK)!
 
 # Setting Up
 Firstly, you need a graphics plugin that supports texture packs, such as GLideN64 (recommended) or RiceVideo. You need to configure the plugin to be able to load the “hi-res” textures, there are numerous tutorials that can be found on how to do this, such as [GlitchyPSI's](https://www.youtube.com/watch?v=AsmwKbv054g), [Team Toad's](https://www.youtube.com/watch?v=o33pdMVl2Ow), or [mine](https://www.youtube.com/watch?v=1VsTe2No9eA) (has English subtitles), which also tries to explain how to set up katarakta (albeit pretty outdated).
